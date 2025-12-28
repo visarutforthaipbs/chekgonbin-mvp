@@ -1,8 +1,13 @@
-import { Box, Spinner, Text, VStack } from "@chakra-ui/react";
+import { Box, Spinner, Text, VStack, Icon } from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { FaSpinner } from "react-icons/fa6";
+
+const MotionBox = motion.create(Box);
+const MotionVStack = motion.create(VStack);
 
 export default function LoadingSpinner({ text = "กำลังโหลด..." }) {
   return (
-    <Box
+    <MotionBox
       position="fixed"
       top="0"
       left="0"
@@ -11,21 +16,35 @@ export default function LoadingSpinner({ text = "กำลังโหลด..."
       display="flex"
       alignItems="center"
       justifyContent="center"
-      bg="rgba(255, 255, 255, 0.9)"
+      bg="rgba(255, 255, 255, 0.95)"
+      backdropFilter="blur(4px)"
       zIndex="9999"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2 }}
     >
-      <VStack spacing={4}>
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="brand.500"
-          size="xl"
-        />
-        <Text color="gray.600" fontSize="lg">
+      <MotionVStack
+        spacing={4}
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
+      >
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+        >
+          <Icon as={FaSpinner} boxSize={12} color="brand.500" />
+        </motion.div>
+        <Text
+          color="gray.700"
+          fontSize="lg"
+          fontWeight="500"
+          textAlign="center"
+          maxW="300px"
+        >
           {text}
         </Text>
-      </VStack>
-    </Box>
+      </MotionVStack>
+    </MotionBox>
   );
 }

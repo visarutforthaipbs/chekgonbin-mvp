@@ -9,6 +9,7 @@
 ### Quick Deployment Steps:
 
 1. **Connect to Vercel:**
+
    - Go to [vercel.com](https://vercel.com)
    - Click "Add New Project"
    - Import: `visarutforthaipbs/chekgonbin-mvp`
@@ -40,7 +41,7 @@ npm run build  # Production build
 ✅ Whitelist/Blacklist checking (159 entries each)  
 ✅ Suspicious pattern detection  
 ✅ PDPA compliant (no data storage)  
-✅ Thai language support  
+✅ Thai language support
 
 ## 📞 Contact
 

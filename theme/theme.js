@@ -18,18 +18,6 @@ const config = defineConfig({
           800: { value: "#145571" },
           900: { value: "#0d3e54" },
         },
-        danger: {
-          50: { value: "#fdeeed" },
-          100: { value: "#f9d0cc" },
-          200: { value: "#f5b0a9" },
-          300: { value: "#f19086" },
-          400: { value: "#ed706c" },
-          500: { value: "#e5472e" },
-          600: { value: "#d94029" },
-          700: { value: "#c93823" },
-          800: { value: "#b9301d" },
-          900: { value: "#9f2212" },
-        },
       },
       fonts: {
         body: { value: '"DB Helvethaica X", Arial, Helvetica, sans-serif' },
