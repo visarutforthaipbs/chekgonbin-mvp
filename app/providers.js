@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 
 export function Providers({ children }) {
   return (
-    <ChakraProvider value={system} disableGlobalStyle={false}>
+    <ChakraProvider value={system} disableGlobalStyle={true}>
       <Box
         display="flex"
         flexDirection="column"

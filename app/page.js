@@ -26,6 +26,9 @@ import {
   FaUserTie,
   FaArrowRight,
   FaShieldHalved,
+  FaPenToSquare,
+  FaCheck,
+  FaChartLine,
 } from "react-icons/fa6";
 
 const MotionBox = motion.create(Box);
@@ -124,6 +127,107 @@ export default function Home() {
                 ช่วยให้คุณตัดสินใจได้อย่างมั่นใจและปลอดภัยยิ่งขึ้น
               </Text>
             </MotionVStack>
+
+            {/* Problem Statement Section */}
+            <MotionBox
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              width="100%"
+            >
+              <Card.Root
+                variant="elevated"
+                size="lg"
+                boxShadow="lg"
+                borderRadius="2xl"
+                bg="white"
+                borderWidth="1px"
+                borderColor="gray.100"
+              >
+                <Card.Body p={{ base: 6, md: 8 }}>
+                  <VStack spacing={4} align="stretch">
+                    <Heading size="lg" color="brand.700">
+                      ความเป็นจริงของปัญหา
+                    </Heading>
+                    <Text color="gray.600" fontSize="md" lineHeight="tall">
+                      ในปี 2567 มีแรงงานไทยกว่า 1,000
+                      คนตกเป็นเหยื่อการหลอกลวงไปทำงานต่างประเทศ
+                      ส่งผลให้เสียหายรวมกว่า{" "}
+                      <Text as="span" fontWeight="bold" color="brand.600">
+                        44.2 ล้านบาท
+                      </Text>
+                    </Text>
+                    <Text color="gray.600" fontSize="md">
+                      การตรวจสอบอย่างรอบคอบก่อนตัดสินใจเป็นวิธีที่ดีที่สุดในการปกป้องตัวเอง
+                    </Text>
+                  </VStack>
+                </Card.Body>
+              </Card.Root>
+            </MotionBox>
+
+            {/* How It Works Section */}
+            <MotionBox
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              width="100%"
+            >
+              <VStack spacing={6} align="stretch">
+                <Heading size="lg" textAlign="center" color="brand.700">
+                  วิธีการทำงาน
+                </Heading>
+                <HStack spacing={4} justify="center" flexWrap="wrap">
+                  {[
+                    {
+                      icon: FaPenToSquare,
+                      title: "ขั้นตอนที่ 1",
+                      desc: "กรอกข้อมูลบริษัท/นายหน้า",
+                    },
+                    {
+                      icon: FaChartLine,
+                      title: "ขั้นตอนที่ 2",
+                      desc: "ระบบประมวลผล",
+                    },
+                    {
+                      icon: FaCheck,
+                      title: "ขั้นตอนที่ 3",
+                      desc: "รับผลวิเคราะห์",
+                    },
+                  ].map((step, idx) => (
+                    <MotionBox
+                      key={idx}
+                      initial={{ scale: 0.8, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.4 + idx * 0.1 }}
+                      flex="1"
+                      minW="150px"
+                    >
+                      <Card.Root
+                        variant="outline"
+                        borderRadius="xl"
+                        textAlign="center"
+                        p={4}
+                        borderColor="brand.200"
+                      >
+                        <Icon
+                          as={step.icon}
+                          boxSize={10}
+                          color="brand.500"
+                          mb={3}
+                          mx="auto"
+                        />
+                        <Heading size="sm" color="brand.700" mb={2}>
+                          {step.title}
+                        </Heading>
+                        <Text fontSize="sm" color="gray.600">
+                          {step.desc}
+                        </Text>
+                      </Card.Root>
+                    </MotionBox>
+                  ))}
+                </HStack>
+              </VStack>
+            </MotionBox>
 
             {/* Form Section */}
             <MotionBox

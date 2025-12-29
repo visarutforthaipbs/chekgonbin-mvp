@@ -31,12 +31,6 @@ const config = defineConfig({
       },
     },
   },
-  globalCss: {
-    "html, body": {
-      fontSize: "16px",
-      lineHeight: "1.6",
-    },
-  },
 });
 
 const system = createSystem(defaultConfig, config);

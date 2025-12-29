@@ -44,6 +44,48 @@ export default function Footer() {
 
           <Separator borderColor="gray.800" maxW="200px" />
 
+          <HStack spacing={4} justify="center" flexWrap="wrap">
+            <Link href="/media-hub" _hover={{ textDecoration: "none" }}>
+              <Text
+                fontSize="sm"
+                color="gray.400"
+                _hover={{ color: "brand.300" }}
+              >
+                ศูนย์ความรู้
+              </Text>
+            </Link>
+            <Text color="gray.600">•</Text>
+            <Link href="/report-scam" _hover={{ textDecoration: "none" }}>
+              <Text
+                fontSize="sm"
+                color="gray.400"
+                _hover={{ color: "brand.300" }}
+              >
+                รายงานข้อมูล
+              </Text>
+            </Link>
+            <Text color="gray.600">•</Text>
+            <Link href="/privacy-policy" _hover={{ textDecoration: "none" }}>
+              <Text
+                fontSize="sm"
+                color="gray.400"
+                _hover={{ color: "brand.300" }}
+              >
+                นโยบายความเป็นส่วนตัว
+              </Text>
+            </Link>
+            <Text color="gray.600">•</Text>
+            <Link href="/about" _hover={{ textDecoration: "none" }}>
+              <Text
+                fontSize="sm"
+                color="gray.400"
+                _hover={{ color: "brand.300" }}
+              >
+                เกี่ยวกับเรา
+              </Text>
+            </Link>
+          </HStack>
+
           <Text fontSize="xs" color="gray.600">
             © 2025 เช็คก่อนบิน - ตรวจสอบความเสี่ยงงานต่างประเทศ
           </Text>

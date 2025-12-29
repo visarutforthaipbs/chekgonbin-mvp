@@ -22,6 +22,9 @@ import {
   FaExclamationTriangle,
   FaCircleExclamation,
   FaArrowRotateLeft,
+  FaPhone,
+  FaGlobe,
+  FaClipboardList,
 } from "react-icons/fa6";
 
 const MotionBox = motion.create(Box);
@@ -91,6 +94,48 @@ function ResultContent() {
   };
 
   const config = riskConfig[result.riskLevel] || riskConfig.medium;
+
+  // Action Plan based on risk level
+  const actionPlans = {
+    low: [
+      {
+        icon: FaGlobe,
+        title: "ตรวจสอบใบอนุญาต",
+        desc: "ยืนยันว่าบริษัทได้รับอนุญาตจากกรมการจัดหางาน",
+      },
+      {
+        icon: FaClipboardList,
+        title: "ตรวจสอบเอกสาร",
+        desc: "ขอเอกสารสัญญาอย่างครบถ้วนและอ่านอย่างละเอียด",
+      },
+    ],
+    medium: [
+      {
+        icon: FaPhone,
+        title: "ติดต่อกรมการจัดหางาน",
+        desc: "โทร 1300 เพื่อยืนยันข้อมูลบริษัท",
+      },
+      {
+        icon: FaClipboardList,
+        title: "ล็อคเงินไว้ก่อน",
+        desc: "อย่าโอนเงินจนกว่าจะยืนยันทุกประการ",
+      },
+    ],
+    high: [
+      {
+        icon: FaPhone,
+        title: "เรียกสายด่วนแรงงาน",
+        desc: "โทร 1694 (สายด่วนแรงงานไทย)",
+      },
+      {
+        icon: FaGlobe,
+        title: "ติดต่อสถานทูต",
+        desc: "ขอข้อมูลติดต่อสถานทูตไทยในประเทศปลายทาง",
+      },
+    ],
+  };
+
+  const actions = actionPlans[result.riskLevel] || actionPlans.medium;
 
   return (
     <Box
@@ -216,6 +261,89 @@ function ResultContent() {
                     )}
                   </VStack>
                 </VStack>
+              </VStack>
+            </Card.Body>
+          </Card.Root>
+
+          {/* Action Plan Section */}
+          <Card.Root
+            variant="elevated"
+            size="lg"
+            boxShadow="lg"
+            borderRadius="2xl"
+            bg="white"
+            borderWidth="1px"
+            borderColor="gray.100"
+            w="100%"
+          >
+            <Card.Body p={{ base: 6, md: 8 }}>
+              <VStack spacing={6} align="stretch">
+                <Heading size="md" color="brand.700">
+                  📋 แนวทางการดำเนินการ
+                </Heading>
+                <VStack spacing={3} align="stretch">
+                  {actions.map((action, idx) => (
+                    <MotionBox
+                      key={idx}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 + idx * 0.1 }}
+                      p={4}
+                      bg="gray.50"
+                      borderRadius="lg"
+                      borderLeftWidth="4px"
+                      borderLeftColor="brand.500"
+                    >
+                      <HStack align="flex-start" spacing={3}>
+                        <Icon as={action.icon} color="brand.600" mt={1} />
+                        <VStack align="flex-start" spacing={1}>
+                          <Text fontWeight="semibold" color="gray.800">
+                            {action.title}
+                          </Text>
+                          <Text fontSize="sm" color="gray.600">
+                            {action.desc}
+                          </Text>
+                        </VStack>
+                      </HStack>
+                    </MotionBox>
+                  ))}
+                </VStack>
+              </VStack>
+            </Card.Body>
+          </Card.Root>
+
+          {/* Emergency Hotlines */}
+          <Card.Root
+            variant="outline"
+            size="lg"
+            borderRadius="2xl"
+            borderColor={config.color}
+            bg={config.bg}
+            w="100%"
+          >
+            <Card.Body p={{ base: 6, md: 8 }}>
+              <VStack spacing={4} align="stretch">
+                <Heading size="md" color={config.color}>
+                  📞 เบอร์ติดต่อฉุกเฉิน
+                </Heading>
+                <HStack spacing={4} flexWrap="wrap">
+                  <VStack align="flex-start" spacing={1} flex="1" minW="200px">
+                    <Text fontWeight="semibold" color="gray.800">
+                      สายด่วนแรงงาน
+                    </Text>
+                    <Heading size="lg" color={config.color}>
+                      1694
+                    </Heading>
+                  </VStack>
+                  <VStack align="flex-start" spacing={1} flex="1" minW="200px">
+                    <Text fontWeight="semibold" color="gray.800">
+                      กรมการจัดหางาน
+                    </Text>
+                    <Heading size="lg" color={config.color}>
+                      1300
+                    </Heading>
+                  </VStack>
+                </HStack>
               </VStack>
             </Card.Body>
           </Card.Root>
