@@ -9,7 +9,7 @@ export default function sitemap() {
       priority: 1,
     },
     {
-      url: `${baseUrl}/check`,
+      url: `${baseUrl}/agencies`,
       lastModified: new Date().toISOString(),
       changeFrequency: "daily",
       priority: 0.8,

@@ -113,36 +113,38 @@ export default function Home() {
       />
       {isLoading && <LoadingSpinner text="กำลังวิเคราะห์ความเสี่ยง..." />}
 
-      {/* Layer 1: Subconscious Hook - Clear Branding & Mission */}
-      <header className="w-full bg-white border-b border-slate-100 py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-brand-primary/10 rounded-2xl"
-          >
-            <ShieldAlert className="text-brand-primary" size={48} />
-          </motion.div>
-          
+      {/* Layer 1: Subconscious Hook - Visual & Core Mission */}
+      <header className="relative w-full min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden">
+        {/* Background Image with Deep Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=2070&auto=format&fit=crop" 
+            alt="Travelers in airport terminal"
+            className="w-full h-full object-cover scale-105"
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-slate-900/80 via-slate-900/60 to-slate-50" />
+        </div>
+
+        <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center text-center gap-8 py-20">
           <motion.h1 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight leading-[1.2] md:leading-[1.15]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl md:text-7xl font-black text-white tracking-tight leading-[1.1] max-w-4xl"
           >
-            เช็คก่อนบิน ตรวจสอบบริษัทจัดหางาน <br className="hidden md:block" />
-            <span className="text-brand-primary">ป้องกันมิจฉาชีพ</span> งานต่างประเทศ
+            เช็คก่อนบิน <br className="md:hidden" />
+            <span className="text-brand-primary">ตรวจสอบบริษัทจัดหางาน</span> <br />
+            ป้องกันมิจฉาชีพงานต่างประเทศ
           </motion.h1>
           
-          <motion.p 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg md:text-xl text-slate-600 max-w-2xl leading-relaxed"
+            transition={{ delay: 0.3 }}
+            className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full"
           >
-            ตรวจสอบความเสี่ยงเบื้องต้นก่อนตัดสินใจไปทำงานต่างประเทศ 
-            <span className="block font-medium text-slate-900 mt-2">หางานเกาหลี ญี่ปุ่น หรือไต้หวัน เช็คให้ชัวร์ก่อนโอนเงิน</span>
-          </motion.p>
-          
+            <ShieldAlert className="text-brand-primary" size={20} />
+            <span className="text-white font-medium">เครื่องมือประเมินความเสี่ยงแรงงานไทย</span>
+          </motion.div>
         </div>
       </header>
 
