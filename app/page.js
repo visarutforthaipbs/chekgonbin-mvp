@@ -14,6 +14,8 @@ import {
   PenSquare, 
   CheckCircle2, 
   BarChart3,
+  HelpCircle,
+  ChevronDown
 } from "lucide-react";
 
 export default function Home() {
@@ -76,11 +78,38 @@ export default function Home() {
     ]
   };
 
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "จะรู้ได้อย่างไรว่าบริษัทจัดหางานถูกกฎหมายหรือไม่?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "คุณสามารถตรวจสอบได้จากเลขที่ใบอนุญาตจัดหางาน และค้นหาในรายชื่อบริษัทที่ได้รับอนุญาตจากกรมการจัดหางาน (DOE) ซึ่งเครื่องมือเช็คก่อนบินของเราได้รวบรวมข้อมูลเหล่านี้ไว้ให้แล้ว"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "สัญญาณเตือนว่ากำลังจะโดนหลอกไปทำงานต่างประเทศมีอะไรบ้าง?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "1. มีการเรียกเก็บเงินล่วงหน้าเป็นค่าดำเนินการ 2. ติดต่อผ่านช่องทางส่วนตัวที่ไม่สามารถยืนยันตัวตนได้ 3. สัญญาจ้างไม่ชัดเจนหรือไม่มีการทำสัญญาผ่านกรมการจัดหางาน"
+        }
+      }
+    ]
+  };
+
   return (
     <div className="w-full min-h-screen bg-slate-50 flex flex-col items-center">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       {isLoading && <LoadingSpinner text="กำลังวิเคราะห์ความเสี่ยง..." />}
 
@@ -98,7 +127,7 @@ export default function Home() {
           <motion.h1 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight"
+            className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight leading-[1.2] md:leading-[1.15]"
           >
             เช็คก่อนบิน ตรวจสอบบริษัทจัดหางาน <br className="hidden md:block" />
             <span className="text-brand-primary">ป้องกันมิจฉาชีพ</span> งานต่างประเทศ
@@ -151,11 +180,9 @@ export default function Home() {
 
         {/* Layer 3: Conscious Deep-Dive - The Action Tool */}
         <section className="relative">
-          {/* Glow halo behind the card */}
           <div className="absolute -inset-3 bg-brand-primary/10 rounded-[2.5rem] blur-2xl pointer-events-none" />
 
           <div className="relative bg-white border-2 border-brand-primary/25 rounded-3xl overflow-hidden shadow-2xl shadow-brand-primary/10">
-            {/* Thick gradient top bar */}
             <div className="h-2 bg-linear-to-r from-brand-primary via-orange-400 to-brand-primary w-full" />
 
             <div className="p-8 md:p-12">
@@ -174,7 +201,6 @@ export default function Home() {
                     <p className="text-slate-500 text-sm">กรอกข้อมูลเท่าที่มีเพื่อเริ่มการวิเคราะห์</p>
                   </div>
                 </div>
-                {/* DOE data badge */}
                 <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full shrink-0">
                   <CheckCircle2 className="text-signal-green" size={13} />
                   <span className="text-[11px] font-bold text-green-700">ข้อมูลจากกรมการจัดหางาน</span>
@@ -278,7 +304,46 @@ export default function Home() {
         </div>
         </section>
 
-        {/* Cognitive Breather - Whitespace at the bottom */}
+        {/* FAQ Section for SEO */}
+        <section className="flex flex-col gap-8 py-12 border-t border-slate-200">
+          <div className="flex items-center gap-3">
+            <HelpCircle className="text-brand-primary" size={28} />
+            <h2 className="text-3xl font-bold text-slate-900">คำถามที่พบบ่อย (FAQ)</h2>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center justify-between">
+                จะรู้ได้อย่างไรว่าบริษัทจัดหางานถูกกฎหมายหรือไม่?
+                <ChevronDown size={20} className="text-slate-400" />
+              </h3>
+              <p className="text-slate-600 leading-relaxed">
+                คุณสามารถตรวจสอบได้จากเลขที่ใบอนุญาตจัดหางาน และค้นหาในรายชื่อบริษัทที่ได้รับอนุญาตจากกรมการจัดหางาน (DOE) ซึ่งเครื่องมือเช็คก่อนบินของเราได้รวบรวมข้อมูลเหล่านี้ไว้ให้แล้ว
+              </p>
+            </div>
+
+            <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center justify-between">
+                สัญญาณเตือนว่ากำลังจะโดนหลอกไปทำงานต่างประเทศมีอะไรบ้าง?
+                <ChevronDown size={20} className="text-slate-400" />
+              </h3>
+              <p className="text-slate-600 leading-relaxed">
+                สัญญาณที่พบบ่อยที่สุดคือ 1. มีการเรียกเก็บเงินล่วงหน้าเป็นค่าดำเนินการ 2. ติดต่อผ่านช่องทางส่วนตัวที่ไม่สามารถยืนยันตัวตนได้ 3. สัญญาจ้างไม่ชัดเจนหรือไม่มีการทำสัญญาผ่านกรมการจัดหางาน
+              </p>
+            </div>
+
+            <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center justify-between">
+                ทำไมต้องใช้เครื่องมือเช็คก่อนบิน?
+                <ChevronDown size={20} className="text-slate-400" />
+              </h3>
+              <p className="text-slate-600 leading-relaxed">
+                เราช่วยคุณวิเคราะห์ข้อมูลเบื้องต้นจากฐานข้อมูล Blacklist และ Whitelist ของกรมการจัดหางานแบบเรียลไทม์ เพื่อลดความเสี่ยงก่อนที่คุณจะเสียเงินหรือเสียโอกาส
+              </p>
+            </div>
+          </div>
+        </section>
+
         <div className="h-12" />
       </div>
     </div>

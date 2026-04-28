@@ -3,9 +3,13 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 
 export const metadata = {
+  metadataBase: new URL("https://chekgonbin.vercel.app"),
   title: "เช็คก่อนบิน - ตรวจสอบความเสี่ยงงานต่างประเทศ | ป้องกันมิจฉาชีพ",
   description:
     "เครื่องมือตรวจสอบความเสี่ยงเบื้องต้นสำหรับผู้หางานต่างประเทศ เช็คบริษัทจัดหางาน ตรวจสอบบัญชีดำ (Blacklist) และป้องกันการโดนหลอกไปทำงานต่างประเทศ",
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "เช็คก่อนบิน",
     "ตรวจสอบงานต่างประเทศ",

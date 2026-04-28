@@ -12,13 +12,17 @@ import {
   Globe,
   ClipboardList,
   Info,
-  ArrowLeft
+  ArrowLeft,
+  Share2,
+  Copy,
+  Check,
 } from "lucide-react";
 import Link from "next/link";
 
 function ResultContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [copied, setCopied] = useState(false);
   const [result, setResult] = useState(() => {
     const data = searchParams.get("data");
     if (data) {
@@ -207,7 +211,40 @@ function ResultContent() {
           <p className="text-center text-xs text-slate-400 max-w-md leading-relaxed">
             *ผลลัพธ์นี้เป็นการประเมินเบื้องต้นจากข้อมูลที่คุณให้มาเท่านั้น ไม่สามารถรับรองความปลอดภัยได้ 100% โปรดตรวจสอบกับกรมการจัดหางานโดยตรงอีกครั้ง
           </p>
-          
+
+          {/* Share buttons */}
+          <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+              <Share2 size={12} /> แชร์ให้เพื่อน
+            </p>
+            <div className="flex gap-3 w-full">
+              <a
+                href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent("https://chekgonbin.vercel.app")}`}
+                target="_blank" rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#06C755] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95"
+              >
+                LINE
+              </a>
+              <a
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://chekgonbin.vercel.app")}`}
+                target="_blank" rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#1877F2] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95"
+              >
+                Facebook
+              </a>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText("https://chekgonbin.vercel.app");
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2000);
+                }}
+                className="flex-1 flex items-center justify-center gap-2 py-3 bg-slate-100 text-slate-700 rounded-xl font-bold text-sm hover:bg-slate-200 transition-all active:scale-95"
+              >
+                {copied ? <><Check size={15} /> คัดลอกแล้ว</> : <><Copy size={15} /> คัดลอก</>}
+              </button>
+            </div>
+          </div>
+
           <Link href="/" className="flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg active:scale-95">
             <RotateCcw size={20} />
             ตรวจสอบใหม่

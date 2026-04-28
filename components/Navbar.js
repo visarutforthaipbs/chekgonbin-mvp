@@ -17,9 +17,9 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: "/report-scam", label: "รายงาน" },
-    { href: "/about", label: "เกี่ยวกับ" },
-    { href: "/privacy-policy", label: "ความเป็นส่วนตัว" },
+    { href: "/agencies",     label: "บริษัทที่อนุญาต" },
+    { href: "/report-scam",  label: "รายงาน" },
+    { href: "/about",        label: "เกี่ยวกับ" },
   ];
 
   return (
