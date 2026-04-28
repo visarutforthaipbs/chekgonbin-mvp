@@ -1,25 +1,12 @@
 "use client";
 
-import {
-  Box,
-  Flex,
-  Button,
-  Heading,
-  HStack,
-  Image,
-  Container,
-  VStack,
-  IconButton,
-  useDisclosure,
-  Collapsible,
-} from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { FaBars, FaXmark } from "react-icons/fa6";
+import { Menu, X, ShieldCheck } from "lucide-react";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const { isOpen, onToggle } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,119 +17,97 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: "/media-hub", label: "ศูนย์ความรู้" },
     { href: "/report-scam", label: "รายงาน" },
     { href: "/about", label: "เกี่ยวกับ" },
     { href: "/privacy-policy", label: "ความเป็นส่วนตัว" },
   ];
 
-  const NavLink = ({ href, label }) => (
-    <Link href={href} passHref>
-      <Button
-        variant="ghost"
-        size="sm"
-        color={scrolled ? "gray.600" : "white"}
-        _hover={{
-          bg: scrolled ? "gray.100" : "white/20",
-        }}
-        fontWeight="medium"
-      >
-        {label}
-      </Button>
-    </Link>
-  );
-
   return (
-    <Box
-      as="nav"
-      position="sticky"
-      top={0}
-      zIndex={1000}
-      bg={scrolled ? "rgba(255, 255, 255, 0.9)" : "brand.500"}
-      backdropFilter={scrolled ? "blur(10px)" : "none"}
-      boxShadow={scrolled ? "sm" : "none"}
-      transition="all 0.3s"
+    <nav
+      className={`sticky top-0 z-[1000] transition-all duration-300 ${
+        scrolled
+          ? "bg-white/90 backdrop-blur-md shadow-sm py-3"
+          : "bg-brand-primary py-4"
+      }`}
     >
-      <Container maxW="container.xl" px={{ base: 4, md: 6 }}>
-        <Flex justify="space-between" align="center" py={3} minH="64px">
-          {/* Logo */}
-          <Link href="/" passHref>
-            <HStack spacing={3} cursor="pointer">
-              <Box bg="white" borderRadius="full" p={1} boxShadow="sm">
-                <Image
-                  src="/favicon.svg"
-                  alt="เช็คก่อนบิน Logo"
-                  width={{ base: "32px", md: "40px" }}
-                  height={{ base: "32px", md: "40px" }}
-                />
-              </Box>
-              <Heading
-                as="h1"
-                size={{ base: "sm", md: "md" }}
-                color={scrolled ? "brand.600" : "white"}
-                fontWeight="bold"
-                display={{ base: "none", sm: "block" }}
-              >
-                เช็คก่อนบิน
-              </Heading>
-            </HStack>
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex justify-between items-center min-h-[40px]">
+          {/* Logo - Layer 1: Subconscious Hook */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="bg-white rounded-full p-1.5 shadow-sm transition-transform group-hover:scale-105">
+              <ShieldCheck 
+                className={scrolled ? "text-brand-primary" : "text-brand-primary"} 
+                size={24} 
+              />
+            </div>
+            <span
+              className={`text-lg md:text-xl font-bold transition-colors hidden sm:block ${
+                scrolled ? "text-slate-900" : "text-white"
+              }`}
+            >
+              เช็คก่อนบิน
+            </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <HStack spacing={1} display={{ base: "none", md: "flex" }}>
+          {/* Desktop Navigation - Layer 2: Chunked Gateway */}
+          <div className="hidden md:flex items-center gap-2">
             {navLinks.map((link) => (
-              <NavLink key={link.href} {...link} />
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  scrolled
+                    ? "text-slate-600 hover:bg-slate-100 hover:text-brand-primary"
+                    : "text-white/90 hover:bg-white/20 hover:text-white"
+                }`}
+              >
+                {link.label}
+              </Link>
             ))}
-          </HStack>
+          </div>
 
           {/* Mobile Menu Button */}
-          <IconButton
-            icon={isOpen ? <FaXmark /> : <FaBars />}
-            variant="ghost"
-            size="lg"
-            color={scrolled ? "gray.600" : "white"}
-            _hover={{
-              bg: scrolled ? "gray.100" : "white/20",
-            }}
-            display={{ base: "flex", md: "none" }}
-            onClick={onToggle}
+          <button
+            className={`p-2 rounded-md md:hidden transition-colors ${
+              scrolled
+                ? "text-slate-600 hover:bg-slate-100"
+                : "text-white hover:bg-white/20"
+            }`}
+            onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
-          />
-        </Flex>
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
 
         {/* Mobile Navigation */}
-        <Collapsible.Root open={isOpen}>
-          <Collapsible.Content>
-            <VStack
-              spacing={1}
-              align="stretch"
-              pb={4}
-              display={{ base: "flex", md: "none" }}
-              borderTopWidth="1px"
-              borderTopColor={scrolled ? "gray.200" : "white/20"}
-              pt={2}
-            >
-              {navLinks.map((link) => (
-                <Link key={link.href} href={link.href} passHref>
-                  <Button
-                    variant="ghost"
-                    width="100%"
-                    justifyContent="flex-start"
-                    color={scrolled ? "gray.800" : "white"}
-                    _hover={{
-                      bg: scrolled ? "brand.50" : "white/20",
-                      color: scrolled ? "brand.600" : "white",
-                    }}
-                    fontWeight="medium"
-                  >
-                    {link.label}
-                  </Button>
-                </Link>
-              ))}
-            </VStack>
-          </Collapsible.Content>
-        </Collapsible.Root>
-      </Container>
-    </Box>
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isOpen ? "max-h-64 mt-4 opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          <div
+            className={`flex flex-col gap-1 pb-4 pt-2 border-t ${
+              scrolled ? "border-slate-100" : "border-white/20"
+            }`}
+          >
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-4 py-3 rounded-md text-base font-medium transition-colors ${
+                  scrolled
+                    ? "text-slate-800 hover:bg-brand-primary/5 hover:text-brand-primary"
+                    : "text-white hover:bg-white/20"
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 }

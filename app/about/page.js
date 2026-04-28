@@ -1,202 +1,117 @@
 "use client";
 
-import {
-  Box,
-  Heading,
-  Text,
-  VStack,
-  Container,
-  Separator,
-  Card,
-  Icon,
-  HStack,
-} from "@chakra-ui/react";
-import {
-  FaCircleCheck,
-  FaDatabase,
-  FaShieldHalved,
-  FaTriangleExclamation,
-} from "react-icons/fa6";
+import { motion } from "framer-motion";
+import { 
+  CheckCircle2, 
+  Database, 
+  ShieldCheck, 
+  AlertTriangle,
+  Mail,
+  Users,
+  Info
+} from "lucide-react";
 
 export default function About() {
   return (
-    <Box
-      bgGradient="to-b"
-      gradientFrom="brand.50"
-      gradientTo="white"
-      minH="calc(100vh - 64px)"
-    >
-      <Container
-        maxW="container.xl"
-        py={{ base: 10, md: 16 }}
-        px={{ base: 4, md: 6 }}
-      >
-        <VStack
-          spacing={8}
-          align="stretch"
-          width="100%"
-          maxW={{ base: "100%", md: "800px" }}
-          mx="auto"
-        >
-          <Heading
-            as="h1"
-            size="2xl"
-            textAlign="center"
-            color="brand.700"
-            mb={4}
-          >
-            เกี่ยวกับ &ldquo;เช็คก่อนบิน&rdquo;
-          </Heading>
+    <div className="w-full min-h-screen bg-slate-50 flex flex-col items-center">
+      
+      {/* Layer 1: Subconscious Hook */}
+      <header className="w-full bg-white border-b border-slate-100 py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center gap-6">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+            เกี่ยวกับ <span className="text-brand-primary">เช็คก่อนบิน</span>
+          </h1>
+          <p className="text-lg text-slate-600 max-w-xl leading-relaxed">
+            โครงการเพื่อสังคมที่มุ่งหวังจะปกป้องแรงงานไทยจากการถูกหลอกลวงไปทำงานต่างประเทศ
+          </p>
+          <div className="mt-4 flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+            <Info size={12} />
+            <span>Attention Cost: 1.5 KB</span>
+          </div>
+        </div>
+      </header>
 
-          <Card.Root
-            variant="elevated"
-            size="lg"
-            borderRadius="2xl"
-            boxShadow="lg"
-            bg="white"
-          >
-            <Card.Body p={{ base: 6, md: 10 }}>
-              <VStack spacing={6} align="stretch">
-                <Text fontSize="lg" lineHeight="tall" color="gray.700">
-                  <Text as="span" fontWeight="bold" color="brand.600">
-                    เช็คก่อนบิน
-                  </Text>{" "}
-                  เป็นเครื่องมือช่วยตรวจสอบความเสี่ยงเบื้องต้น
-                  สำหรับผู้ที่กำลังพิจารณาไปทำงานต่างประเทศ
-                  เพื่อลดโอกาสในการตกเป็นเหยื่อของการหลอกลวงจากนายหน้าหรือบริษัทจัดหางานที่ไม่สุจริต
-                </Text>
-                <Text fontSize="lg" lineHeight="tall" color="gray.700">
-                  โครงการนี้มุ่งหวังที่จะช่วยปกป้องแรงงานไทยจากการถูกหลอกลวงไปทำงานในต่างประเทศ
-                  โดยให้ข้อมูลและเครื่องมือในการตรวจสอบความน่าเชื่อถือของบริษัทจัดหางานและนายหน้า
-                  ก่อนที่จะตัดสินใจเดินทาง
-                </Text>
+      <div className="container mx-auto px-4 md:px-6 py-12 flex flex-col gap-12 max-w-3xl">
+        
+        {/* Layer 2: Chunked Gateway - Core Value */}
+        <section className="bg-white border border-slate-200 rounded-3xl p-8 md:p-12 shadow-sm flex flex-col gap-8">
+          <div className="flex flex-col gap-6 text-lg text-slate-700 leading-relaxed">
+            <p>
+              <span className="font-bold text-brand-primary">เช็คก่อนบิน</span> เป็นเครื่องมือช่วยตรวจสอบความเสี่ยงเบื้องต้น สำหรับผู้ที่กำลังพิจารณาไปทำงานต่างประเทศ เพื่อลดโอกาสในการตกเป็นเหยื่อของการหลอกลวงจากนายหน้าหรือบริษัทจัดหางานที่ไม่สุจริต
+            </p>
+            <p>
+              เราเชื่อว่าการมีข้อมูลที่ถูกต้องก่อนการตัดสินใจ คือเกราะป้องกันที่ดีที่สุดเพื่อให้คนไทยไม่ต้องไป "ตายดาบหน้า"
+            </p>
+          </div>
 
-                <Box
-                  bg="orange.50"
-                  p={4}
-                  borderRadius="lg"
-                  borderLeftWidth="4px"
-                  borderLeftColor="orange.400"
-                >
-                  <HStack align="flex-start" spacing={3}>
-                    <Icon
-                      as={FaTriangleExclamation}
-                      color="orange.500"
-                      mt={1}
-                    />
-                    <Text color="orange.800">
-                      <strong>หมายเหตุ:</strong> แอปพลิเคชันนี้เป็นเพียง{" "}
-                      <strong>MVP (Minimum Viable Product)</strong>{" "}
-                      ที่ใช้ในการทดสอบแนวคิด
-                      ซึ่งใช้ฐานข้อมูลจำกัดและกฎการตรวจสอบเบื้องต้น
-                      ผลลัพธ์ที่ได้เป็นเพียงการประเมินเบื้องต้นเท่านั้น
-                    </Text>
-                  </HStack>
-                </Box>
+          <div className="p-6 bg-orange-50 border-l-4 border-orange-400 rounded-r-2xl flex gap-4">
+            <AlertTriangle className="text-orange-500 shrink-0 mt-1" size={24} />
+            <p className="text-orange-800 text-sm leading-relaxed">
+              <strong>หมายเหตุ:</strong> แอปพลิเคชันนี้เป็นเพียง <strong>MVP (Minimum Viable Product)</strong> ที่ใช้ในการทดสอบแนวคิด ซึ่งใช้ฐานข้อมูลจำกัดและกฎการตรวจสอบเบื้องต้น ผลลัพธ์ที่ได้เป็นเพียงการประเมินเบื้องต้นเท่านั้น
+            </p>
+          </div>
+        </section>
 
-                <Separator my={4} />
+        {/* Layer 3: Deep-Dive Details */}
+        <section className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6">
+            <h2 className="text-2xl font-bold text-slate-900">วิธีการทำงาน</h2>
+            <p className="text-slate-600">ระบบจะตรวจสอบข้อมูลที่คุณกรอกโดยเปรียบเทียบกับ 3 แหล่งข้อมูลหลัก:</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[
+                { icon: CheckCircle2, color: "text-green-500", label: "Whitelist", desc: "บริษัทจัดหางานถูกกฎหมาย" },
+                { icon: Database, color: "text-red-500", label: "Blacklist", desc: "มิจฉาชีพที่เคยถูกรายงาน" },
+                { icon: ShieldCheck, color: "text-brand-primary", label: "Risk Patterns", desc: "พฤติกรรมที่น่าสงสัย" },
+              ].map((item, idx) => (
+                <div key={idx} className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm flex flex-col gap-3">
+                  <item.icon className={item.color} size={24} />
+                  <div>
+                    <h4 className="font-bold text-slate-900">{item.label}</h4>
+                    <p className="text-xs text-slate-500">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-                <Heading as="h2" size="lg" color="brand.600">
-                  วิธีการทำงาน
-                </Heading>
-                <Text color="gray.700">
-                  ระบบจะตรวจสอบข้อมูลที่คุณกรอกโดยเปรียบเทียบกับ:
-                </Text>
+          <div className="flex flex-col gap-6">
+            <h2 className="text-2xl font-bold text-slate-900">นโยบายความเป็นส่วนตัว (PDPA)</h2>
+            <div className="bg-slate-50 border border-slate-200 rounded-3xl p-8 flex flex-col gap-6">
+              <div className="flex flex-col gap-2">
+                <h4 className="font-bold text-slate-800">การเก็บรักษาข้อมูล</h4>
+                <p className="text-sm text-slate-600">เราไม่เก็บบันทึกข้อมูลส่วนบุคคลของผู้ใช้งานโดยไม่จำเป็น ข้อมูลที่คุณกรอกเพื่อตรวจสอบจะถูกประมวลผลทันที</p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h4 className="font-bold text-slate-800">การใช้ข้อมูล</h4>
+                <p className="text-sm text-slate-600">ข้อมูลจะถูกใช้เพื่อการประเมินความเสี่ยงเท่านั้น และเราจะไม่มีการแบ่งปันข้อมูลให้กับบุคคลที่สามเพื่อผลประโยชน์ทางการค้า</p>
+              </div>
+            </div>
+          </div>
 
-                <VStack spacing={3} align="stretch" pl={2}>
-                  <HStack align="flex-start" spacing={3}>
-                    <Icon as={FaCircleCheck} color="green.500" mt={1} />
-                    <Text color="gray.700">
-                      ฐานข้อมูลบริษัทจัดหางานที่ถูกกฎหมาย (Whitelist)
-                    </Text>
-                  </HStack>
-                  <HStack align="flex-start" spacing={3}>
-                    <Icon as={FaDatabase} color="red.500" mt={1} />
-                    <Text color="gray.700">
-                      ฐานข้อมูลรายชื่อมิจฉาชีพ (Blacklist)
-                    </Text>
-                  </HStack>
-                  <HStack align="flex-start" spacing={3}>
-                    <Icon as={FaShieldHalved} color="brand.500" mt={1} />
-                    <Text color="gray.700">
-                      รูปแบบพฤติกรรมความเสี่ยงทั่วไป (เช่น
-                      การเรียกเก็บเงินล่วงหน้า)
-                    </Text>
-                  </HStack>
-                </VStack>
+          <div className="flex flex-col gap-6">
+            <h2 className="text-2xl font-bold text-slate-900">ช่องทางติดต่อ</h2>
+            <div className="flex flex-wrap gap-4">
+              <a href="mailto:thaimigrantwatchs@gmail.com" className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-2xl hover:border-brand-primary transition-all group">
+                <Mail className="text-slate-400 group-hover:text-brand-primary" size={20} />
+                <span className="text-slate-700 font-medium">Email ติดต่อโครงการ</span>
+              </a>
+              <a href="https://www.facebook.com/profile.php?id=61570127262236" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-2xl hover:border-brand-primary transition-all group">
+                <Users className="text-slate-400 group-hover:text-brand-primary" size={20} />
+                <span className="text-slate-700 font-medium">Facebook Page</span>
+              </a>
+            </div>
+          </div>
+        </section>
 
-                <Separator my={4} />
+        <footer className="mt-8 p-8 bg-brand-primary/5 border border-brand-primary/10 rounded-3xl text-center">
+          <p className="text-brand-primary font-bold text-sm uppercase tracking-widest">
+            โครงการเพื่อสังคม • ไม่มีวัตถุประสงค์ในเชิงพาณิชย์
+          </p>
+        </footer>
 
-                <Heading as="h2" size="lg" color="brand.600">
-                  นโยบายความเป็นส่วนตัว (PDPA)
-                </Heading>
-                <Text color="gray.700">
-                  <strong>การเก็บรักษาข้อมูล:</strong>{" "}
-                  เราไม่เก็บบันทึกข้อมูลส่วนบุคคลของผู้ใช้งาน
-                  ข้อมูลที่ท่านกรอกจะถูกนำไปประมวลผลและแสดงผลทันทีโดยไม่มีการบันทึกลงในระบบ
-                </Text>
-                <Text color="gray.700">
-                  <strong>การใช้ข้อมูล:</strong>{" "}
-                  ข้อมูลที่ท่านกรอกจะใช้เพื่อการประมวลผลและแสดงผลลัพธ์เท่านั้น
-                  เราไม่แบ่งปันข้อมูลให้กับบุคคลที่สาม
-                </Text>
-
-                <Separator my={4} />
-
-                <Heading as="h2" size="lg" color="brand.600">
-                  ข้อจำกัดความรับผิดชอบ (Disclaimer)
-                </Heading>
-                <Text color="gray.700">
-                  การประเมินความเสี่ยงที่ได้จากเครื่องมือนี้เป็นเพียงข้อมูลเบื้องต้นเท่านั้น
-                  <strong>
-                    {" "}
-                    ไม่สามารถใช้เป็นหลักฐานทางกฎหมายหรือการตัดสินใจขั้นสุดท้ายได้
-                  </strong>
-                </Text>
-                <Text color="gray.700">
-                  ผู้ใช้งานควรใช้วิจารณญาณและตรวจสอบข้อมูลเพิ่มเติมจากแหล่งที่เชื่อถือได้
-                  เช่น:
-                </Text>
-                <VStack align="stretch" pl={2} spacing={2}>
-                  <Text color="gray.700">• กรมการจัดหางาน กระทรวงแรงงาน</Text>
-                  <Text color="gray.700">• สถานทูตไทยในประเทศปลายทาง</Text>
-                  <Text color="gray.700">• สายด่วนแรงงานไทย 1694</Text>
-                </VStack>
-
-                <Separator my={4} />
-
-                <Heading as="h2" size="lg" color="brand.600">
-                  ช่องทางติดต่อ
-                </Heading>
-                <Text color="gray.700">
-                  หากท่านพบปัญหาในการใช้งาน หรือต้องการแจ้งข้อมูลเพิ่มเติม
-                  กรุณาติดต่อ:
-                </Text>
-                <VStack align="stretch" pl={2} spacing={2}>
-                  <Text color="gray.700">
-                    • อีเมล: thaimigrantwatchs@gmail.com
-                  </Text>
-                  <Text color="gray.700">• Facebook: Thai Migrant Watch </Text>
-                </VStack>
-
-                <Box
-                  mt={6}
-                  p={4}
-                  bg="brand.50"
-                  borderRadius="lg"
-                  textAlign="center"
-                >
-                  <Text fontSize="sm" color="brand.800" fontWeight="medium">
-                    โครงการ &ldquo;เช็คก่อนบิน&rdquo;
-                    พัฒนาขึ้นเพื่อประโยชน์ของสังคม
-                    และไม่มีวัตถุประสงค์ในเชิงพาณิชย์
-                  </Text>
-                </Box>
-              </VStack>
-            </Card.Body>
-          </Card.Root>
-        </VStack>
-      </Container>
-    </Box>
+        <div className="h-20" />
+      </div>
+    </div>
   );
 }

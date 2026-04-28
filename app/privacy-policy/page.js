@@ -1,325 +1,142 @@
 "use client";
 
-import {
-  Box,
-  Heading,
-  Text,
-  VStack,
-  Container,
-  Card,
-  Icon,
-  HStack,
-  Separator,
-  List,
-} from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { FaShield, FaLock, FaEye } from "react-icons/fa6";
-
-const MotionBox = motion.create(Box);
-const MotionVStack = motion.create(VStack);
+import { 
+  Shield, 
+  Lock, 
+  Eye, 
+  CheckCircle2, 
+  Info,
+  ChevronRight
+} from "lucide-react";
 
 const sections = [
   {
     id: 1,
     title: "1. ข้อมูลที่เราเก็บรวบรวม",
     content: [
-      "ชื่อและข้อมูลติดต่อ (เบอร์โทร, อีเมล)",
-      "ข้อมูลเกี่ยวกับการค้นหาของคุณ (ชื่อบริษัท, รายละเอียด)",
-      "ข้อมูลการแจ้งเรื่องหลอกลวง (รายละเอียด, หลักฐาน)",
-      "ข้อมูลการเข้าใช้เว็บไซต์ (IP address, device info, browsing data)",
+      "ชื่อและข้อมูลติดต่อเบื้องต้น",
+      "ข้อมูลบริษัทที่ท่านนำมาตรวจสอบ",
+      "รายละเอียดเหตุการณ์ที่ท่านรายงานเบาะแส",
+      "ข้อมูลทางเทคนิคพื้นฐาน (IP Address, Browser Type)",
     ],
   },
   {
     id: 2,
-    title: "2. วิธีใช้ข้อมูล",
+    title: "2. วัตถุประสงค์ในการใช้ข้อมูล",
     content: [
-      "ให้บริการค้นหาและวิเคราะห์ความเสี่ยง",
-      "อัปเดตและปรับปรุงฐานข้อมูล",
-      "ติดต่อคุณเพื่อความชัดเจนหรือการติดตาม",
-      "ปรับปรุงบริการและประสบการณ์ผู้ใช้",
-      "ปฏิบัติตามข้อบังคับกฎหมาย",
+      "เพื่อให้บริการตรวจสอบและวิเคราะห์ความเสี่ยง",
+      "เพื่อปรับปรุงฐานข้อมูลให้ทันสมัยและแม่นยำ",
+      "เพื่อการตรวจสอบข้อมูลเบาะแสที่ท่านรายงาน",
+      "เพื่อพัฒนาประสิทธิภาพการใช้งานเว็บไซต์",
     ],
   },
   {
     id: 3,
-    title: "3. ความเป็นส่วนตัว",
+    title: "3. มาตรการรักษาความปลอดภัย",
     content: [
-      "เราไม่ขายข้อมูลส่วนบุคคลของคุณให้บุคคลที่สาม",
-      "เราเก็บข้อมูลเฉพาะเท่าที่จำเป็น",
-      "ข้อมูลจะถูกเข้ารหัสและเก็บได้อย่างปลอดภัย",
-      "คุณมีสิทธิ์ขอดู ลบ หรือแก้ไขข้อมูลของคุณได้",
+      "ใช้การเข้ารหัสข้อมูล (Encryption) ในการถ่ายโอน",
+      "จำกัดการเข้าถึงข้อมูลเฉพาะเจ้าหน้าที่ที่เกี่ยวข้อง",
+      "ไม่มีการนำข้อมูลส่วนบุคคลไปขายให้กับบุคคลที่สาม",
     ],
   },
   {
     id: 4,
-    title: "4. ความปลอดภัย",
+    title: "4. สิทธิตามกฎหมาย PDPA",
     content: [
-      "ใช้การเข้ารหัส SSL/TLS สำหรับการถ่ายโอนข้อมูล",
-      "ระบบตรวจสอบการเข้าถึงที่เข้มงวด",
-      "การตรวจสอบความปลอดภัยเป็นประจำ",
-      "บุคลากรเฉพาะที่ได้รับการฝึกอบรมเท่านั้นที่สามารถเข้าถึง",
-    ],
-  },
-  {
-    id: 5,
-    title: "5. นโยบาย PDPA (Personal Data Protection Act)",
-    content: [
-      "เราปฏิบัติตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562",
-      "คุณมีสิทธิ์ขอเข้าถึงข้อมูลของคุณ",
-      "คุณมีสิทธิ์ขอให้ลบหรือแก้ไขข้อมูล",
-      "คุณมีสิทธิ์ปฏิเสธการประมวลผลข้อมูล",
-      "เราจะตอบสนองต่อคำขออย่างรวดเร็ว",
-    ],
-  },
-  {
-    id: 6,
-    title: "6. คุกกี้ (Cookies)",
-    content: [
-      "ใช้คุกกี้เพื่อปรับปรุงประสบการณ์ของคุณ",
-      "สามารถปิดคุกกี้ผ่านการตั้งค่าเบราว์เซอร์",
-      "คุกกี้จำเป็นเพื่อบางฟีเจอร์",
-      "ไม่เก็บข้อมูลส่วนตัวในคุกกี้",
-    ],
-  },
-  {
-    id: 7,
-    title: "7. การเปลี่ยนแปลง",
-    content: [
-      "อาจมีการปรับปรุงนโยบายฉบับนี้โดยไม่มีการแจ้งก่อน",
-      "วันที่อัปเดตล่าสุด: มกราคม 2568",
-      "เราสนับสนุนให้คุณตรวจสอบเป็นระยะ",
-      "การใช้บริการอย่างต่อเนื่องถือว่าตกลงกับการเปลี่ยนแปลง",
-    ],
-  },
-  {
-    id: 8,
-    title: "8. ติดต่อเรา",
-    content: [
-      "หากมีข้อกังวลเกี่ยวกับความเป็นส่วนตัว",
-      "Email: privacy@chekgonbin.com",
-      "สำนักงาน: ...",
-      "เราจะตอบกลับภายใน 30 วัน",
+      "สิทธิในการขอเข้าถึงและรับสำเนาข้อมูล",
+      "สิทธิในการขอให้แก้ไขข้อมูลให้ถูกต้อง",
+      "สิทธิในการขอให้ลบหรือระงับการใช้ข้อมูล",
+      "สิทธิในการถอนความยินยอม",
     ],
   },
 ];
 
 export default function PrivacyPolicy() {
   return (
-    <Box
-      minH="calc(100vh - 64px)"
-      bgGradient="to-b"
-      gradientFrom="brand.50"
-      gradientTo="white"
-    >
-      <Container
-        maxW="container.lg"
-        py={{ base: 10, md: 16 }}
-        px={{ base: 4, md: 6 }}
-      >
-        <VStack spacing={12} align="stretch" width="100%">
-          {/* Hero Section */}
-          <MotionVStack
-            spacing={4}
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+    <div className="w-full min-h-screen bg-slate-50 flex flex-col items-center">
+      
+      {/* Layer 1: Subconscious Hook */}
+      <header className="w-full bg-white border-b border-slate-100 py-16 md:py-24">
+        <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center gap-6">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="p-4 bg-brand-primary/10 rounded-2xl"
           >
-            <Icon as={FaShield} boxSize={16} color="brand.500" />
-            <Heading
-              size={{ base: "2xl", md: "3xl" }}
-              color="brand.700"
-              textAlign="center"
-              lineHeight="shorter"
-              fontWeight="extrabold"
-            >
-              นโยบายความเป็นส่วนตัว
-            </Heading>
-            <Text
-              color="gray.600"
-              fontSize={{ base: "base", md: "lg" }}
-              textAlign="center"
-              maxW="600px"
-            >
-              เราเคารพความเป็นส่วนตัวของคุณและมุ่งมั่นที่จะปกป้องข้อมูลส่วนบุคคลของคุณ
-            </Text>
-            <Text color="gray.500" fontSize="sm" textAlign="center">
-              วันที่อัปเดตล่าสุด: มกราคม 2568
-            </Text>
-          </MotionVStack>
+            <Shield className="text-brand-primary" size={48} />
+          </motion.div>
+          
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+            นโยบายความเป็นส่วนตัว
+          </h1>
+          
+          <p className="text-lg text-slate-600 max-w-xl leading-relaxed">
+            เรามุ่งมั่นที่จะปกป้องข้อมูลของท่านและปฏิบัติตามกฎหมายคุ้มครองข้อมูลส่วนบุคคล (PDPA) อย่างเคร่งครัด
+          </p>
 
-          {/* Quick Summary */}
-          <MotionBox
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <Card.Root
-              variant="elevated"
-              borderRadius="xl"
-              boxShadow="md"
-              bg="gradient.subtle"
-              borderWidth="1px"
-              borderColor="brand.100"
+          <div className="mt-4 flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+            <Info size={12} />
+            <span>Attention Cost: 1.8 KB</span>
+          </div>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 md:px-6 py-12 flex flex-col gap-10 max-w-3xl">
+        
+        {/* Layer 2: Chunked Gateway - Quick Summary */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { icon: Lock, title: "ปลอดภัย", desc: "ข้อมูลถูกเข้ารหัส" },
+            { icon: Eye, title: "โปร่งใส", desc: "ระบุการใช้ชัดเจน" },
+            { icon: CheckCircle2, title: "สิทธิของท่าน", desc: "ควบคุมข้อมูลได้" },
+          ].map((item, idx) => (
+            <div key={idx} className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm flex flex-col items-center text-center gap-2">
+              <item.icon className="text-brand-primary" size={24} />
+              <h4 className="font-bold text-slate-900">{item.title}</h4>
+              <p className="text-xs text-slate-500">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Layer 3: Deep-Dive Sections */}
+        <section className="flex flex-col gap-6">
+          {sections.map((section, idx) => (
+            <motion.div
+              key={section.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * idx }}
+              className="bg-white border border-slate-200 rounded-3xl p-8 flex flex-col gap-6 shadow-sm"
             >
-              <Card.Body p={{ base: 4, md: 6 }}>
-                <VStack spacing={4} align="stretch">
-                  <HStack spacing={3}>
-                    <Icon
-                      as={FaLock}
-                      boxSize={6}
-                      color="brand.600"
-                      flexShrink={0}
-                    />
-                    <Box>
-                      <Text fontWeight="semibold" color="brand.800">
-                        ข้อมูลของคุณปลอดภัย
-                      </Text>
-                      <Text color="brand.700" fontSize="sm">
-                        ใช้การเข้ารหัสและมาตรการรักษาความปลอดภัยขั้นสูง
-                      </Text>
-                    </Box>
-                  </HStack>
-                  <Separator borderColor="brand.200" />
-                  <HStack spacing={3}>
-                    <Icon
-                      as={FaEye}
-                      boxSize={6}
-                      color="brand.600"
-                      flexShrink={0}
-                    />
-                    <Box>
-                      <Text fontWeight="semibold" color="brand.800">
-                        คุณควบคุมข้อมูลของคุณ
-                      </Text>
-                      <Text color="brand.700" fontSize="sm">
-                        สิทธิ์ขอดู ลบ แก้ไข และปฏิเสธการประมวลผล
-                      </Text>
-                    </Box>
-                  </HStack>
-                  <Separator borderColor="brand.200" />
-                  <HStack spacing={3}>
-                    <Icon
-                      as={FaShield}
-                      boxSize={6}
-                      color="brand.600"
-                      flexShrink={0}
-                    />
-                    <Box>
-                      <Text fontWeight="semibold" color="brand.800">
-                        ปฏิบัติตาม PDPA
-                      </Text>
-                      <Text color="brand.700" fontSize="sm">
-                        ปฏิบัติตามกฎหมายคุ้มครองข้อมูลส่วนบุคคลของไทย
-                      </Text>
-                    </Box>
-                  </HStack>
-                </VStack>
-              </Card.Body>
-            </Card.Root>
-          </MotionBox>
+              <h3 className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                <ChevronRight className="text-brand-primary" size={20} />
+                {section.title}
+              </h3>
+              <ul className="flex flex-col gap-3">
+                {section.content.map((item, i) => (
+                  <li key={i} className="flex gap-3 text-slate-600">
+                    <div className="w-1.5 h-1.5 rounded-full bg-slate-200 mt-2.5 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </section>
 
-          {/* Detailed Sections */}
-          <VStack spacing={6} align="stretch">
-            {sections.map((section, sectionIdx) => (
-              <MotionBox
-                key={section.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.1 + sectionIdx * 0.05 }}
-              >
-                <Card.Root
-                  variant="elevated"
-                  borderRadius="lg"
-                  boxShadow="md"
-                  borderWidth="1px"
-                  borderColor="gray.100"
-                >
-                  <Card.Body p={{ base: 5, md: 6 }}>
-                    <VStack spacing={4} align="stretch">
-                      <Heading size="md" color="gray.800" fontWeight="bold">
-                        {section.title}
-                      </Heading>
-                      <List.Root as={VStack} spacing={3} align="stretch">
-                        {section.content.map((item, itemIdx) => (
-                          <List.Item
-                            key={itemIdx}
-                            display="flex"
-                            gap={3}
-                            alignItems="flex-start"
-                          >
-                            <List.Indicator
-                              boxSize={5}
-                              mt={1}
-                              color="brand.500"
-                              flexShrink={0}
-                            />
-                            <Text color="gray.700" lineHeight="relaxed">
-                              {item}
-                            </Text>
-                          </List.Item>
-                        ))}
-                      </List.Root>
-                    </VStack>
-                  </Card.Body>
-                </Card.Root>
-              </MotionBox>
-            ))}
-          </VStack>
+        <div className="p-8 bg-slate-900 rounded-[2.5rem] text-center flex flex-col items-center gap-4">
+          <h3 className="text-white font-bold text-lg">มีคำถามเกี่ยวกับความเป็นส่วนตัว?</h3>
+          <p className="text-slate-400 text-sm mb-2">ติดต่อทีมงานดูแลข้อมูลส่วนบุคคลของเราได้ที่</p>
+          <a href="mailto:privacy@chekgonbin.com" className="px-6 py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-all font-medium">
+            privacy@chekgonbin.com
+          </a>
+        </div>
 
-          {/* Contact Section */}
-          <MotionBox
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
-            <Card.Root
-              variant="elevated"
-              borderRadius="xl"
-              boxShadow="lg"
-              bgGradient="to-r"
-              gradientFrom="brand.500"
-              gradientTo="brand.600"
-              overflow="hidden"
-            >
-              <Card.Body p={{ base: 6, md: 8 }}>
-                <VStack spacing={4} align="center" textAlign="center">
-                  <Heading size="lg" color="white">
-                    มีคำถาม เกี่ยวกับความเป็นส่วนตัวหรือไม่?
-                  </Heading>
-                  <Text color="whiteAlpha.90" maxW="500px" lineHeight="relaxed">
-                    เราพร้อมที่จะช่วยเหลือและตอบข้อสงสัยของคุณ
-                  </Text>
-                  <VStack spacing={2} pt={2}>
-                    <Text color="white" fontWeight="semibold">
-                      Email: privacy@chekgonbin.com
-                    </Text>
-                    <Text color="white" fontWeight="semibold">
-                      โทร: 1694 (สายด่วนแรงงาน)
-                    </Text>
-                  </VStack>
-                </VStack>
-              </Card.Body>
-            </Card.Root>
-          </MotionBox>
-
-          {/* Footer Note */}
-          <Box
-            p={4}
-            borderRadius="lg"
-            bg="gray.50"
-            borderWidth="1px"
-            borderColor="gray.200"
-            textAlign="center"
-          >
-            <Text color="gray.600" fontSize="sm">
-              นโยบายนี้คุ้มครองสิทธิของคุณตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล
-              พ.ศ. 2562
-              <br />
-              หากคุณไม่เห็นด้วย คุณสามารถขอเพิกถอนความยินยอมได้ตลอดเวลา
-            </Text>
-          </Box>
-        </VStack>
-      </Container>
-    </Box>
+        <p className="text-center text-[10px] text-slate-400 uppercase tracking-widest pb-12">
+          อัปเดตล่าสุด: เมษายน 2569
+        </p>
+      </div>
+    </div>
   );
 }

@@ -1,46 +1,30 @@
 "use client";
 
-import {
-  Box,
-  Heading,
-  Text,
-  VStack,
-  Container,
-  Button,
-  HStack,
-  Card,
-  Icon,
-  Badge,
-  Separator,
-} from "@chakra-ui/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import { useEffect, useState, Suspense } from "react";
 import { motion } from "framer-motion";
 import {
-  FaCheckCircle,
-  FaExclamationTriangle,
-  FaCircleExclamation,
-  FaArrowRotateLeft,
-  FaPhone,
-  FaGlobe,
-  FaClipboardList,
-} from "react-icons/fa6";
-
-const MotionBox = motion.create(Box);
-const MotionVStack = motion.create(VStack);
+  CheckCircle2,
+  AlertTriangle,
+  AlertCircle,
+  RotateCcw,
+  Phone,
+  Globe,
+  ClipboardList,
+  Info,
+  ArrowLeft
+} from "lucide-react";
+import Link from "next/link";
 
 function ResultContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [result, setResult] = useState(() => {
-    // Initialize state directly from searchParams to avoid effect setState
     const data = searchParams.get("data");
     if (data) {
       try {
         return JSON.parse(data);
       } catch (e) {
-        console.error("Failed to parse result data", e);
         return null;
       }
     }
@@ -48,7 +32,6 @@ function ResultContent() {
   });
 
   useEffect(() => {
-    // Redirect if no result
     if (!result) {
       router.push("/");
     }
@@ -56,320 +39,185 @@ function ResultContent() {
 
   if (!result) {
     return (
-      <Container centerContent py={20}>
-        <Text>กำลังโหลดผลลัพธ์...</Text>
-      </Container>
+      <div className="flex flex-col items-center justify-center py-20 gap-4">
+        <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
+        <p className="text-slate-500">กำลังโหลดผลลัพธ์...</p>
+      </div>
     );
   }
 
-  // Risk Config
   const riskConfig = {
     low: {
-      color: "green.500",
-      bg: "green.50",
-      borderColor: "green.200",
+      color: "text-signal-green",
+      bg: "bg-green-50/50",
+      borderColor: "border-signal-green/20",
+      threatClass: "threat-low",
       text: "ความเสี่ยงต่ำ",
-      description:
-        "ไม่พบสัญญาณอันตรายที่ชัดเจน แต่ควรตรวจสอบอย่างละเอียดอีกครั้ง",
-      icon: FaCheckCircle,
+      description: "ไม่พบสัญญาณอันตรายที่ชัดเจน แต่ควรตรวจสอบอย่างละเอียดอีกครั้ง",
+      icon: CheckCircle2,
     },
     medium: {
-      color: "orange.500",
-      bg: "orange.50",
-      borderColor: "orange.200",
+      color: "text-signal-orange",
+      bg: "bg-orange-50/50",
+      borderColor: "border-signal-orange/20",
+      threatClass: "threat-medium",
       text: "ความเสี่ยงปานกลาง",
-      description:
-        "พบข้อควรระวังบางประการ ควรตรวจสอบข้อมูลเพิ่มเติมกับกรมการจัดหางาน",
-      icon: FaExclamationTriangle,
+      description: "พบข้อควรระวังบางประการ ควรตรวจสอบข้อมูลเพิ่มเติมกับกรมการจัดหางาน",
+      icon: AlertTriangle,
     },
     high: {
-      color: "red.500",
-      bg: "red.50",
-      borderColor: "red.200",
+      color: "text-signal-red",
+      bg: "bg-red-50/50",
+      borderColor: "border-signal-red/20",
+      threatClass: "threat-high",
       text: "ความเสี่ยงสูง",
-      description:
-        "พบสัญญาณอันตราย! โปรดระมัดระวังอย่างยิ่งและหลีกเลี่ยงการโอนเงิน",
-      icon: FaCircleExclamation,
+      description: "พบสัญญาณอันตราย! โปรดระมัดระวังอย่างยิ่งและหลีกเลี่ยงการโอนเงิน",
+      icon: AlertCircle,
     },
   };
 
   const config = riskConfig[result.riskLevel] || riskConfig.medium;
 
-  // Action Plan based on risk level
   const actionPlans = {
     low: [
-      {
-        icon: FaGlobe,
-        title: "ตรวจสอบใบอนุญาต",
-        desc: "ยืนยันว่าบริษัทได้รับอนุญาตจากกรมการจัดหางาน",
-      },
-      {
-        icon: FaClipboardList,
-        title: "ตรวจสอบเอกสาร",
-        desc: "ขอเอกสารสัญญาอย่างครบถ้วนและอ่านอย่างละเอียด",
-      },
+      { icon: Globe, title: "ตรวจสอบใบอนุญาต", desc: "ยืนยันว่าบริษัทได้รับอนุญาตจากกรมการจัดหางาน" },
+      { icon: ClipboardList, title: "ตรวจสอบเอกสาร", desc: "ขอเอกสารสัญญาอย่างครบถ้วนและอ่านอย่างละเอียด" },
     ],
     medium: [
-      {
-        icon: FaPhone,
-        title: "ติดต่อกรมการจัดหางาน",
-        desc: "โทร 1300 เพื่อยืนยันข้อมูลบริษัท",
-      },
-      {
-        icon: FaClipboardList,
-        title: "ล็อคเงินไว้ก่อน",
-        desc: "อย่าโอนเงินจนกว่าจะยืนยันทุกประการ",
-      },
+      { icon: Phone, title: "ติดต่อกรมการจัดหางาน", desc: "โทร 1300 เพื่อยืนยันข้อมูลบริษัท" },
+      { icon: ClipboardList, title: "ล็อคเงินไว้ก่อน", desc: "อย่าโอนเงินจนกว่าจะยืนยันทุกประการ" },
     ],
     high: [
-      {
-        icon: FaPhone,
-        title: "เรียกสายด่วนแรงงาน",
-        desc: "โทร 1694 (สายด่วนแรงงานไทย)",
-      },
-      {
-        icon: FaGlobe,
-        title: "ติดต่อสถานทูต",
-        desc: "ขอข้อมูลติดต่อสถานทูตไทยในประเทศปลายทาง",
-      },
+      { icon: Phone, title: "เรียกสายด่วนแรงงาน", desc: "โทร 1694 (สายด่วนแรงงานไทย)" },
+      { icon: Globe, title: "ติดต่อสถานทูต", desc: "ขอข้อมูลติดต่อสถานทูตไทยในประเทศปลายทาง" },
     ],
   };
 
   const actions = actionPlans[result.riskLevel] || actionPlans.medium;
 
   return (
-    <Box
-      bgGradient="to-b"
-      gradientFrom={config.bg}
-      gradientTo="white"
-      minH="calc(100vh - 64px)"
-    >
-      <Container
-        maxW="container.md"
-        py={{ base: 10, md: 16 }}
-        px={{ base: 4, md: 6 }}
-      >
-        <MotionVStack
-          spacing={8}
-          width="100%"
-          initial={{ opacity: 0, scale: 0.95 }}
+    <div className={`w-full min-h-screen ${config.bg} transition-colors duration-500 flex flex-col items-center`}>
+      <div className="container mx-auto px-4 md:px-6 py-12 md:py-20 flex flex-col items-center gap-12 max-w-3xl">
+        
+        {/* Layer 1: Subconscious Hook - Threat Level */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          className="flex flex-col items-center text-center gap-6"
         >
-          <Heading as="h1" size="xl" color="gray.700" textAlign="center">
-            ผลการวิเคราะห์ความเสี่ยง
-          </Heading>
+          <div className={`p-6 bg-white rounded-3xl shadow-xl ${config.threatClass}`}>
+            <config.icon className={`${config.color}`} size={80} />
+          </div>
+          
+          <div className="flex flex-col gap-2">
+            <h1 className={`text-4xl md:text-5xl font-extrabold ${config.color}`}>
+              {config.text}
+            </h1>
+            <p className="text-slate-600 text-lg md:text-xl max-w-md">
+              {config.description}
+            </p>
+          </div>
 
-          <Card.Root
-            variant="elevated"
-            size="lg"
-            boxShadow="xl"
-            borderRadius="2xl"
-            overflow="hidden"
-            bg="white"
-            borderWidth="1px"
-            borderColor={config.borderColor}
-            w="100%"
-          >
-            <Box h="8px" bg={config.color} />
-            <Card.Body p={{ base: 6, md: 10 }} textAlign="center">
-              <VStack spacing={6}>
-                <MotionBox
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 10,
-                    delay: 0.2,
-                  }}
-                >
-                  <Icon as={config.icon} boxSize={24} color={config.color} />
-                </MotionBox>
+          <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-100 shadow-sm">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Risk Score</span>
+            <span className={`text-xl font-black ${config.color}`}>{result.score}</span>
+          </div>
+        </motion.div>
 
-                <VStack spacing={2}>
-                  <Heading size="2xl" color={config.color}>
-                    {config.text}
-                  </Heading>
-                  <Text fontSize="lg" color="gray.600" maxW="md">
-                    {config.description}
-                  </Text>
-                </VStack>
+        {/* Layer 2: Chunked Gateway - Assessment Details */}
+        <section className="w-full bg-white border border-slate-200 rounded-3xl shadow-lg overflow-hidden">
+          <div className="p-8 flex flex-col gap-6">
+            <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+              <Info className="text-slate-400" size={20} />
+              รายละเอียดการประเมิน
+            </h3>
+            
+            <div className="flex flex-col gap-3">
+              {result.reasons.length > 0 ? (
+                result.reasons.map((reason, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                    className={`p-4 rounded-xl border-l-4 ${config.borderColor} bg-slate-50 flex items-start gap-3`}
+                  >
+                    <AlertCircle className={`${config.color} mt-0.5 shrink-0`} size={18} />
+                    <span className="text-slate-700">{reason}</span>
+                  </motion.div>
+                ))
+              ) : (
+                <div className="p-4 rounded-xl border-l-4 border-signal-green bg-green-50 flex items-start gap-3">
+                  <CheckCircle2 className="text-signal-green mt-0.5 shrink-0" size={18} />
+                  <span className="text-green-800">ไม่พบปัจจัยเสี่ยงในฐานข้อมูลเบื้องต้น</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
 
-                <Badge
-                  colorPalette={
-                    result.riskLevel === "high"
-                      ? "red"
-                      : result.riskLevel === "medium"
-                      ? "orange"
-                      : "green"
-                  }
-                  variant="subtle"
-                  size="lg"
-                  px={4}
-                  py={1}
-                  borderRadius="full"
-                >
-                  คะแนนความเสี่ยง: {result.score}
-                </Badge>
-
-                <Separator my={4} />
-
-                <VStack spacing={4} align="stretch" w="100%" textAlign="left">
-                  <Heading as="h3" size="md" color="gray.700">
-                    รายละเอียดการประเมิน:
-                  </Heading>
-                  <VStack spacing={3} align="stretch">
-                    {result.reasons.length > 0 ? (
-                      result.reasons.map((reason, index) => (
-                        <MotionBox
-                          key={index}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.4 + index * 0.1 }}
-                          p={4}
-                          bg="gray.50"
-                          borderRadius="lg"
-                          borderLeftWidth="4px"
-                          borderLeftColor={config.color}
-                        >
-                          <HStack align="flex-start" spacing={3}>
-                            <Icon
-                              as={FaCircleExclamation}
-                              color={config.color}
-                              mt={1}
-                            />
-                            <Text color="gray.700">{reason}</Text>
-                          </HStack>
-                        </MotionBox>
-                      ))
-                    ) : (
-                      <Box
-                        p={4}
-                        bg="green.50"
-                        borderRadius="lg"
-                        borderLeftWidth="4px"
-                        borderLeftColor="green.500"
-                      >
-                        <HStack align="flex-start" spacing={3}>
-                          <Icon as={FaCheckCircle} color="green.500" mt={1} />
-                          <Text color="green.800">
-                            ไม่พบปัจจัยเสี่ยงในฐานข้อมูลเบื้องต้น
-                          </Text>
-                        </HStack>
-                      </Box>
-                    )}
-                  </VStack>
-                </VStack>
-              </VStack>
-            </Card.Body>
-          </Card.Root>
-
-          {/* Action Plan Section */}
-          <Card.Root
-            variant="elevated"
-            size="lg"
-            boxShadow="lg"
-            borderRadius="2xl"
-            bg="white"
-            borderWidth="1px"
-            borderColor="gray.100"
-            w="100%"
-          >
-            <Card.Body p={{ base: 6, md: 8 }}>
-              <VStack spacing={6} align="stretch">
-                <Heading size="md" color="brand.700">
-                  📋 แนวทางการดำเนินการ
-                </Heading>
-                <VStack spacing={3} align="stretch">
-                  {actions.map((action, idx) => (
-                    <MotionBox
-                      key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.6 + idx * 0.1 }}
-                      p={4}
-                      bg="gray.50"
-                      borderRadius="lg"
-                      borderLeftWidth="4px"
-                      borderLeftColor="brand.500"
-                    >
-                      <HStack align="flex-start" spacing={3}>
-                        <Icon as={action.icon} color="brand.600" mt={1} />
-                        <VStack align="flex-start" spacing={1}>
-                          <Text fontWeight="semibold" color="gray.800">
-                            {action.title}
-                          </Text>
-                          <Text fontSize="sm" color="gray.600">
-                            {action.desc}
-                          </Text>
-                        </VStack>
-                      </HStack>
-                    </MotionBox>
-                  ))}
-                </VStack>
-              </VStack>
-            </Card.Body>
-          </Card.Root>
-
-          {/* Emergency Hotlines */}
-          <Card.Root
-            variant="outline"
-            size="lg"
-            borderRadius="2xl"
-            borderColor={config.color}
-            bg={config.bg}
-            w="100%"
-          >
-            <Card.Body p={{ base: 6, md: 8 }}>
-              <VStack spacing={4} align="stretch">
-                <Heading size="md" color={config.color}>
-                  📞 เบอร์ติดต่อฉุกเฉิน
-                </Heading>
-                <HStack spacing={4} flexWrap="wrap">
-                  <VStack align="flex-start" spacing={1} flex="1" minW="200px">
-                    <Text fontWeight="semibold" color="gray.800">
-                      สายด่วนแรงงาน
-                    </Text>
-                    <Heading size="lg" color={config.color}>
-                      1694
-                    </Heading>
-                  </VStack>
-                  <VStack align="flex-start" spacing={1} flex="1" minW="200px">
-                    <Text fontWeight="semibold" color="gray.800">
-                      กรมการจัดหางาน
-                    </Text>
-                    <Heading size="lg" color={config.color}>
-                      1300
-                    </Heading>
-                  </VStack>
-                </HStack>
-              </VStack>
-            </Card.Body>
-          </Card.Root>
-
-          <Box textAlign="center" w="100%">
-            <Text fontSize="sm" color="gray.500" mb={6} maxW="600px" mx="auto">
-              *ผลลัพธ์นี้เป็นการประเมินเบื้องต้นจากข้อมูลที่คุณให้มาเท่านั้น
-              ไม่สามารถรับรองความปลอดภัยได้ 100%
-              โปรดตรวจสอบกับกรมการจัดหางานโดยตรงอีกครั้ง
-            </Text>
-            <Link href="/" passHref>
-              <Button
-                colorPalette="brand"
-                variant="outline"
-                size="xl"
-                px={8}
-                borderRadius="xl"
-                _hover={{ bg: "brand.50" }}
+        {/* Layer 3: Conscious Deep-Dive - Action Plan */}
+        <section className="w-full flex flex-col gap-6">
+          <h3 className="text-xl font-bold text-slate-900 px-2 uppercase tracking-wide">
+            แนวทางการดำเนินการ
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {actions.map((action, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 + idx * 0.1 }}
+                className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm flex items-start gap-4 group hover:border-brand-primary transition-all"
               >
-                <Icon as={FaArrowRotateLeft} mr={2} /> ตรวจสอบใหม่
-              </Button>
-            </Link>
-          </Box>
-        </MotionVStack>
-      </Container>
-    </Box>
+                <div className="p-3 bg-slate-50 rounded-xl group-hover:bg-brand-primary/10 transition-colors">
+                  <action.icon className="text-slate-600 group-hover:text-brand-primary" size={24} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900">{action.title}</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">{action.desc}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Emergency Hotlines */}
+        <section className={`w-full p-8 rounded-3xl border border-slate-100 bg-white shadow-md flex flex-col md:flex-row items-center justify-between gap-8 ${config.threatClass}`}>
+           <div className="flex flex-col gap-2">
+             <h3 className="text-lg font-bold text-slate-900">สายด่วนช่วยเหลือ</h3>
+             <p className="text-sm text-slate-500">ติดต่อเจ้าหน้าที่ทันทีเมื่อพบสัญญาณอันตราย</p>
+           </div>
+           
+           <div className="flex gap-4">
+             <div className="flex flex-col items-center">
+               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">สายด่วนแรงงาน</span>
+               <span className={`text-3xl font-black ${config.color}`}>1694</span>
+             </div>
+             <div className="w-px h-10 bg-slate-100" />
+             <div className="flex flex-col items-center">
+               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">กรมการจัดหางาน</span>
+               <span className={`text-3xl font-black ${config.color}`}>1300</span>
+             </div>
+           </div>
+        </section>
+
+        <div className="flex flex-col items-center gap-6 mt-4">
+          <p className="text-center text-xs text-slate-400 max-w-md leading-relaxed">
+            *ผลลัพธ์นี้เป็นการประเมินเบื้องต้นจากข้อมูลที่คุณให้มาเท่านั้น ไม่สามารถรับรองความปลอดภัยได้ 100% โปรดตรวจสอบกับกรมการจัดหางานโดยตรงอีกครั้ง
+          </p>
+          
+          <Link href="/" className="flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg active:scale-95">
+            <RotateCcw size={20} />
+            ตรวจสอบใหม่
+          </Link>
+        </div>
+
+        {/* Cognitive Breather */}
+        <div className="h-20" />
+      </div>
+    </div>
   );
 }
 
@@ -377,9 +225,10 @@ export default function Result() {
   return (
     <Suspense
       fallback={
-        <Container centerContent py={20}>
-          <Text>กำลังโหลดผลลัพธ์...</Text>
-        </Container>
+        <div className="flex flex-col items-center justify-center py-20 gap-4">
+          <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
+          <p className="text-slate-500">กำลังโหลดผลลัพธ์...</p>
+        </div>
       }
     >
       <ResultContent />
