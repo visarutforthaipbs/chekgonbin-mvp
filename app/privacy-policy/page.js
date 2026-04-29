@@ -74,11 +74,6 @@ export default function PrivacyPolicy() {
           <p className="text-lg text-slate-600 max-w-xl leading-relaxed">
             เรามุ่งมั่นที่จะปกป้องข้อมูลของท่านและปฏิบัติตามกฎหมายคุ้มครองข้อมูลส่วนบุคคล (PDPA) อย่างเคร่งครัด
           </p>
-
-          <div className="mt-4 flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-            <Info size={12} />
-            <span>Attention Cost: 1.8 KB</span>
-          </div>
         </div>
       </header>
 
@@ -91,9 +86,9 @@ export default function PrivacyPolicy() {
             { icon: Eye, title: "โปร่งใส", desc: "ระบุการใช้ชัดเจน" },
             { icon: CheckCircle2, title: "สิทธิของท่าน", desc: "ควบคุมข้อมูลได้" },
           ].map((item, idx) => (
-            <div key={idx} className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm flex flex-col items-center text-center gap-2">
+            <div key={idx} className="p-6 bg-white border border-slate-100 rounded-[2rem] shadow-sm flex flex-col items-center text-center gap-2">
               <item.icon className="text-brand-primary" size={24} />
-              <h4 className="font-bold text-slate-900">{item.title}</h4>
+              <h4 className="font-extrabold text-slate-900">{item.title}</h4>
               <p className="text-xs text-slate-500">{item.desc}</p>
             </div>
           ))}
@@ -107,15 +102,15 @@ export default function PrivacyPolicy() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 * idx }}
-              className="bg-white border border-slate-200 rounded-3xl p-8 flex flex-col gap-6 shadow-sm"
+              className="bg-white border border-slate-200 rounded-[2.5rem] p-8 flex flex-col gap-6 shadow-sm"
             >
-              <h3 className="text-xl font-bold text-slate-900 flex items-center gap-3">
+              <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-3">
                 <ChevronRight className="text-brand-primary" size={20} />
                 {section.title}
               </h3>
               <ul className="flex flex-col gap-3">
                 {section.content.map((item, i) => (
-                  <li key={i} className="flex gap-3 text-slate-600">
+                  <li key={i} className="flex gap-3 text-slate-600 font-medium">
                     <div className="w-1.5 h-1.5 rounded-full bg-slate-200 mt-2.5 shrink-0" />
                     <span>{item}</span>
                   </li>

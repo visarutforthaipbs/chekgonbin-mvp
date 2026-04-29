@@ -109,7 +109,7 @@ function ResultContent() {
           animate={{ opacity: 1, scale: 1 }}
           className="flex flex-col items-center text-center gap-6"
         >
-          <div className={`p-6 bg-white rounded-3xl shadow-xl ${config.threatClass}`}>
+          <div className={`p-6 bg-white rounded-[2.5rem] shadow-xl ${config.threatClass}`}>
             <config.icon className={`${config.color}`} size={80} />
           </div>
           
@@ -123,15 +123,15 @@ function ResultContent() {
           </div>
 
           <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-slate-100 shadow-sm">
-            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Risk Score</span>
+            <span className="text-xs font-extrabold text-slate-400 uppercase tracking-widest">Risk Score</span>
             <span className={`text-xl font-black ${config.color}`}>{result.score}</span>
           </div>
         </motion.div>
 
         {/* Layer 2: Chunked Gateway - Assessment Details */}
-        <section className="w-full bg-white border border-slate-200 rounded-3xl shadow-lg overflow-hidden">
+        <section className="w-full bg-white border border-slate-200 rounded-[2.5rem] shadow-lg overflow-hidden">
           <div className="p-8 flex flex-col gap-6">
-            <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
+            <h3 className="text-lg font-extrabold text-slate-800 flex items-center gap-2">
               <Info className="text-slate-400" size={20} />
               รายละเอียดการประเมิน
             </h3>
@@ -153,7 +153,7 @@ function ResultContent() {
               ) : (
                 <div className="p-4 rounded-xl border-l-4 border-signal-green bg-green-50 flex items-start gap-3">
                   <CheckCircle2 className="text-signal-green mt-0.5 shrink-0" size={18} />
-                  <span className="text-green-800">ไม่พบปัจจัยเสี่ยงในฐานข้อมูลเบื้องต้น</span>
+                  <span className="text-green-800 font-medium">ไม่พบปัจจัยเสี่ยงในฐานข้อมูลเบื้องต้น</span>
                 </div>
               )}
             </div>
@@ -162,7 +162,7 @@ function ResultContent() {
 
         {/* Layer 3: Conscious Deep-Dive - Action Plan */}
         <section className="w-full flex flex-col gap-6">
-          <h3 className="text-xl font-bold text-slate-900 px-2 uppercase tracking-wide">
+          <h3 className="text-xl font-extrabold text-slate-900 px-2 uppercase tracking-wide">
             แนวทางการดำเนินการ
           </h3>
           
@@ -173,13 +173,13 @@ function ResultContent() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + idx * 0.1 }}
-                className="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm flex items-start gap-4 group hover:border-brand-primary transition-all"
+                className="p-6 bg-white border border-slate-100 rounded-[2rem] shadow-sm flex items-start gap-4 group hover:border-brand-primary transition-all"
               >
                 <div className="p-3 bg-slate-50 rounded-xl group-hover:bg-brand-primary/10 transition-colors">
                   <action.icon className="text-slate-600 group-hover:text-brand-primary" size={24} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900">{action.title}</h4>
+                  <h4 className="font-extrabold text-slate-900">{action.title}</h4>
                   <p className="text-sm text-slate-500 leading-relaxed">{action.desc}</p>
                 </div>
               </motion.div>
@@ -188,20 +188,20 @@ function ResultContent() {
         </section>
 
         {/* Emergency Hotlines */}
-        <section className={`w-full p-8 rounded-3xl border border-slate-100 bg-white shadow-md flex flex-col md:flex-row items-center justify-between gap-8 ${config.threatClass}`}>
+        <section className={`w-full p-8 rounded-[2.5rem] border border-slate-100 bg-white shadow-md flex flex-col md:flex-row items-center justify-between gap-8 ${config.threatClass}`}>
            <div className="flex flex-col gap-2">
-             <h3 className="text-lg font-bold text-slate-900">สายด่วนช่วยเหลือ</h3>
+             <h3 className="text-lg font-extrabold text-slate-900">สายด่วนช่วยเหลือ</h3>
              <p className="text-sm text-slate-500">ติดต่อเจ้าหน้าที่ทันทีเมื่อพบสัญญาณอันตราย</p>
            </div>
            
            <div className="flex gap-4">
              <div className="flex flex-col items-center">
-               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">สายด่วนแรงงาน</span>
+               <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter">สายด่วนแรงงาน</span>
                <span className={`text-3xl font-black ${config.color}`}>1694</span>
              </div>
              <div className="w-px h-10 bg-slate-100" />
              <div className="flex flex-col items-center">
-               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">กรมการจัดหางาน</span>
+               <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter">กรมการจัดหางาน</span>
                <span className={`text-3xl font-black ${config.color}`}>1300</span>
              </div>
            </div>

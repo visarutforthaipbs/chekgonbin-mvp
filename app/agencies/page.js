@@ -41,7 +41,7 @@ export default function Agencies() {
       <header className="w-full bg-white border-b border-slate-100 py-16 md:py-20">
         <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center gap-6">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-brand-primary/10 rounded-2xl">
+            className="p-4 bg-brand-primary/10 rounded-[2rem]">
             <Building2 className="text-brand-primary" size={48} />
           </motion.div>
           <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
@@ -52,7 +52,7 @@ export default function Agencies() {
           </p>
           <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full">
             <CheckCircle2 className="text-signal-green" size={14} />
-            <span className="text-xs font-bold text-green-700">{total.toLocaleString()} บริษัทในฐานข้อมูล</span>
+            <span className="text-xs font-extrabold text-green-700">{total.toLocaleString()} บริษัทในฐานข้อมูล</span>
           </div>
         </div>
       </header>

@@ -44,11 +44,9 @@ Every page, component, and user journey must be structured through these three l
 
 ---
 
-## 4. UNIVERSAL COGNITIVE COMPONENTS (CRA)
+## 5. UNIVERSAL COGNITIVE COMPONENTS (CRA)
 When applicable, implement **Cognitive Resource Accounting (CRA)** features:
 
-* **The Cognitive Price Tag:** Replace "Read Time" or "Complexity" with an upfront Attention Cost estimate (e.g., `Attention Cost: 1.2 KB`).
-    * *Formula:* `(Seconds of engagement * 39 bps) / 8192 = KB Cost`
 * **Entropy Indicators:** Use subtle progress bars or heatmaps to indicate where the "high-density" information lives on a page.
 * **Meaning ROI Summaries:** At the end of a long user flow (checkout, article, data report), provide a "Receipt" summarizing the value extracted versus the cognitive tax paid.
 

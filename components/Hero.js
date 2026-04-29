@@ -18,22 +18,22 @@ const Hero = () => {
           >
             {/* Trust Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full w-fit border border-slate-200 shadow-sm">
-              <Shield size={16} className="text-[#0B1B3B]" />
-              <span className="text-xs font-bold text-[#0B1B3B] uppercase tracking-wider">
+              <Shield size={16} className="text-brand-secondary" />
+              <span className="text-xs font-bold text-brand-secondary uppercase tracking-wider">
                 เครื่องมือตรวจสอบความเสี่ยงทางการเงิน
               </span>
             </div>
 
             {/* Headline */}
-            <h1 className="text-5xl md:text-7xl font-black text-[#0B1B3B] leading-[1.1] tracking-tight">
+            <h1 className="text-5xl md:text-7xl font-extrabold text-brand-secondary leading-[1.1] tracking-tight">
               เช็คก่อนบิน<br />
               เช็คให้ชัวร์<br />
-              <span className="text-[#EE4D2D]">ก่อนโอนเงิน</span>
+              <span className="text-brand-primary">ก่อนโอนเงิน</span>
             </h1>
 
             {/* Subheadline */}
             <div className="flex flex-col gap-2">
-              <p className="text-xl md:text-2xl font-medium text-[#0B1B3B]/80">
+              <p className="text-xl md:text-2xl font-medium text-brand-secondary/80">
                 ตรวจสอบความเสี่ยงเบื้องต้น ก่อนตัดสินใจไปทำงานต่างประเทศ
               </p>
               <p className="text-lg text-slate-500">
@@ -44,16 +44,16 @@ const Hero = () => {
             {/* Feature Icons */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-4">
               <div className="flex items-center gap-2">
-                <CheckCircle2 size={18} className="text-green-500" />
-                <span className="text-sm font-bold text-[#0B1B3B]">เช็คความน่าเชื่อถือ</span>
+                <CheckCircle2 size={18} className="text-signal-green" />
+                <span className="text-sm font-bold text-brand-secondary">เช็คความน่าเชื่อถือ</span>
               </div>
               <div className="flex items-center gap-2">
-                <AlertCircle size={18} className="text-orange-500" />
-                <span className="text-sm font-bold text-[#0B1B3B]">ประเมินความเสี่ยง</span>
+                <AlertCircle size={18} className="text-signal-orange" />
+                <span className="text-sm font-bold text-brand-secondary">ประเมินความเสี่ยง</span>
               </div>
               <div className="flex items-center gap-2">
                 <ShieldCheck size={18} className="text-blue-500" />
-                <span className="text-sm font-bold text-[#0B1B3B]">ปลอดภัย เป็นส่วนตัว</span>
+                <span className="text-sm font-bold text-brand-secondary">ปลอดภัย เป็นส่วนตัว</span>
               </div>
             </div>
 
@@ -61,7 +61,7 @@ const Hero = () => {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="mt-4 flex items-center justify-center gap-2 px-8 py-4 bg-[#EE4D2D] text-white rounded-full text-xl font-bold shadow-lg shadow-[#EE4D2D]/20 hover:shadow-xl transition-all w-fit group"
+              className="mt-4 flex items-center justify-center gap-2 px-8 py-4 bg-brand-primary text-white rounded-full text-xl font-bold shadow-lg shadow-brand-primary/20 hover:shadow-xl transition-all w-fit group"
               onClick={() => document.getElementById('risk-assessment')?.scrollIntoView({ behavior: 'smooth' })}
             >
               เริ่มตรวจสอบเลย
@@ -97,14 +97,14 @@ const Hero = () => {
             >
               <div className="flex items-center justify-between">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Risk Report</span>
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <div className="w-2 h-2 rounded-full bg-signal-green animate-pulse" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-bold text-slate-800">ผลการประเมินความเสี่ยง</span>
-                <span className="text-2xl font-black text-green-500">ต่ำ (Low)</span>
+                <span className="text-2xl font-black text-signal-green">ต่ำ (Low)</span>
               </div>
               <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                <div className="w-1/4 h-full bg-green-500" />
+                <div className="w-1/4 h-full bg-signal-green" />
               </div>
             </motion.div>
 
@@ -113,7 +113,7 @@ const Hero = () => {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="absolute -left-6 bottom-1/4 p-4 bg-[#0B1B3B] text-white rounded-2xl shadow-2xl"
+              className="absolute -left-6 bottom-1/4 p-4 bg-brand-secondary text-white rounded-2xl shadow-2xl"
             >
               <ShieldCheck size={32} />
             </motion.div>
@@ -123,7 +123,7 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.8 }}
               transition={{ delay: 1, duration: 1 }}
-              className="absolute -bottom-10 -right-6 w-32 h-32 border-4 border-[#EE4D2D]/20 rounded-full border-dashed animate-spin-slow"
+              className="absolute -bottom-10 -right-6 w-32 h-32 border-4 border-brand-primary/20 rounded-full border-dashed animate-spin-slow"
             />
           </motion.div>
 

@@ -122,23 +122,23 @@ export default function Home() {
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <motion.div 
             whileHover={{ y: -2 }}
-            className="p-8 bg-white border border-slate-100 rounded-2xl shadow-sm flex flex-col gap-4"
+            className="p-8 bg-white border border-slate-100 rounded-[2rem] shadow-sm flex flex-col gap-4"
           >
-            <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+            <h2 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
               <BarChart3 className="text-brand-primary" size={20} />
               ความเป็นจริงของปัญหา
             </h2>
             <p className="text-slate-600 leading-relaxed">
               ในปี 2567 แรงงานไทยกว่า 1,000 คน ตกเป็นเหยื่อการหลอกลวง 
-              เสียหายรวมกว่า <span className="font-bold text-brand-primary text-lg">44.2 ล้านบาท</span>
+              เสียหายรวมกว่า <span className="font-extrabold text-brand-primary text-lg">44.2 ล้านบาท</span>
             </p>
           </motion.div>
 
           <motion.div 
             whileHover={{ y: -2 }}
-            className="p-8 bg-white border border-slate-100 rounded-2xl shadow-sm flex flex-col gap-4"
+            className="p-8 bg-white border border-slate-100 rounded-[2rem] shadow-sm flex flex-col gap-4"
           >
-            <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+            <h2 className="text-xl font-extrabold text-slate-800 flex items-center gap-2">
               <CheckCircle2 className="text-brand-primary" size={20} />
               วิธีการป้องกัน
             </h2>
@@ -152,7 +152,7 @@ export default function Home() {
         <section className="relative" id="risk-assessment">
           <div className="absolute -inset-3 bg-brand-primary/10 rounded-[2.5rem] blur-2xl pointer-events-none" />
 
-          <div className="relative bg-white border-2 border-brand-primary/25 rounded-3xl overflow-hidden shadow-2xl shadow-brand-primary/10">
+          <div className="relative bg-white border-2 border-brand-primary/25 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-brand-primary/10">
             <div className="h-2 bg-linear-to-r from-brand-primary via-orange-400 to-brand-primary w-full" />
 
             <div className="p-8 md:p-12">
@@ -163,7 +163,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-2xl font-bold text-slate-900">ประเมินความเสี่ยง</h3>
+                      <h3 className="text-2xl font-extrabold text-slate-900">ประเมินความเสี่ยง</h3>
                       <span className="px-2.5 py-0.5 bg-brand-primary text-white text-[10px] font-black uppercase tracking-widest rounded-full">
                         บริการหลัก
                       </span>
@@ -173,7 +173,7 @@ export default function Home() {
                 </div>
                 <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full shrink-0">
                   <CheckCircle2 className="text-signal-green" size={13} />
-                  <span className="text-[11px] font-bold text-green-700">ข้อมูลจากกรมการจัดหางาน</span>
+                  <span className="text-[11px] font-extrabold text-green-700">ข้อมูลจากกรมการจัดหางาน</span>
                 </div>
               </div>
 

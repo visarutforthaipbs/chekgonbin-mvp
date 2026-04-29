@@ -17,7 +17,7 @@ export default function Footer() {
               className="flex items-center justify-center md:justify-start gap-2 text-white hover:text-brand-primary transition-colors"
             >
               <Users size={18} />
-              <span className="font-bold text-lg">Thai Migrant Watch</span>
+              <span className="font-extrabold text-lg">Thai Migrant Watch</span>
             </a>
             <p className="text-xs text-slate-500 italic">
               เพื่อให้คนไทยต้องไม่ไปตายดาบหน้า

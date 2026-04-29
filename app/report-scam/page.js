@@ -81,7 +81,7 @@ export default function ReportScam() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-brand-primary/10 rounded-2xl"
+            className="p-4 bg-brand-primary/10 rounded-[2rem]"
           >
             <Bell className="text-brand-primary" size={48} />
           </motion.div>
@@ -93,11 +93,6 @@ export default function ReportScam() {
           <p className="text-lg text-slate-600 max-w-xl leading-relaxed">
             ช่วยเราสร้างฐานข้อมูลที่ปลอดภัยยิ่งขึ้น โดยแบ่งปันข้อมูลเกี่ยวกับบริษัทหรือนายหน้าที่น่าสงสัย
           </p>
-
-          <div className="mt-4 flex items-center gap-2 px-3 py-1 bg-slate-100 rounded-full text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-            <Info size={12} />
-            <span>Attention Cost: 1.2 KB</span>
-          </div>
         </div>
       </header>
 
@@ -107,19 +102,19 @@ export default function ReportScam() {
         <motion.section 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-6 bg-brand-primary/5 border border-brand-primary/10 rounded-3xl flex items-start gap-4"
+          className="p-6 bg-brand-primary/5 border border-brand-primary/10 rounded-[2rem] flex items-start gap-4"
         >
           <div className="p-2 bg-white rounded-lg shadow-sm">
             <ShieldCheck className="text-brand-primary" size={24} />
           </div>
           <div>
-            <h3 className="font-bold text-slate-900">ข้อมูลจะถูกเก็บเป็นความลับ</h3>
+            <h3 className="font-extrabold text-slate-900">ข้อมูลจะถูกเก็บเป็นความลับ</h3>
             <p className="text-sm text-slate-600">เราเคารพความเป็นส่วนตัวของคุณและจะไม่เปิดเผยข้อมูลส่วนบุคคลต่อสาธารณะ</p>
           </div>
         </motion.section>
 
         {/* Layer 3: Conscious Deep-Dive - Form */}
-        <section className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl">
+        <section className="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-xl">
           <div className="h-2 bg-brand-primary w-full" />
           <div className="p-8 md:p-12 flex flex-col gap-10">
             
@@ -142,7 +137,7 @@ export default function ReportScam() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-bold text-slate-700">ชื่อบริษัท/นายหน้า</label>
+                    <label className="text-sm font-extrabold text-slate-700">ชื่อบริษัท/นายหน้า</label>
                     <div className="relative">
                       <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                       <input
@@ -157,7 +152,7 @@ export default function ReportScam() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-bold text-slate-700">ชื่อผู้ติดต่อ (ถ้ามี)</label>
+                    <label className="text-sm font-extrabold text-slate-700">ชื่อผู้ติดต่อ (ถ้ามี)</label>
                     <div className="relative">
                       <UserRound className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                       <input
@@ -172,7 +167,7 @@ export default function ReportScam() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-slate-700">เบอร์โทรศัพท์/Email/LINE ID</label>
+                  <label className="text-sm font-extrabold text-slate-700">เบอร์โทรศัพท์/Email/LINE ID</label>
                   <div className="relative">
                     <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                     <input
@@ -193,7 +188,7 @@ export default function ReportScam() {
                 </h3>
                 
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-slate-700">รูปแบบหลักฐาน</label>
+                  <label className="text-sm font-extrabold text-slate-700">รูปแบบหลักฐาน</label>
                   <div className="relative">
                     <FileText className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                     <input
@@ -208,7 +203,7 @@ export default function ReportScam() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-slate-700">รายละเอียดการหลอกลวง</label>
+                  <label className="text-sm font-extrabold text-slate-700">รายละเอียดการหลอกลวง</label>
                   <textarea
                     required
                     placeholder="อธิบายพฤติกรรมที่น่าสงสัย เช่น เรียกเก็บเงินก่อน, ไม่ยอมให้ดูใบอนุญาต, ให้ไปทำงานที่ไม่มีจริง"
@@ -227,7 +222,7 @@ export default function ReportScam() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-bold text-slate-700">ชื่อของคุณ (ไม่บังคับ)</label>
+                    <label className="text-sm font-extrabold text-slate-700">ชื่อของคุณ (ไม่บังคับ)</label>
                     <input
                       type="text"
                       placeholder="ชื่อ-นามสกุล"
@@ -238,7 +233,7 @@ export default function ReportScam() {
                   </div>
 
                   <div className="flex flex-col gap-2">
-                    <label className="text-sm font-bold text-slate-700">เบอร์โทรศัพท์ (ไม่บังคับ)</label>
+                    <label className="text-sm font-extrabold text-slate-700">เบอร์โทรศัพท์ (ไม่บังคับ)</label>
                     <input
                       type="text"
                       placeholder="08x-xxx-xxxx"
@@ -253,7 +248,7 @@ export default function ReportScam() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-5 bg-brand-primary text-white rounded-2xl font-bold text-lg shadow-lg shadow-brand-primary/20 hover:shadow-xl hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
+                className="w-full py-5 bg-brand-primary text-white rounded-[2rem] font-extrabold text-lg shadow-lg shadow-brand-primary/20 hover:shadow-xl hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
               >
                 {isLoading ? "กำลังส่งข้อมูล..." : "ส่งรายงานเบาะแส"}
                 <ArrowRight size={20} />

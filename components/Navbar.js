@@ -41,8 +41,8 @@ export default function Navbar() {
               />
             </div>
             <span
-              className={`text-lg md:text-xl font-bold transition-colors hidden sm:block ${
-                scrolled ? "text-slate-900" : "text-white"
+              className={`text-lg md:text-xl font-extrabold transition-colors hidden sm:block ${
+                scrolled ? "text-brand-secondary" : "text-white"
               }`}
             >
               เช็คก่อนบิน
@@ -55,7 +55,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded-xl text-sm font-extrabold transition-all ${
                   scrolled
                     ? "text-slate-600 hover:bg-slate-100 hover:text-brand-primary"
                     : "text-white/90 hover:bg-white/20 hover:text-white"
@@ -68,7 +68,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className={`p-2 rounded-md md:hidden transition-colors ${
+            className={`p-2 rounded-xl md:hidden transition-colors ${
               scrolled
                 ? "text-slate-600 hover:bg-slate-100"
                 : "text-white hover:bg-white/20"
@@ -95,9 +95,9 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-3 rounded-md text-base font-medium transition-colors ${
+                className={`px-4 py-3 rounded-xl text-base font-extrabold transition-colors ${
                   scrolled
-                    ? "text-slate-800 hover:bg-brand-primary/5 hover:text-brand-primary"
+                    ? "text-brand-secondary hover:bg-brand-primary/5 hover:text-brand-primary"
                     : "text-white hover:bg-white/20"
                 }`}
                 onClick={() => setIsOpen(false)}

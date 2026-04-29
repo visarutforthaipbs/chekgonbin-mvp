@@ -31,12 +31,14 @@
   --signal-orange: #f97316;
   --signal-green: #22c55e;
   --brand-primary: #e5472e;
+  --brand-secondary: #0b1b3b;
 }
 
 @theme {
   --font-sans: "DB Helvethaica X", ui-sans-serif, system-ui, sans-serif;
   
   --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
   --color-signal-red: var(--signal-red);
   --color-signal-orange: var(--signal-orange);
   --color-signal-green: var(--signal-green);
