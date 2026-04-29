@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Hero from "@/components/Hero";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { motion } from "framer-motion";
 import { 
@@ -113,40 +114,7 @@ export default function Home() {
       />
       {isLoading && <LoadingSpinner text="กำลังวิเคราะห์ความเสี่ยง..." />}
 
-      {/* Layer 1: Subconscious Hook - Visual & Core Mission */}
-      <header className="relative w-full min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Background Image with Deep Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1530521954074-e64f6810b32d?q=80&w=2070&auto=format&fit=crop" 
-            alt="Travelers in airport terminal"
-            className="w-full h-full object-cover scale-105"
-          />
-          <div className="absolute inset-0 bg-linear-to-b from-slate-900/80 via-slate-900/60 to-slate-50" />
-        </div>
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10 flex flex-col items-center text-center gap-8 py-20">
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-7xl font-black text-white tracking-tight leading-[1.1] max-w-4xl"
-          >
-            เช็คก่อนบิน <br className="md:hidden" />
-            <span className="text-brand-primary">ตรวจสอบบริษัทจัดหางาน</span> <br />
-            ป้องกันมิจฉาชีพงานต่างประเทศ
-          </motion.h1>
-          
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full"
-          >
-            <ShieldAlert className="text-brand-primary" size={20} />
-            <span className="text-white font-medium">เครื่องมือประเมินความเสี่ยงแรงงานไทย</span>
-          </motion.div>
-        </div>
-      </header>
+      <Hero />
 
       <div className="container mx-auto px-4 md:px-6 py-12 flex flex-col gap-12 max-w-4xl">
         
@@ -181,7 +149,7 @@ export default function Home() {
         </section>
 
         {/* Layer 3: Conscious Deep-Dive - The Action Tool */}
-        <section className="relative">
+        <section className="relative" id="risk-assessment">
           <div className="absolute -inset-3 bg-brand-primary/10 rounded-[2.5rem] blur-2xl pointer-events-none" />
 
           <div className="relative bg-white border-2 border-brand-primary/25 rounded-3xl overflow-hidden shadow-2xl shadow-brand-primary/10">
