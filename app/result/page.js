@@ -43,8 +43,8 @@ function ResultContent() {
 
   if (!result) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 gap-4">
-        <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
+      <div role="status" className="flex flex-col items-center justify-center py-20 gap-4">
+        <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" aria-hidden="true" />
         <p className="text-slate-500">กำลังโหลดผลลัพธ์...</p>
       </div>
     );
@@ -262,8 +262,8 @@ export default function Result() {
   return (
     <Suspense
       fallback={
-        <div className="flex flex-col items-center justify-center py-20 gap-4">
-          <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
+        <div role="status" className="flex flex-col items-center justify-center py-20 gap-4">
+          <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" aria-hidden="true" />
           <p className="text-slate-500">กำลังโหลดผลลัพธ์...</p>
         </div>
       }

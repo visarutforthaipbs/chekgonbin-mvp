@@ -6,6 +6,8 @@ import { Loader2 } from "lucide-react";
 export default function LoadingSpinner({ text = "กำลังโหลด..." }) {
   return (
     <motion.div
+      role="status"
+      aria-label={text}
       className="fixed inset-0 flex items-center justify-center bg-white/95 backdrop-blur-sm z-[9999]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}

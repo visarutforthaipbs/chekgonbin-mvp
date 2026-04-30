@@ -64,6 +64,12 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body className="min-h-screen flex flex-col" suppressHydrationWarning>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-brand-primary focus:text-white focus:rounded-lg focus:font-bold focus:shadow-lg"
+        >
+          ข้ามไปเนื้อหาหลัก
+        </a>
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KR47Y7TTK7"
@@ -80,7 +86,7 @@ export default function RootLayout({ children }) {
         </Script>
 
         <Navbar />
-        <main className="flex-1 flex flex-col items-center w-full">
+        <main id="main-content" className="flex-1 flex flex-col items-center w-full">
           {children}
         </main>
         <Footer />

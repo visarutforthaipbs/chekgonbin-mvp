@@ -4,33 +4,39 @@ export default function sitemap() {
   return [
     {
       url: baseUrl,
-      lastModified: new Date().toISOString(),
+      lastModified: "2026-04-30",
       changeFrequency: "daily",
       priority: 1,
     },
     {
       url: `${baseUrl}/agencies`,
-      lastModified: new Date().toISOString(),
+      lastModified: "2026-04-30",
       changeFrequency: "daily",
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/media-hub`,
+      lastModified: "2026-04-30",
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
+    {
       url: `${baseUrl}/report-scam`,
-      lastModified: new Date().toISOString(),
+      lastModified: "2026-04-30",
       changeFrequency: "monthly",
       priority: 0.5,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date().toISOString(),
+      lastModified: "2026-04-30",
       changeFrequency: "monthly",
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/media-hub`,
-      lastModified: new Date().toISOString(),
-      changeFrequency: "weekly",
-      priority: 0.6,
+      url: `${baseUrl}/privacy-policy`,
+      lastModified: "2026-04-30",
+      changeFrequency: "yearly",
+      priority: 0.2,
     },
   ];
 }

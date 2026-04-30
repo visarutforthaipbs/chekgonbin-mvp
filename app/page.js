@@ -29,6 +29,7 @@ export default function Home() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [openFaq, setOpenFaq] = useState(null);
 
   const handleInputChange = useCallback((field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -179,7 +180,7 @@ export default function Home() {
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-8 max-w-full">
               {error && (
-                <div className="p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm flex items-center gap-2">
+                <div role="alert" className="p-4 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm flex items-center gap-2">
                   <ShieldAlert size={16} />
                   {error}
                 </div>
@@ -187,7 +188,7 @@ export default function Home() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-slate-700 uppercase tracking-wide flex items-center gap-2">
+                  <label htmlFor="agencyName" className="text-sm font-bold text-slate-700 uppercase tracking-wide flex items-center gap-2">
                     1. ชื่อบริษัทจัดหางาน
                     <span className="text-[10px] font-normal normal-case tracking-normal text-green-600 flex items-center gap-1">
                       <CheckCircle2 size={11} />
@@ -195,8 +196,9 @@ export default function Home() {
                     </span>
                   </label>
                   <div className="relative">
-                    <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
                     <input
+                      id="agencyName"
                       type="text"
                       placeholder="เช่น บจก. จัดหางาน..."
                       className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all outline-none"
@@ -207,12 +209,13 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+                  <label htmlFor="contactInfo" className="text-sm font-bold text-slate-700 uppercase tracking-wide">
                     2. ช่องทางติดต่อ (เบอร์/LINE/Email)
                   </label>
                   <div className="relative">
-                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
                     <input
+                      id="contactInfo"
                       type="text"
                       placeholder="เช่น 081-xxx-xxxx"
                       className="w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all outline-none"
@@ -282,35 +285,42 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 gap-4">
-            <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center justify-between">
-                จะรู้ได้อย่างไรว่าบริษัทจัดหางานถูกกฎหมายหรือไม่?
-                <ChevronDown size={20} className="text-slate-400" />
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                คุณสามารถตรวจสอบได้จากเลขที่ใบอนุญาตจัดหางาน และค้นหาในรายชื่อบริษัทที่ได้รับอนุญาตจากกรมการจัดหางาน (DOE) ซึ่งเครื่องมือเช็คก่อนบินของเราได้รวบรวมข้อมูลเหล่านี้ไว้ให้แล้ว
-              </p>
-            </div>
-
-            <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center justify-between">
-                สัญญาณเตือนว่ากำลังจะโดนหลอกไปทำงานต่างประเทศมีอะไรบ้าง?
-                <ChevronDown size={20} className="text-slate-400" />
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                สัญญาณที่พบบ่อยที่สุดคือ 1. มีการเรียกเก็บเงินล่วงหน้าเป็นค่าดำเนินการ 2. ติดต่อผ่านช่องทางส่วนตัวที่ไม่สามารถยืนยันตัวตนได้ 3. สัญญาจ้างไม่ชัดเจนหรือไม่มีการทำสัญญาผ่านกรมการจัดหางาน
-              </p>
-            </div>
-
-            <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm">
-              <h3 className="text-lg font-bold text-slate-900 mb-3 flex items-center justify-between">
-                ทำไมต้องใช้เครื่องมือเช็คก่อนบิน?
-                <ChevronDown size={20} className="text-slate-400" />
-              </h3>
-              <p className="text-slate-600 leading-relaxed">
-                เราช่วยคุณวิเคราะห์ข้อมูลเบื้องต้นจากฐานข้อมูล Blacklist และ Whitelist ของกรมการจัดหางานแบบเรียลไทม์ เพื่อลดความเสี่ยงก่อนที่คุณจะเสียเงินหรือเสียโอกาส
-              </p>
-            </div>
+            {[
+              {
+                q: "จะรู้ได้อย่างไรว่าบริษัทจัดหางานถูกกฎหมายหรือไม่?",
+                a: "คุณสามารถตรวจสอบได้จากเลขที่ใบอนุญาตจัดหางาน และค้นหาในรายชื่อบริษัทที่ได้รับอนุญาตจากกรมการจัดหางาน (DOE) ซึ่งเครื่องมือเช็คก่อนบินของเราได้รวบรวมข้อมูลเหล่านี้ไว้ให้แล้ว",
+              },
+              {
+                q: "สัญญาณเตือนว่ากำลังจะโดนหลอกไปทำงานต่างประเทศมีอะไรบ้าง?",
+                a: "สัญญาณที่พบบ่อยที่สุดคือ 1. มีการเรียกเก็บเงินล่วงหน้าเป็นค่าดำเนินการ 2. ติดต่อผ่านช่องทางส่วนตัวที่ไม่สามารถยืนยันตัวตนได้ 3. สัญญาจ้างไม่ชัดเจนหรือไม่มีการทำสัญญาผ่านกรมการจัดหางาน",
+              },
+              {
+                q: "ทำไมต้องใช้เครื่องมือเช็คก่อนบิน?",
+                a: "เราช่วยคุณวิเคราะห์ข้อมูลเบื้องต้นจากฐานข้อมูล Blacklist และ Whitelist ของกรมการจัดหางานแบบเรียลไทม์ เพื่อลดความเสี่ยงก่อนที่คุณจะเสียเงินหรือเสียโอกาส",
+              },
+            ].map((faq, index) => (
+              <div key={index} className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+                <button
+                  type="button"
+                  className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors"
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  aria-expanded={openFaq === index}
+                  aria-controls={`faq-answer-${index}`}
+                >
+                  <h3 className="text-lg font-bold text-slate-900">{faq.q}</h3>
+                  <ChevronDown
+                    size={20}
+                    className={`text-slate-400 shrink-0 transition-transform duration-200 ${openFaq === index ? "rotate-180" : ""}`}
+                    aria-hidden="true"
+                  />
+                </button>
+                {openFaq === index && (
+                  <div id={`faq-answer-${index}`} className="px-6 pb-6">
+                    <p className="text-slate-600 leading-relaxed">{faq.a}</p>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </section>
 

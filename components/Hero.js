@@ -59,6 +59,7 @@ const Hero = () => {
 
             {/* CTA Button */}
             <motion.button
+              type="button"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="mt-4 flex items-center justify-center gap-2 px-8 py-4 bg-brand-primary text-white rounded-full text-xl font-bold shadow-lg shadow-brand-primary/20 hover:shadow-xl transition-all w-fit group"
@@ -78,9 +79,9 @@ const Hero = () => {
           >
             {/* Main Image Container */}
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white">
-              <img 
-                src="/two-attractive-asian-businessman-businesswoman-hand-gesture-wave-greeting-goodbye-social-distancing-departure-airport-terminal.jpeg" 
-                alt="Thai travelers at airport"
+              <img
+                src="/two-attractive-asian-businessman-businesswoman-hand-gesture-wave-greeting-goodbye-social-distancing-departure-airport-terminal.jpeg"
+                alt="แรงงานไทยที่สนามบิน - ตรวจสอบก่อนไปทำงานต่างประเทศ"
                 className="w-full aspect-[4/5] object-cover"
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
