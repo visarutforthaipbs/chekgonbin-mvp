@@ -67,18 +67,18 @@
 
 /* SIGNAL 39 Utility: Cognitive Breather */
 .breather {
-  @apply p-8 gap-6;
+  @apply p-4 md:p-8 gap-4 md:gap-6;
 }
 
 /* Layer 1: Subconscious Hook - Threat Levels */
 .threat-low {
-  @apply border-l-4 border-signal-green bg-green-50/50;
+  @apply border-l-4 border-signal-green bg-green-50/50 p-6 md:p-8;
 }
 
 .threat-medium {
-  @apply border-l-4 border-signal-orange bg-orange-50/50;
+  @apply border-l-4 border-signal-orange bg-orange-50/50 p-6 md:p-8;
 }
 
 .threat-high {
-  @apply border-l-4 border-signal-red bg-red-50/50;
+  @apply border-l-4 border-signal-red bg-red-50/50 p-6 md:p-8;
 }

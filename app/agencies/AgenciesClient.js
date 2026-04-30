@@ -37,39 +37,41 @@ export default function AgenciesClient() {
 
   return (
     <div className="w-full min-h-screen bg-slate-50 flex flex-col items-center">
-      <header className="w-full bg-white border-b border-slate-100 py-16 md:py-20">
-        <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center gap-6">
+      <header className="w-full bg-white border-b border-slate-100 py-10 md:py-20">
+        <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center gap-4 md:gap-6">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}
-            className="p-4 bg-brand-primary/10 rounded-[2rem]">
-            <Building2 className="text-brand-primary" size={48} aria-hidden="true" />
+            className="p-3 md:p-4 bg-brand-primary/10 rounded-[1.5rem] md:rounded-[2rem]">
+            <Building2 className="text-brand-primary w-8 h-8 md:w-12 md:h-12" aria-hidden="true" />
           </motion.div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             บริษัทจัดหางานที่ได้รับอนุญาต
           </h1>
-          <p className="text-lg text-slate-600 max-w-xl leading-relaxed">
+          <p className="text-base md:text-lg text-slate-600 max-w-xl leading-relaxed">
             รายชื่อบริษัทจัดหางานที่ได้รับใบอนุญาตจากกรมการจัดหางาน อัปเดตทุกวัน
           </p>
           <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full">
-            <CheckCircle2 className="text-signal-green" size={14} aria-hidden="true" />
-            <span className="text-xs font-extrabold text-green-700">{total.toLocaleString()} บริษัทในฐานข้อมูล</span>
+            <CheckCircle2 className="text-signal-green w-3 h-3 md:w-3.5 md:h-3.5" aria-hidden="true" />
+            <span className="text-[10px] md:text-xs font-extrabold text-green-700">{total.toLocaleString()} บริษัทในฐานข้อมูล</span>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 md:px-6 py-10 flex flex-col gap-6 max-w-4xl w-full">
-        <form onSubmit={handleSearch} className="relative" role="search">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-10 flex flex-col gap-6 max-w-4xl w-full">
+        <form onSubmit={handleSearch} className="relative flex flex-col md:block gap-2" role="search">
           <label htmlFor="agency-search" className="sr-only">ค้นหาบริษัทจัดหางาน</label>
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} aria-hidden="true" />
-          <input
-            id="agency-search"
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="ค้นหาชื่อบริษัท หรือเลขที่ใบอนุญาต..."
-            className="w-full pl-12 pr-32 py-4 bg-white border-2 border-slate-200 rounded-2xl focus:border-brand-primary outline-none transition-all text-lg shadow-sm"
-          />
+          <div className="relative flex-1">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4.5 h-4.5 md:w-5 md:h-5" aria-hidden="true" />
+            <input
+              id="agency-search"
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="ชื่อบริษัท หรือเลขที่ใบอนุญาต..."
+              className="w-full pl-11 pr-4 md:pr-32 py-3.5 md:py-4 bg-white border-2 border-slate-200 rounded-xl md:rounded-2xl focus:border-brand-primary outline-none transition-all text-base md:text-lg shadow-sm"
+            />
+          </div>
           <button type="submit"
-            className="absolute right-2 top-1/2 -translate-y-1/2 px-5 py-2.5 bg-brand-primary text-white rounded-xl font-bold hover:bg-brand-primary/90 transition-all">
+            className="md:absolute md:right-2 md:top-1/2 md:-translate-y-1/2 px-5 py-3 md:py-2.5 bg-brand-primary text-white rounded-xl font-bold hover:bg-brand-primary/90 transition-all shadow-md md:shadow-none">
             ค้นหา
           </button>
         </form>
@@ -94,13 +96,13 @@ export default function AgenciesClient() {
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.03 }}
-                    className="bg-white border border-slate-100 rounded-2xl p-5 flex flex-col md:flex-row md:items-center gap-4 shadow-sm hover:border-brand-primary/30 hover:shadow-md transition-all"
+                    className="bg-white border border-slate-100 rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-4 shadow-sm hover:border-brand-primary/30 hover:shadow-md transition-all"
                   >
                     <div className="flex-1 flex flex-col gap-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h2 className="font-bold text-slate-900">{agency.name_th}</h2>
+                        <h2 className="font-bold text-slate-900 text-sm md:text-base leading-tight">{agency.name_th}</h2>
                         {agency.company_status && (
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide ${
+                          <span className={`text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide ${
                             agency.company_status.includes("ปกติ") || agency.company_status === "active"
                               ? "bg-green-50 text-green-700"
                               : "bg-slate-100 text-slate-500"
@@ -109,25 +111,25 @@ export default function AgenciesClient() {
                           </span>
                         )}
                       </div>
-                      {agency.name_en && <p className="text-sm text-slate-500">{agency.name_en}</p>}
+                      {agency.name_en && <p className="text-xs md:text-sm text-slate-500 leading-tight">{agency.name_en}</p>}
                     </div>
 
-                    <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-slate-500 md:text-right shrink-0">
+                    <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-x-4 gap-y-1.5 text-xs md:text-sm text-slate-500 md:text-right shrink-0 border-t md:border-t-0 pt-3 md:pt-0 mt-1 md:mt-0 border-slate-50">
                       {agency.license_no && (
-                        <span className="flex items-center gap-1">
-                          <CheckCircle2 className="text-signal-green shrink-0" size={14} aria-hidden="true" />
-                          {agency.license_no}
+                        <span className="flex items-center gap-1.5">
+                          <CheckCircle2 className="text-signal-green shrink-0 w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
+                          <span className="font-medium text-slate-700">{agency.license_no}</span>
                         </span>
                       )}
                       {agency.province && (
-                        <span className="flex items-center gap-1">
-                          <MapPin className="shrink-0" size={14} aria-hidden="true" />
+                        <span className="flex items-center gap-1.5">
+                          <MapPin className="shrink-0 text-slate-400 w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
                           {agency.province}
                         </span>
                       )}
                       {agency.phone && (
-                        <span className="flex items-center gap-1">
-                          <Phone className="shrink-0" size={14} aria-hidden="true" />
+                        <span className="flex items-center gap-1.5">
+                          <Phone className="shrink-0 text-slate-400 w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
                           {agency.phone}
                         </span>
                       )}
@@ -136,6 +138,7 @@ export default function AgenciesClient() {
                 ))}
               </div>
             )}
+
 
             {totalPages > 1 && (
               <nav aria-label="การแบ่งหน้า" className="flex items-center justify-center gap-4 pt-4">
