@@ -219,14 +219,14 @@ function ResultContent() {
             </p>
             <div className="flex gap-3 w-full">
               <a
-                href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent("https://chekgonbin.vercel.app")}`}
+                href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent("https://checkgonbin.in.th")}`}
                 target="_blank" rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#06C755] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95"
               >
                 LINE
               </a>
               <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://chekgonbin.vercel.app")}`}
+                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://checkgonbin.in.th")}`}
                 target="_blank" rel="noopener noreferrer"
                 className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#1877F2] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95"
               >
@@ -234,7 +234,7 @@ function ResultContent() {
               </a>
               <button
                 onClick={() => {
-                  navigator.clipboard.writeText("https://chekgonbin.vercel.app");
+                  navigator.clipboard.writeText("https://checkgonbin.in.th");
                   setCopied(true);
                   setTimeout(() => setCopied(false), 2000);
                 }}

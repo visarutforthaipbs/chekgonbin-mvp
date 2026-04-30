@@ -5,6 +5,6 @@ export default function robots() {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://chekgonbin.vercel.app/sitemap.xml",
+    sitemap: "https://checkgonbin.in.th/sitemap.xml",
   };
 }

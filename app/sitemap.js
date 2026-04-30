@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = "https://chekgonbin.vercel.app";
+  const baseUrl = "https://checkgonbin.in.th";
 
   return [
     {
