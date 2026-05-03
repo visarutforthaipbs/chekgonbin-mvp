@@ -2,15 +2,16 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Search, Building2, MapPin, Phone, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Building2, MapPin, Phone, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
 
 export default function AgenciesClient() {
-  const [query, setQuery]       = useState("");
-  const [results, setResults]   = useState([]);
-  const [total, setTotal]       = useState(0);
-  const [page, setPage]         = useState(1);
-  const [loading, setLoading]   = useState(false);
-  const [searched, setSearched] = useState(false);
+  const [query, setQuery]         = useState("");
+  const [results, setResults]     = useState([]);
+  const [total, setTotal]         = useState(0);
+  const [page, setPage]           = useState(1);
+  const [loading, setLoading]     = useState(false);
+  const [searched, setSearched]   = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
 
   const search = useCallback(async (q, p = 1) => {
     setLoading(true);
@@ -21,6 +22,7 @@ export default function AgenciesClient() {
       setResults(json.data ?? []);
       setTotal(json.total ?? 0);
       setPage(p);
+      if (json.last_updated) setLastUpdated(json.last_updated);
     } finally {
       setLoading(false);
     }
@@ -49,9 +51,20 @@ export default function AgenciesClient() {
           <p className="text-base md:text-lg text-slate-600 max-w-xl leading-relaxed">
             รายชื่อบริษัทจัดหางานที่ได้รับใบอนุญาตจากกรมการจัดหางาน อัปเดตทุกวัน
           </p>
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full">
-            <CheckCircle2 className="text-signal-green w-3 h-3 md:w-3.5 md:h-3.5" aria-hidden="true" />
-            <span className="text-[10px] md:text-xs font-extrabold text-green-700">{total.toLocaleString()} บริษัทในฐานข้อมูล</span>
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full">
+              <CheckCircle2 className="text-signal-green w-3 h-3 md:w-3.5 md:h-3.5" aria-hidden="true" />
+              <span className="text-[10px] md:text-xs font-extrabold text-green-700">{total.toLocaleString()} บริษัทในฐานข้อมูล</span>
+            </div>
+            {lastUpdated && (
+              <div className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 border border-blue-100 rounded-full">
+                <RefreshCw className="text-blue-500 w-3 h-3 md:w-3.5 md:h-3.5" aria-hidden="true" />
+                <span className="text-[10px] md:text-xs font-medium text-blue-700">
+                  อัปเดตล่าสุด{" "}
+                  {new Date(lastUpdated).toLocaleDateString("th-TH", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Bangkok" })}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </header>

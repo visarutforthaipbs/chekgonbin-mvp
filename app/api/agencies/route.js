@@ -19,8 +19,11 @@ export async function GET(request) {
     query = query.or(`name_th.ilike.%${q}%,name_en.ilike.%${q}%,license_no.ilike.%${q}%`);
   }
 
-  const { data, count, error } = await query;
+  const [{ data, count, error }, { data: lastRow }] = await Promise.all([
+    query,
+    supabase.from("agencies").select("scraped_at").order("scraped_at", { ascending: false }).limit(1).single(),
+  ]);
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
-  return NextResponse.json({ data: data ?? [], total: count ?? 0, page, limit });
+  return NextResponse.json({ data: data ?? [], total: count ?? 0, page, limit, last_updated: lastRow?.scraped_at ?? null });
 }

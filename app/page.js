@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Hero from "@/components/Hero";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -16,7 +16,8 @@ import {
   CheckCircle2, 
   BarChart3,
   HelpCircle,
-  ChevronDown
+  ChevronDown,
+  RefreshCw
 } from "lucide-react";
 
 export default function Home() {
@@ -30,6 +31,14 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [openFaq, setOpenFaq] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
+
+  useEffect(() => {
+    fetch("/api/agencies?q=&page=1")
+      .then((r) => r.json())
+      .then((json) => { if (json.last_updated) setLastUpdated(json.last_updated); })
+      .catch(() => {});
+  }, []);
 
   const handleInputChange = useCallback((field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -142,9 +151,20 @@ export default function Home() {
                     <p className="text-slate-500 text-xs md:text-sm">กรอกข้อมูลเท่าที่มีเพื่อเริ่มการวิเคราะห์</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full w-fit">
-                  <CheckCircle2 className="text-signal-green w-3 h-3 md:w-[13px] md:h-[13px]" />
-                  <span className="text-[10px] md:text-[11px] font-extrabold text-green-700">ข้อมูลจากกรมการจัดหางาน</span>
+                <div className="flex flex-col items-start md:items-end gap-1.5">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full w-fit">
+                    <CheckCircle2 className="text-signal-green w-3 h-3 md:w-[13px] md:h-[13px]" />
+                    <span className="text-[10px] md:text-[11px] font-extrabold text-green-700">ข้อมูลจากกรมการจัดหางาน</span>
+                  </div>
+                  {lastUpdated && (
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 border border-blue-100 rounded-full w-fit">
+                      <RefreshCw className="text-blue-500 w-3 h-3 md:w-[13px] md:h-[13px]" />
+                      <span className="text-[10px] md:text-[11px] font-medium text-blue-700">
+                        อัปเดตล่าสุด{" "}
+                        {new Date(lastUpdated).toLocaleDateString("th-TH", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Bangkok" })}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
