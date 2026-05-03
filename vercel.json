@@ -3,5 +3,16 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "crons": [
+    {
+      "path": "/api/cron/scrape-agencies",
+      "schedule": "0 20 * * *"
+    }
+  ],
+  "functions": {
+    "app/api/cron/scrape-agencies/route.js": {
+      "maxDuration": 300
+    }
+  }
 }

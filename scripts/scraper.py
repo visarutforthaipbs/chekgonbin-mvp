@@ -20,6 +20,8 @@ import time
 import logging
 import schedule
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from datetime import datetime, timezone
 from bs4 import BeautifulSoup
 from supabase import create_client as create_supabase_client
@@ -30,7 +32,8 @@ load_dotenv(".env.local", override=False)  # no-op in CI; env vars injected by G
 # ── Config ─────────────────────────────────────────────────────────────────────
 BASE_URL   = "https://toea.doe.go.th/LBANK-WEB/main.php"
 ENCODING   = "tis-620"
-DELAY_SEC  = 1.5
+DELAY_SEC  = 2.0
+TIMEOUT    = 60  # seconds per request
 
 SUPABASE_URL         = os.environ["NEXT_PUBLIC_SUPABASE_URL"]
 SUPABASE_SERVICE_KEY = os.environ["SUPABASE_SERVICE_KEY"]
@@ -45,16 +48,32 @@ log = logging.getLogger(__name__)
 # ── Step 1: Session Initialization ─────────────────────────────────────────────
 def init_session() -> tuple[requests.Session, dict]:
     session = requests.Session()
+
+    # Retry up to 3 times on connection errors with exponential backoff
+    retry = Retry(
+        total=3,
+        backoff_factor=2,
+        status_forcelist=[429, 500, 502, 503, 504],
+        allowed_methods=["GET", "POST"],
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
+
     session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                       "AppleWebKit/537.36 (KHTML, like Gecko) "
                       "Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "th-TH,th;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1",
         "Referer": BASE_URL,
-        "Accept-Language": "th-TH,th;q=0.9,en;q=0.8",
     })
 
     log.info("Step 1 — Initialising session...")
-    resp = session.get(BASE_URL, params={"menu": "viewer_agent", "gmenu": "2"})
+    resp = session.get(BASE_URL, params={"menu": "viewer_agent", "gmenu": "2"}, timeout=TIMEOUT)
     resp.raise_for_status()
 
     html = resp.content.decode(ENCODING, errors="replace")
@@ -84,6 +103,7 @@ def fetch_list_page(session: requests.Session, hidden: dict, page: int) -> list[
         BASE_URL,
         params={"menu": "viewer_agent", "step": "1", "task": "search"},
         data=payload,
+        timeout=TIMEOUT,
     )
     resp.raise_for_status()
 
@@ -148,6 +168,7 @@ def fetch_detail(session: requests.Session, hidden: dict, cid: str) -> dict:
         BASE_URL,
         params={"menu": "viewer_agent", "smenu": "view", "step": "1"},
         data=payload,
+        timeout=TIMEOUT,
     )
     resp.raise_for_status()
 

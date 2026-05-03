@@ -1,9 +1,9 @@
-name: Daily Agency Scraper
+name: Daily Agency Scraper (Disabled — moved to Vercel Cron)
 
 on:
-  schedule:
-    - cron: "0 20 * * *"   # 03:00 Thailand time (UTC+7) every day
-  workflow_dispatch:        # Allow manual trigger from GitHub UI
+  # schedule disabled: scraper now runs via Vercel Cron at /api/cron/scrape-agencies
+  # - cron: "0 20 * * *"
+  workflow_dispatch: # keep for manual emergency runs
 
 jobs:
   scrape:
