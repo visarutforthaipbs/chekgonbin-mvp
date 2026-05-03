@@ -119,8 +119,8 @@ export default function PrivacyPolicyClient() {
         <div className="p-8 bg-slate-900 rounded-[1.5rem] md:rounded-[2.5rem] text-center flex flex-col items-center gap-4">
           <h2 className="text-white font-bold text-base md:text-lg">มีคำถามเกี่ยวกับความเป็นส่วนตัว?</h2>
           <p className="text-slate-400 text-xs md:text-sm mb-1">ติดต่อทีมงานดูแลข้อมูลส่วนบุคคลของเราได้ที่</p>
-          <a href="mailto:privacy@chekgonbin.com" className="px-5 py-2.5 md:px-6 md:py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-all font-medium text-sm md:text-base">
-            privacy@chekgonbin.com
+          <a href="mailto:thaimigrantwatchs@gmail.com" className="px-5 py-2.5 md:px-6 md:py-3 bg-white/10 text-white rounded-xl hover:bg-white/20 transition-all font-medium text-sm md:text-base">
+            thaimigrantwatchs@gmail.com
           </a>
         </div>
 
