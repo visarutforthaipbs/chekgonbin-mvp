@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Search, Building2, MapPin, Phone, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
+import { Search, Building2, MapPin, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, RefreshCw, AlertTriangle, ShieldCheck } from "lucide-react";
 
 export default function AgenciesClient() {
   const [query, setQuery]         = useState("");
@@ -70,6 +70,22 @@ export default function AgenciesClient() {
       </header>
 
       <div className="container mx-auto px-4 md:px-6 py-8 md:py-10 flex flex-col gap-6 max-w-4xl w-full">
+        {/* Scammer tactic warning */}
+        <div className="flex gap-3 p-4 md:p-5 bg-amber-50 border border-amber-200 rounded-xl md:rounded-2xl" role="alert">
+          <AlertTriangle className="text-amber-500 shrink-0 mt-0.5 w-5 h-5" aria-hidden="true" />
+          <div className="flex flex-col gap-1.5">
+            <p className="text-sm font-extrabold text-amber-900">รู้ทันกลโกง: มิจฉาชีพขโมยตัวตนบริษัทจริง</p>
+            <p className="text-xs md:text-sm text-amber-800 leading-relaxed">
+              มิจฉาชีพมักนำ <strong>ชื่อบริษัท และชื่อผู้มีอำนาจลงนามแทนนิติบุคคล</strong> ของบริษัทที่จดทะเบียนถูกกฎหมาย
+              ไปสร้างเว็บไซต์ปลอมหรือเพจ Facebook ปลอม แต่ใส่เบอร์โทรและช่องทางติดต่อของตัวเองเข้าไปแทน
+            </p>
+            <p className="text-xs md:text-sm font-bold text-amber-900">
+              ✅ ให้ยึด <span className="underline underline-offset-2">เบอร์โทรทางการที่จดทะเบียนไว้</span> ด้านล่างเป็นเกณฑ์
+              — อย่าโทรหาหรือโอนเงินผ่านช่องทางอื่นที่ไม่ตรงกับที่นี่
+            </p>
+          </div>
+        </div>
+
         <form onSubmit={handleSearch} className="relative flex flex-col md:block gap-2" role="search">
           <label htmlFor="agency-search" className="sr-only">ค้นหาบริษัทจัดหางาน</label>
           <div className="relative flex-1">
@@ -141,10 +157,15 @@ export default function AgenciesClient() {
                         </span>
                       )}
                       {agency.phone && (
-                        <span className="flex items-center gap-1.5">
-                          <Phone className="shrink-0 text-slate-400 w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
-                          {agency.phone}
-                        </span>
+                        <a
+                          href={`tel:${agency.phone.replace(/\s/g, "")}`}
+                          className="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors group w-fit md:ml-auto"
+                          title="เบอร์โทรทางการที่จดทะเบียนไว้กับกรมการจัดหางาน"
+                        >
+                          <ShieldCheck className="shrink-0 text-signal-green w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
+                          <span className="font-bold text-green-800 group-hover:underline">{agency.phone}</span>
+                          <span className="hidden sm:inline text-[9px] md:text-[10px] font-extrabold text-green-700 bg-green-100 border border-green-200 px-1.5 py-0.5 rounded-full uppercase tracking-wide whitespace-nowrap">เบอร์ทางการ</span>
+                        </a>
                       )}
                     </div>
                   </motion.div>
