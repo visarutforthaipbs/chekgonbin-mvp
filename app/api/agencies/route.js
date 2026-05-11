@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q")?.trim() ?? "";
+  const all = searchParams.get("all") === "1";
   const page = Math.max(1, parseInt(searchParams.get("page") ?? "1"));
   const limit = 20;
   const offset = (page - 1) * limit;
@@ -11,9 +12,19 @@ export async function GET(request) {
   const supabase = createAdminClient();
   let query = supabase
     .from("agencies")
-    .select("name_th, name_en, license_no, province, phone, company_status, license_expiry", { count: "exact" })
-    .range(offset, offset + limit - 1)
+    .select(`
+      juristic_id, name_th, name_en, license_no, province, phone, company_status, license_expiry,
+      cap_amt, paid_amt, share_qty, share_vol, jp_stat_code, fiscal_year,
+      total_asset, total_income, net_profit, total_equity,
+      current_ratio, debt_to_equity, return_on_asset, return_on_equity,
+      net_profit_margin, gross_profit_margin, business_size_code, company_age,
+      committees, financials, financials_prev, dbd_scraped_at
+    `, { count: "exact" })
     .order("name_th");
+
+  if (!all) {
+    query = query.range(offset, offset + limit - 1);
+  }
 
   if (q) {
     query = query.or(`name_th.ilike.%${q}%,name_en.ilike.%${q}%,license_no.ilike.%${q}%`);

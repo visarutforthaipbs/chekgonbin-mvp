@@ -3,3 +3,5 @@ beautifulsoup4
 supabase
 python-dotenv
 schedule
+curl-cffi
+cryptography

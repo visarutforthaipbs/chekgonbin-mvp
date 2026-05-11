@@ -1,41 +1,390 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
-import { Search, Building2, MapPin, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight, RefreshCw, AlertTriangle, ShieldCheck } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import Fuse from "fuse.js";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  Search, 
+  Building2, 
+  MapPin, 
+  CheckCircle2, 
+  AlertCircle, 
+  ChevronLeft, 
+  ChevronRight, 
+  RefreshCw, 
+  AlertTriangle, 
+  ShieldCheck,
+  ChevronDown,
+  ChevronUp,
+  Users,
+  TrendingUp,
+  Banknote,
+  Scale,
+  Calendar,
+  Activity
+} from "lucide-react";
+
+const PAGE_SIZE = 20;
+
+const normalizeSearchText = (text = "") =>
+  text
+    .toString()
+    .toLowerCase()
+    .replace(/^บริษัทจัดหางาน\s*/i, "")
+    .replace(/^บริษัท\s*/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+const formatCurrency = (val) => {
+  if (val === null || val === undefined) return "ไม่พบข้อมูล";
+  return new Intl.NumberFormat("th-TH", {
+    style: "decimal",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(val);
+};
+
+const formatMillions = (val) => {
+  if (val === null || val === undefined) return "ไม่พบข้อมูล";
+  const millions = val / 1_000_000;
+  return new Intl.NumberFormat("th-TH", {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 2,
+  }).format(millions) + " ล้านบาท";
+};
+
+const getFlagEmoji = (countryCode) => {
+  if (!countryCode || countryCode.length !== 2) return countryCode;
+  const codePoints = countryCode
+    .toUpperCase()
+    .split("")
+    .map(char => 127397 + char.charCodeAt(0));
+  return String.fromCodePoint(...codePoints);
+};
+
+function AgencyCard({ agency, index }) {
+  const [expanded, setExpanded] = useState(false);
+
+  const getBusinessSizeLabel = (code) => {
+    switch (code) {
+      case "S": return { label: "ธุรกิจขนาดเล็ก (S)", color: "bg-blue-50 text-blue-700 border-blue-100" };
+      case "M": return { label: "ธุรกิจขนาดกลาง (M)", color: "bg-indigo-50 text-indigo-700 border-indigo-100" };
+      case "L": return { label: "ธุรกิจขนาดใหญ่ (L)", color: "bg-purple-50 text-purple-700 border-purple-100" };
+      default: return null;
+    }
+  };
+
+  const bSize = getBusinessSizeLabel(agency.business_size_code);
+
+  // Derive human-friendly stability indicators
+  const getStabilityInfo = () => {
+    const indicators = [];
+    if (agency.company_age) {
+      indicators.push({
+        label: `เปิดมาแล้ว ${agency.company_age} ปี`,
+        icon: <Calendar size={12} />,
+        color: "text-blue-700 bg-blue-50 border-blue-100"
+      });
+    }
+    
+    if (agency.net_profit > 0) {
+      indicators.push({
+        label: "ผลประกอบการมีกำไร",
+        icon: <TrendingUp size={12} />,
+        color: "text-green-700 bg-green-50 border-green-100"
+      });
+    } else if (agency.net_profit < 0) {
+      indicators.push({
+        label: "ผลประกอบการขาดทุน",
+        icon: <Activity size={12} />,
+        color: "text-red-700 bg-red-50 border-red-100"
+      });
+    }
+
+    if (agency.current_ratio > 1.2) {
+      indicators.push({
+        label: "สภาพคล่องทางการเงินสูง",
+        icon: <ShieldCheck size={12} />,
+        color: "text-indigo-700 bg-indigo-50 border-indigo-100"
+      });
+    }
+
+    return indicators;
+  };
+
+  const stabilityIndicators = getStabilityInfo();
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.03 }}
+      className="bg-white border border-slate-100 rounded-xl md:rounded-2xl overflow-hidden shadow-sm hover:border-brand-primary/30 hover:shadow-md transition-all"
+    >
+      <div className="p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+        <div className="flex-1 flex flex-col gap-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h2 className="font-bold text-slate-900 text-sm md:text-base leading-tight">{agency.name_th}</h2>
+            {agency.company_status && (
+              <span className={`text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide ${
+                agency.company_status.includes("ปกติ") || agency.company_status === "active"
+                  ? "bg-green-50 text-green-700 border border-green-100"
+                  : "bg-slate-100 text-slate-500 border border-slate-200"
+              }`}>
+                {agency.company_status}
+              </span>
+            )}
+            {bSize && (
+              <span className={`text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide border ${bSize.color}`}>
+                {bSize.label}
+              </span>
+            )}
+            {agency.company_age && (
+              <span className="text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wide">
+                เปิดมาแล้ว {agency.company_age} ปี
+              </span>
+            )}
+          </div>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            {agency.name_en && <p className="text-xs md:text-sm text-slate-500 leading-tight">{agency.name_en}</p>}
+            {agency.cap_amt && (
+              <p className="text-[10px] md:text-xs text-slate-400 flex items-center gap-1">
+                <Banknote size={12} className="shrink-0" />
+                ทุนจดทะเบียน: {formatMillions(agency.cap_amt)}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-x-4 gap-y-1.5 text-xs md:text-sm text-slate-500 md:text-right shrink-0 border-t md:border-t-0 pt-3 md:pt-0 mt-1 md:mt-0 border-slate-50">
+          <div className="flex flex-wrap md:flex-col lg:flex-row gap-x-4 gap-y-1.5 md:items-end lg:items-center">
+            {agency.license_no && (
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 className="text-signal-green shrink-0 w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
+                <span className="font-medium text-slate-700">{agency.license_no}</span>
+              </span>
+            )}
+            {agency.province && (
+              <span className="flex items-center gap-1.5">
+                <MapPin className="shrink-0 text-slate-400 w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
+                {agency.province}
+              </span>
+            )}
+          </div>
+          
+          {agency.phone && (
+            <a
+              href={`tel:${agency.phone.replace(/\s/g, "")}`}
+              className="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors group w-fit md:ml-auto"
+              title="เบอร์โทรทางการที่จดทะเบียนไว้กับกรมการจัดหางาน"
+            >
+              <ShieldCheck className="shrink-0 text-signal-green w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
+              <span className="font-bold text-green-800 group-hover:underline">{agency.phone}</span>
+              <span className="hidden sm:inline text-[9px] md:text-[10px] font-extrabold text-green-700 bg-green-100 border border-green-200 px-1.5 py-0.5 rounded-full uppercase tracking-wide whitespace-nowrap">เบอร์ทางการ</span>
+            </a>
+          )}
+        </div>
+      </div>
+
+      {/* Layer 3: Conscious Deep-Dive - Progressive Disclosure */}
+      <button 
+        onClick={() => setExpanded(!expanded)}
+        className="w-full py-2 bg-slate-50/50 hover:bg-slate-100/80 border-t border-slate-50 transition-colors flex items-center justify-center gap-2 text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest"
+      >
+        {expanded ? (
+          <>ปิดรายละเอียด <ChevronUp size={14} /></>
+        ) : (
+          <>ดูข้อมูล DBD & กรรมการ <ChevronDown size={14} /></>
+        )}
+      </button>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden bg-slate-50/30 border-t border-slate-100"
+          >
+            <div className="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              {/* Committees Section */}
+              <div className="flex flex-col gap-3">
+                <h3 className="text-[11px] md:text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+                  <Users size={14} className="text-brand-primary" />
+                  รายชื่อกรรมการ (Committees)
+                </h3>
+                <div className="flex flex-col gap-2">
+                  {agency.committees && Array.isArray(agency.committees) ? (
+                    agency.committees.map((member, i) => (
+                      <div key={i} className="text-xs md:text-sm text-slate-600 flex items-start gap-2">
+                        <span className="text-slate-300 font-mono mt-0.5">{i + 1}.</span>
+                        <div className="flex items-center gap-2">
+                          <span>{member.titleName || ""}{member.firstName} {member.lastName}</span>
+                          {member.ntCode && (
+                            <span className="text-base" title={member.ntCode}>
+                              {getFlagEmoji(member.ntCode)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-xs text-slate-400 italic">ไม่พบข้อมูลกรรมการ</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Financial Summary Section */}
+              <div className="flex flex-col gap-3">
+                <h3 className="text-[11px] md:text-xs font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+                  <TrendingUp size={14} className="text-brand-primary" />
+                  สรุปความมั่นคงทางการเงิน ปี {agency.fiscal_year || "-"}
+                </h3>
+                
+                {/* Meaningful Stability Badges */}
+                <div className="flex flex-wrap gap-2">
+                  {stabilityIndicators.map((indicator, i) => (
+                    <div key={i} className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg border text-[10px] md:text-xs font-bold ${indicator.color}`}>
+                      {indicator.icon}
+                      {indicator.label}
+                    </div>
+                  ))}
+                  {stabilityIndicators.length === 0 && (
+                    <p className="text-xs text-slate-400 italic">ไม่มีข้อมูลสรุปความมั่นคง</p>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 mt-1">
+                  <div className="p-3 bg-white border border-slate-100 rounded-xl shadow-xs">
+                    <span className="block text-[9px] text-slate-400 font-bold uppercase tracking-tighter mb-1">รายได้รวม</span>
+                    <span className="block text-xs md:text-sm font-black text-slate-800">{formatMillions(agency.total_income)}</span>
+                  </div>
+                  <div className="p-3 bg-white border border-slate-100 rounded-xl shadow-xs">
+                    <span className="block text-[9px] text-slate-400 font-bold uppercase tracking-tighter mb-1">กำไร/ขาดทุนสุทธิ</span>
+                    <span className={`block text-xs md:text-sm font-black ${agency.net_profit >= 0 ? "text-green-600" : "text-red-600"}`}>
+                      {formatMillions(agency.net_profit)}
+                    </span>
+                  </div>
+                  <div className="p-3 bg-white border border-slate-100 rounded-xl shadow-xs">
+                    <span className="block text-[9px] text-slate-400 font-bold uppercase tracking-tighter mb-1">สินทรัพย์รวม</span>
+                    <span className="block text-xs md:text-sm font-black text-slate-800">{formatMillions(agency.total_asset)}</span>
+                  </div>
+                  <div className="p-3 bg-white border border-slate-100 rounded-xl shadow-xs">
+                    <span className="block text-[9px] text-slate-400 font-bold uppercase tracking-tighter mb-1">ส่วนผู้ถือหุ้น</span>
+                    <span className="block text-xs md:text-sm font-black text-slate-800">{formatMillions(agency.total_equity)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {agency.dbd_scraped_at && (
+              <div className="px-4 md:px-6 pb-4 flex items-center justify-end gap-1.5">
+                <RefreshCw size={10} className="text-slate-300" />
+                <span className="text-[9px] font-medium text-slate-400">
+                  DBD Data Refreshed: {new Date(agency.dbd_scraped_at).toLocaleDateString("th-TH")}
+                </span>
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
 
 export default function AgenciesClient() {
-  const [query, setQuery]         = useState("");
-  const [results, setResults]     = useState([]);
-  const [total, setTotal]         = useState(0);
-  const [page, setPage]           = useState(1);
-  const [loading, setLoading]     = useState(false);
-  const [searched, setSearched]   = useState(false);
+  const [query, setQuery] = useState("");
+  const [allAgencies, setAllAgencies] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [searched, setSearched] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
 
-  const search = useCallback(async (q, p = 1) => {
-    setLoading(true);
-    setSearched(true);
-    try {
-      const res = await fetch(`/api/agencies?q=${encodeURIComponent(q)}&page=${p}`);
-      const json = await res.json();
-      setResults(json.data ?? []);
-      setTotal(json.total ?? 0);
-      setPage(p);
-      if (json.last_updated) setLastUpdated(json.last_updated);
-    } finally {
-      setLoading(false);
-    }
+  useEffect(() => {
+    let mounted = true;
+
+    const loadAll = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/agencies?all=1");
+        const json = await res.json();
+        if (!mounted) return;
+
+        setAllAgencies(json.data ?? []);
+        if (json.last_updated) setLastUpdated(json.last_updated);
+        setSearched(true);
+      } catch (e) {
+        console.error("Load agencies failed:", e);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    loadAll();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
-  useEffect(() => { search(""); }, [search]);
+  const fuse = useMemo(() => {
+    if (!allAgencies.length) return null;
+
+    return new Fuse(allAgencies, {
+      includeScore: true,
+      ignoreLocation: true,
+      threshold: 0.35,
+      minMatchCharLength: 2,
+      keys: [
+        { name: "name_th", weight: 0.55 },
+        { name: "name_en", weight: 0.2 },
+        { name: "license_no", weight: 0.15 },
+        { name: "province", weight: 0.1 },
+      ],
+      getFn: (obj, path) => normalizeSearchText(obj?.[path]),
+    });
+  }, [allAgencies]);
+
+  const filteredResults = useMemo(() => {
+    const normalizedQuery = normalizeSearchText(query);
+    if (!normalizedQuery) return allAgencies;
+    if (!fuse) return [];
+
+    return fuse.search(normalizedQuery).map((result) => result.item);
+  }, [allAgencies, fuse, query]);
+
+  const total = filteredResults.length;
+  const totalPages = Math.ceil(total / PAGE_SIZE) || 1;
+
+  const results = useMemo(() => {
+    const start = (page - 1) * PAGE_SIZE;
+    return filteredResults.slice(start, start + PAGE_SIZE);
+  }, [filteredResults, page]);
 
   const handleSearch = (e) => {
     e.preventDefault();
-    search(query, 1);
   };
 
-  const totalPages = Math.ceil(total / 20);
+  const handleQueryChange = (e) => {
+    setQuery(e.target.value);
+    setPage(1);
+  };
+
+  const goToPage = (nextPage) => {
+    setPage(Math.max(1, Math.min(nextPage, totalPages)));
+  };
+
+  const handleRefresh = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/agencies?all=1");
+      const json = await res.json();
+      setAllAgencies(json.data ?? []);
+      if (json.last_updated) setLastUpdated(json.last_updated);
+    } catch (e) {
+      console.error("Refresh failed:", e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="w-full min-h-screen bg-slate-50 flex flex-col items-center">
@@ -76,7 +425,7 @@ export default function AgenciesClient() {
           <div className="flex flex-col gap-1.5">
             <p className="text-sm font-extrabold text-amber-900">รู้ทันกลโกง: มิจฉาชีพขโมยตัวตนบริษัทจริง</p>
             <p className="text-xs md:text-sm text-amber-800 leading-relaxed">
-              มิจฉาชีพมักนำ <strong>ชื่อบริษัท และชื่อผู้มีอำนาจลงนามแทนนิติบุคคล</strong> ของบริษัทที่จดทะเบียนถูกกฎหมาย
+              มิจฉาชีพมักนำ <strong>ชื่อบริษัท และชื่อผู้มีอำนาจลงนามแทิติบุคคล</strong> ของบริษัทที่จดทะเบียนถูกกฎหมาย
               ไปสร้างเว็บไซต์ปลอมหรือเพจ Facebook ปลอม แต่ใส่เบอร์โทรและช่องทางติดต่อของตัวเองเข้าไปแทน
             </p>
             <p className="text-xs md:text-sm font-bold text-amber-900">
@@ -94,14 +443,15 @@ export default function AgenciesClient() {
               id="agency-search"
               type="search"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="ชื่อบริษัท หรือเลขที่ใบอนุญาต..."
+              onChange={handleQueryChange}
+              placeholder="พิมพ์ชื่อบริษัท/เลขใบอนุญาต (รองรับสะกดใกล้เคียง)"
               className="w-full pl-11 pr-4 md:pr-32 py-3.5 md:py-4 bg-white border-2 border-slate-200 rounded-xl md:rounded-2xl focus:border-brand-primary outline-none transition-all text-base md:text-lg shadow-sm"
             />
           </div>
-          <button type="submit"
+          <button type="button"
+            onClick={handleRefresh}
             className="md:absolute md:right-2 md:top-1/2 md:-translate-y-1/2 px-5 py-3 md:py-2.5 bg-brand-primary text-white rounded-xl font-bold hover:bg-brand-primary/90 transition-all shadow-md md:shadow-none">
-            ค้นหา
+            รีเฟรช
           </button>
         </form>
 
@@ -120,55 +470,7 @@ export default function AgenciesClient() {
             ) : (
               <div className="flex flex-col gap-3" aria-label="รายชื่อบริษัทจัดหางาน">
                 {results.map((agency, i) => (
-                  <motion.div
-                    key={`${agency.license_no}-${i}`}
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.03 }}
-                    className="bg-white border border-slate-100 rounded-xl md:rounded-2xl p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-4 shadow-sm hover:border-brand-primary/30 hover:shadow-md transition-all"
-                  >
-                    <div className="flex-1 flex flex-col gap-1">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h2 className="font-bold text-slate-900 text-sm md:text-base leading-tight">{agency.name_th}</h2>
-                        {agency.company_status && (
-                          <span className={`text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide ${
-                            agency.company_status.includes("ปกติ") || agency.company_status === "active"
-                              ? "bg-green-50 text-green-700"
-                              : "bg-slate-100 text-slate-500"
-                          }`}>
-                            {agency.company_status}
-                          </span>
-                        )}
-                      </div>
-                      {agency.name_en && <p className="text-xs md:text-sm text-slate-500 leading-tight">{agency.name_en}</p>}
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-x-4 gap-y-1.5 text-xs md:text-sm text-slate-500 md:text-right shrink-0 border-t md:border-t-0 pt-3 md:pt-0 mt-1 md:mt-0 border-slate-50">
-                      {agency.license_no && (
-                        <span className="flex items-center gap-1.5">
-                          <CheckCircle2 className="text-signal-green shrink-0 w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
-                          <span className="font-medium text-slate-700">{agency.license_no}</span>
-                        </span>
-                      )}
-                      {agency.province && (
-                        <span className="flex items-center gap-1.5">
-                          <MapPin className="shrink-0 text-slate-400 w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
-                          {agency.province}
-                        </span>
-                      )}
-                      {agency.phone && (
-                        <a
-                          href={`tel:${agency.phone.replace(/\s/g, "")}`}
-                          className="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors group w-fit md:ml-auto"
-                          title="เบอร์โทรทางการที่จดทะเบียนไว้กับกรมการจัดหางาน"
-                        >
-                          <ShieldCheck className="shrink-0 text-signal-green w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
-                          <span className="font-bold text-green-800 group-hover:underline">{agency.phone}</span>
-                          <span className="hidden sm:inline text-[9px] md:text-[10px] font-extrabold text-green-700 bg-green-100 border border-green-200 px-1.5 py-0.5 rounded-full uppercase tracking-wide whitespace-nowrap">เบอร์ทางการ</span>
-                        </a>
-                      )}
-                    </div>
-                  </motion.div>
+                  <AgencyCard key={agency.juristic_id || `${agency.license_no}-${i}`} agency={agency} index={i} />
                 ))}
               </div>
             )}
@@ -178,7 +480,7 @@ export default function AgenciesClient() {
               <nav aria-label="การแบ่งหน้า" className="flex items-center justify-center gap-4 pt-4">
                 <button
                   type="button"
-                  onClick={() => search(query, page - 1)}
+                  onClick={() => goToPage(page - 1)}
                   disabled={page === 1}
                   aria-label="หน้าก่อนหน้า"
                   className="p-2 rounded-xl border border-slate-200 hover:border-brand-primary disabled:opacity-30 transition-all"
@@ -190,7 +492,7 @@ export default function AgenciesClient() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => search(query, page + 1)}
+                  onClick={() => goToPage(page + 1)}
                   disabled={page === totalPages}
                   aria-label="หน้าถัดไป"
                   className="p-2 rounded-xl border border-slate-200 hover:border-brand-primary disabled:opacity-30 transition-all"

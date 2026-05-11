@@ -1,0 +1,1339 @@
+===== 2026-05-11 16:23:46 Starting DBD scrape =====
+2026-05-11 16:23:47,053 INFO Loaded 148 companies from CSV
+2026-05-11 16:23:47,145 INFO Token refreshed | encKey prefix: YvpSgj
+2026-05-11 16:23:47,146 INFO [1/148] บริษัทจัดหางาน ฟาเอซ (ประเทศไทย) จำกัด
+2026-05-11 16:23:47,197 INFO   info                 -> OK
+2026-05-11 16:23:47,244 INFO   committees           -> OK
+2026-05-11 16:23:47,338 INFO   committee_signs      -> OK
+2026-05-11 16:23:47,401 INFO   mergers              -> OK
+2026-05-11 16:23:47,442 INFO   financials           -> OK
+2026-05-11 16:23:47,482 INFO   financials_prev      -> OK
+2026-05-11 16:23:47,872 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105520008760 "HTTP/2 200 OK"
+2026-05-11 16:23:47,886 INFO   ✓ Supabase updated
+2026-05-11 16:23:47,886 INFO [2/148] บริษัทจัดหางาน ไทยเลเบอร์ ซัพพลาย จำกัด
+2026-05-11 16:23:47,928 INFO   info                 -> OK
+2026-05-11 16:23:47,962 INFO   committees           -> OK
+2026-05-11 16:23:48,002 INFO   committee_signs      -> OK
+2026-05-11 16:23:48,052 INFO   mergers              -> OK
+2026-05-11 16:23:48,101 INFO   financials           -> OK
+2026-05-11 16:23:48,143 INFO   financials_prev      -> OK
+2026-05-11 16:23:48,556 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105525013192 "HTTP/2 200 OK"
+2026-05-11 16:23:48,567 INFO   ✓ Supabase updated
+2026-05-11 16:23:48,567 INFO [3/148] บริษัทจัดหางาน ลิ้งค์โปรอินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:23:48,614 INFO   info                 -> OK
+2026-05-11 16:23:48,648 INFO   committees           -> OK
+2026-05-11 16:23:48,683 INFO   committee_signs      -> OK
+2026-05-11 16:23:48,717 INFO   mergers              -> OK
+2026-05-11 16:23:48,773 INFO   financials           -> OK
+2026-05-11 16:23:48,823 INFO   financials_prev      -> OK
+2026-05-11 16:23:49,090 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105534067381 "HTTP/2 200 OK"
+2026-05-11 16:23:49,097 INFO   ✓ Supabase updated
+2026-05-11 16:23:49,097 INFO [4/148] บริษัทจัดหางาน สยาม เวิร์ค แทรเวล จำกัด
+2026-05-11 16:23:49,142 INFO   info                 -> OK
+2026-05-11 16:23:49,178 INFO   committees           -> OK
+2026-05-11 16:23:49,210 INFO   committee_signs      -> OK
+2026-05-11 16:23:49,246 INFO   mergers              -> OK
+2026-05-11 16:23:49,288 INFO   financials           -> OK
+2026-05-11 16:23:49,329 INFO   financials_prev      -> OK
+2026-05-11 16:23:49,504 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105538041653 "HTTP/2 200 OK"
+2026-05-11 16:23:49,514 INFO   ✓ Supabase updated
+2026-05-11 16:23:49,514 INFO [5/148] บริษัทจัดหางาน ซี แอล ซี อินเตอร์เนชั่นแนล (1999) จำกัด
+2026-05-11 16:23:49,556 INFO   info                 -> OK
+2026-05-11 16:23:49,591 INFO   committees           -> OK
+2026-05-11 16:23:49,632 INFO   committee_signs      -> OK
+2026-05-11 16:23:49,667 INFO   mergers              -> OK
+2026-05-11 16:23:49,713 INFO   financials           -> OK
+2026-05-11 16:23:49,753 INFO   financials_prev      -> OK
+2026-05-11 16:23:49,967 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105542042944 "HTTP/2 200 OK"
+2026-05-11 16:23:49,979 INFO   ✓ Supabase updated
+2026-05-11 16:23:49,979 INFO [6/148] บริษัทจัดหางาน วี ดรากอน จำกัด
+2026-05-11 16:23:50,068 INFO   info                 -> OK
+2026-05-11 16:23:50,106 INFO   committees           -> OK
+2026-05-11 16:23:50,141 INFO   committee_signs      -> OK
+2026-05-11 16:23:50,180 INFO   mergers              -> OK
+2026-05-11 16:23:50,217 INFO   financials           -> OK
+2026-05-11 16:23:50,260 INFO   financials_prev      -> OK
+2026-05-11 16:23:50,491 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105542098125 "HTTP/2 200 OK"
+2026-05-11 16:23:50,502 INFO   ✓ Supabase updated
+2026-05-11 16:23:50,502 INFO [7/148] บริษัทจัดหางาน ที ดับบลิว จำกัด
+2026-05-11 16:23:50,544 INFO   info                 -> OK
+2026-05-11 16:23:50,593 INFO   committees           -> OK
+2026-05-11 16:23:50,642 INFO   committee_signs      -> OK
+2026-05-11 16:23:50,738 INFO   mergers              -> OK
+2026-05-11 16:23:50,793 INFO   financials           -> OK
+2026-05-11 16:23:50,833 INFO   financials_prev      -> OK
+2026-05-11 16:23:51,018 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105543098013 "HTTP/2 200 OK"
+2026-05-11 16:23:51,032 INFO   ✓ Supabase updated
+2026-05-11 16:23:51,033 INFO [8/148] บริษัทจัดหางาน ที.เอช.กรีน จำกัด
+2026-05-11 16:23:51,082 INFO   info                 -> OK
+2026-05-11 16:23:52,764 INFO   committees           -> OK
+2026-05-11 16:23:52,812 INFO   committee_signs      -> OK
+2026-05-11 16:23:52,858 INFO   mergers              -> OK
+2026-05-11 16:23:52,901 INFO   financials           -> OK
+2026-05-11 16:23:52,941 INFO   financials_prev      -> OK
+2026-05-11 16:23:53,165 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105545126715 "HTTP/2 200 OK"
+2026-05-11 16:23:53,175 INFO   ✓ Supabase updated
+2026-05-11 16:23:53,175 INFO [9/148] บริษัทจัดหางาน สุวรรณภูมิ ฮิวแมน ซัพพลาย จำกัด
+2026-05-11 16:23:59,406 INFO   info                 -> OK
+2026-05-11 16:23:59,442 INFO   committees           -> OK
+2026-05-11 16:24:01,569 INFO   committee_signs      -> OK
+2026-05-11 16:24:02,027 INFO   mergers              -> OK
+2026-05-11 16:24:02,161 INFO   financials           -> OK
+2026-05-11 16:24:02,218 INFO   financials_prev      -> OK
+2026-05-11 16:24:02,552 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105550009764 "HTTP/2 200 OK"
+2026-05-11 16:24:02,566 INFO   ✓ Supabase updated
+2026-05-11 16:24:02,566 INFO [10/148] บริษัทจัดหางาน มีร่าห์ บิซซิเนส กรุ๊ป จำกัด
+2026-05-11 16:24:02,627 INFO   info                 -> OK
+2026-05-11 16:24:02,677 INFO   committees           -> OK
+2026-05-11 16:24:02,739 INFO   committee_signs      -> OK
+2026-05-11 16:24:02,801 INFO   mergers              -> OK
+2026-05-11 16:24:02,842 INFO   financials           -> OK
+2026-05-11 16:24:02,885 INFO   financials_prev      -> OK
+2026-05-11 16:24:03,107 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105556188016 "HTTP/2 200 OK"
+2026-05-11 16:24:03,122 INFO   ✓ Supabase updated
+2026-05-11 16:24:03,122 INFO [11/148] บริษัทจัดหางาน อัล-ตักวา เอ็นเตอร์ไพรช์ จำกัด
+2026-05-11 16:24:03,170 INFO   info                 -> OK
+2026-05-11 16:24:03,208 INFO   committees           -> OK
+2026-05-11 16:24:03,249 INFO   committee_signs      -> OK
+2026-05-11 16:24:03,293 INFO   mergers              -> OK
+2026-05-11 16:24:03,339 INFO   financials           -> OK
+2026-05-11 16:24:03,382 INFO   financials_prev      -> OK
+2026-05-11 16:24:03,608 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105558006985 "HTTP/2 200 OK"
+2026-05-11 16:24:03,621 INFO   ✓ Supabase updated
+2026-05-11 16:24:03,621 INFO [12/148] บริษัทจัดหางาน เอพี โกลบอล จำกัด
+2026-05-11 16:24:03,759 INFO   info                 -> OK
+2026-05-11 16:24:03,971 INFO   committees           -> OK
+2026-05-11 16:24:04,014 INFO   committee_signs      -> OK
+2026-05-11 16:24:04,121 INFO   mergers              -> OK
+2026-05-11 16:24:04,174 INFO   financials           -> OK
+2026-05-11 16:24:04,228 INFO   financials_prev      -> OK
+2026-05-11 16:24:04,435 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105559062111 "HTTP/2 200 OK"
+2026-05-11 16:24:04,445 INFO   ✓ Supabase updated
+2026-05-11 16:24:04,445 INFO [13/148] บริษัทจัดหางาน เอ็ม ที เวิร์ค จำกัด
+2026-05-11 16:24:04,498 INFO   info                 -> OK
+2026-05-11 16:24:04,540 INFO   committees           -> OK
+2026-05-11 16:24:04,645 INFO   committee_signs      -> OK
+2026-05-11 16:24:04,691 INFO   mergers              -> OK
+2026-05-11 16:24:04,753 INFO   financials           -> OK
+2026-05-11 16:24:04,804 INFO   financials_prev      -> OK
+2026-05-11 16:24:05,018 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105560004986 "HTTP/2 200 OK"
+2026-05-11 16:24:05,027 INFO   ✓ Supabase updated
+2026-05-11 16:24:05,027 INFO [14/148] บริษัทจัดหางาน เอ็นเอ บางกอก จำกัด
+2026-05-11 16:24:05,077 INFO   info                 -> OK
+2026-05-11 16:24:05,201 INFO   committees           -> OK
+2026-05-11 16:24:05,269 INFO   committee_signs      -> OK
+2026-05-11 16:24:05,364 INFO   mergers              -> OK
+2026-05-11 16:24:05,553 INFO   financials           -> OK
+2026-05-11 16:24:05,703 INFO   financials_prev      -> OK
+2026-05-11 16:24:05,914 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105560122504 "HTTP/2 200 OK"
+2026-05-11 16:24:05,921 INFO   ✓ Supabase updated
+2026-05-11 16:24:05,921 INFO [15/148] บริษัทจัดหางาน ไท่ เม่ย ห่าว จำกัด
+2026-05-11 16:24:06,119 INFO   info                 -> OK
+2026-05-11 16:24:06,218 INFO   committees           -> OK
+2026-05-11 16:24:06,265 INFO   committee_signs      -> OK
+2026-05-11 16:24:06,307 INFO   mergers              -> OK
+2026-05-11 16:24:06,352 INFO   financials           -> OK
+2026-05-11 16:24:06,400 INFO   financials_prev      -> OK
+2026-05-11 16:24:06,602 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105560142629 "HTTP/2 200 OK"
+2026-05-11 16:24:06,610 INFO   ✓ Supabase updated
+2026-05-11 16:24:06,610 INFO [16/148] บริษัทจัดหางาน ไทยนิจิ จินไซซัพพอร์ท จำกัด
+2026-05-11 16:24:06,650 INFO   info                 -> OK
+2026-05-11 16:24:06,795 INFO   committees           -> OK
+2026-05-11 16:24:06,838 INFO   committee_signs      -> OK
+2026-05-11 16:24:06,890 INFO   mergers              -> OK
+2026-05-11 16:24:06,933 INFO   financials           -> OK
+2026-05-11 16:24:07,019 INFO   financials_prev      -> OK
+2026-05-11 16:24:07,269 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105561155147 "HTTP/2 200 OK"
+2026-05-11 16:24:07,278 INFO   ✓ Supabase updated
+2026-05-11 16:24:07,278 INFO [17/148] บริษัทจัดหางาน ต้าจี๋ บิสซิเนส จำกัด
+2026-05-11 16:24:07,348 INFO   info                 -> OK
+2026-05-11 16:24:07,397 INFO   committees           -> OK
+2026-05-11 16:24:07,447 INFO   committee_signs      -> OK
+2026-05-11 16:24:07,502 INFO   mergers              -> OK
+2026-05-11 16:24:07,549 INFO   financials           -> OK
+2026-05-11 16:24:07,592 INFO   financials_prev      -> OK
+2026-05-11 16:24:07,801 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0135554014371 "HTTP/2 200 OK"
+2026-05-11 16:24:07,810 INFO   ✓ Supabase updated
+2026-05-11 16:24:07,810 INFO [18/148] บริษัทจัดหางาน แกรนด์เบ็ตเตอร์ จำกัด
+2026-05-11 16:24:07,865 INFO   info                 -> OK
+2026-05-11 16:24:07,900 INFO   committees           -> OK
+2026-05-11 16:24:07,936 INFO   committee_signs      -> OK
+2026-05-11 16:24:07,984 INFO   mergers              -> OK
+2026-05-11 16:24:08,098 INFO   financials           -> OK
+2026-05-11 16:24:08,146 INFO   financials_prev      -> OK
+2026-05-11 16:24:08,332 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0305549000587 "HTTP/2 200 OK"
+2026-05-11 16:24:08,344 INFO   ✓ Supabase updated
+2026-05-11 16:24:08,344 INFO [19/148] บริษัทจัดหางาน บี.เอ็ม.เอ็ม.บิลเลี่ยน จำกัด
+2026-05-11 16:24:08,381 INFO   info                 -> OK
+2026-05-11 16:24:08,412 INFO   committees           -> OK
+2026-05-11 16:24:08,450 INFO   committee_signs      -> OK
+2026-05-11 16:24:08,495 INFO   mergers              -> OK
+2026-05-11 16:24:08,549 INFO   financials           -> OK
+2026-05-11 16:24:08,593 INFO   financials_prev      -> OK
+2026-05-11 16:24:08,845 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0305553002106 "HTTP/2 200 OK"
+2026-05-11 16:24:08,856 INFO   ✓ Supabase updated
+2026-05-11 16:24:08,856 INFO [20/148] บริษัทจัดหางาน เอชทูโอ แคเรียร์ (ไทยแลนด์) จำกัด
+2026-05-11 16:24:09,097 INFO   info                 -> OK
+2026-05-11 16:24:09,145 INFO   committees           -> OK
+2026-05-11 16:24:09,188 INFO   committee_signs      -> OK
+2026-05-11 16:24:09,246 INFO   mergers              -> OK
+2026-05-11 16:24:09,372 INFO   financials           -> OK
+2026-05-11 16:24:09,414 INFO   financials_prev      -> OK
+2026-05-11 16:24:09,605 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0345562001061 "HTTP/2 200 OK"
+2026-05-11 16:24:09,617 INFO   ✓ Supabase updated
+2026-05-11 16:24:09,617 INFO [21/148] บริษัทจัดหางาน อุดรเวิลด์บริดจ์ อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:24:09,658 INFO   info                 -> OK
+2026-05-11 16:24:09,699 INFO   committees           -> OK
+2026-05-11 16:24:09,738 INFO   committee_signs      -> OK
+2026-05-11 16:24:09,778 INFO   mergers              -> OK
+2026-05-11 16:24:09,895 INFO   financials           -> OK
+2026-05-11 16:24:09,951 INFO   financials_prev      -> OK
+2026-05-11 16:24:10,133 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0415552000435 "HTTP/2 200 OK"
+2026-05-11 16:24:10,140 INFO   ✓ Supabase updated
+2026-05-11 16:24:10,140 INFO [22/148] บริษัทจัดหางาน ไดชิน จำกัด
+2026-05-11 16:24:10,189 INFO   info                 -> OK
+2026-05-11 16:24:10,246 INFO   committees           -> OK
+2026-05-11 16:24:10,415 INFO   committee_signs      -> OK
+2026-05-11 16:24:10,450 INFO   mergers              -> OK
+2026-05-11 16:24:10,504 INFO   financials           -> OK
+2026-05-11 16:24:10,565 INFO   financials_prev      -> OK
+2026-05-11 16:24:10,752 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0505562011625 "HTTP/2 200 OK"
+2026-05-11 16:24:10,766 INFO   ✓ Supabase updated
+2026-05-11 16:24:10,766 INFO [23/148] บริษัทจัดหางาน เวิร์ค อินเตอร์เนชั่นแนล18 จำกัด
+2026-05-11 16:24:10,805 INFO   info                 -> OK
+2026-05-11 16:24:10,941 INFO   committees           -> OK
+2026-05-11 16:24:10,988 INFO   committee_signs      -> OK
+2026-05-11 16:24:11,069 INFO   mergers              -> OK
+2026-05-11 16:24:11,110 INFO   financials           -> OK
+2026-05-11 16:24:11,153 INFO   financials_prev      -> OK
+2026-05-11 16:24:11,338 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0505566019183 "HTTP/2 200 OK"
+2026-05-11 16:24:11,350 INFO   ✓ Supabase updated
+2026-05-11 16:24:11,350 INFO [24/148] บริษัทจัดหางาน เอ็นเจ เอเจนซี่ เชียงใหม่ จำกัด
+2026-05-11 16:24:11,465 INFO   info                 -> OK
+2026-05-11 16:24:11,537 INFO   committees           -> OK
+2026-05-11 16:24:11,595 INFO   committee_signs      -> OK
+2026-05-11 16:24:11,640 INFO   mergers              -> OK
+2026-05-11 16:24:11,702 INFO   financials           -> OK
+2026-05-11 16:24:11,745 INFO   financials_prev      -> OK
+2026-05-11 16:24:11,989 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0505567018989 "HTTP/2 200 OK"
+2026-05-11 16:24:11,994 INFO   ✓ Supabase updated
+2026-05-11 16:24:11,994 INFO [25/148] บริษัทจัดหางาน เอเอ ริชเชส จำกัด
+2026-05-11 16:24:12,055 INFO   info                 -> OK
+2026-05-11 16:24:12,099 INFO   committees           -> OK
+2026-05-11 16:24:12,150 INFO   committee_signs      -> OK
+2026-05-11 16:24:12,201 INFO   mergers              -> OK
+2026-05-11 16:24:12,252 INFO   financials           -> OK
+2026-05-11 16:24:12,299 INFO   financials_prev      -> OK
+2026-05-11 16:24:12,514 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0575565005260 "HTTP/2 200 OK"
+2026-05-11 16:24:12,520 INFO   ✓ Supabase updated
+2026-05-11 16:24:12,520 INFO [26/148] บริษัทจัดหางาน เอสโก้ จำกัด
+2026-05-11 16:24:12,559 INFO   info                 -> OK
+2026-05-11 16:24:12,601 INFO   committees           -> OK
+2026-05-11 16:24:12,635 INFO   committee_signs      -> OK
+2026-05-11 16:24:12,684 INFO   mergers              -> OK
+2026-05-11 16:24:12,732 INFO   financials           -> OK
+2026-05-11 16:24:12,771 INFO   financials_prev      -> OK
+2026-05-11 16:24:13,038 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105529006689 "HTTP/2 200 OK"
+2026-05-11 16:24:13,051 INFO   ✓ Supabase updated
+2026-05-11 16:24:13,051 INFO [27/148] บริษัทจัดหางาน กรุงเทพสุ้นฮวดเทรดดิ้ง จำกัด
+2026-05-11 16:24:13,089 INFO   info                 -> OK
+2026-05-11 16:24:13,126 INFO   committees           -> OK
+2026-05-11 16:24:13,165 INFO   committee_signs      -> OK
+2026-05-11 16:24:13,624 INFO   mergers              -> OK
+2026-05-11 16:24:13,672 INFO   financials           -> OK
+2026-05-11 16:24:13,732 INFO   financials_prev      -> OK
+2026-05-11 16:24:13,927 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105524013369 "HTTP/2 200 OK"
+2026-05-11 16:24:13,944 INFO   ✓ Supabase updated
+2026-05-11 16:24:13,944 INFO [28/148] บริษัทจัดหางาน บิลเดอร์ส จำกัด
+2026-05-11 16:24:14,115 INFO   info                 -> OK
+2026-05-11 16:24:14,266 INFO   committees           -> OK
+2026-05-11 16:24:14,319 INFO   committee_signs      -> OK
+2026-05-11 16:24:14,441 INFO   mergers              -> OK
+2026-05-11 16:24:14,496 INFO   financials           -> OK
+2026-05-11 16:24:14,614 INFO   financials_prev      -> OK
+2026-05-11 16:24:14,807 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105524026525 "HTTP/2 200 OK"
+2026-05-11 16:24:14,859 INFO   ✓ Supabase updated
+2026-05-11 16:24:14,859 INFO [29/148] บริษัทจัดหางาน สล็อท อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:24:14,915 INFO   info                 -> OK
+2026-05-11 16:24:14,953 INFO   committees           -> OK
+2026-05-11 16:24:14,999 INFO   committee_signs      -> OK
+2026-05-11 16:24:15,140 INFO   mergers              -> OK
+2026-05-11 16:24:15,191 INFO   financials           -> OK
+2026-05-11 16:24:15,244 INFO   financials_prev      -> OK
+2026-05-11 16:24:15,437 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105525003421 "HTTP/2 200 OK"
+2026-05-11 16:24:15,450 INFO   ✓ Supabase updated
+2026-05-11 16:24:15,450 INFO [30/148] บริษัทจัดหางาน เจ.เจ.เอส.บางกอกดีวีลอปเม้นท์ จำกัด
+2026-05-11 16:24:15,507 INFO   info                 -> OK
+2026-05-11 16:24:15,555 INFO   committees           -> OK
+2026-05-11 16:24:15,658 INFO   committee_signs      -> OK
+2026-05-11 16:24:15,727 INFO   mergers              -> OK
+2026-05-11 16:24:15,787 INFO   financials           -> OK
+2026-05-11 16:24:15,845 INFO   financials_prev      -> OK
+2026-05-11 16:24:16,028 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105527022105 "HTTP/2 200 OK"
+2026-05-11 16:24:16,042 INFO   ✓ Supabase updated
+2026-05-11 16:24:16,043 INFO [31/148] บริษัทจัดหางาน เค.เอส.แมนเพาเวอร์ ซัพพลาย จำกัด
+2026-05-11 16:24:16,088 INFO   info                 -> OK
+2026-05-11 16:24:16,365 INFO   committees           -> OK
+2026-05-11 16:24:16,483 INFO   committee_signs      -> OK
+2026-05-11 16:24:16,523 INFO   mergers              -> OK
+2026-05-11 16:24:16,574 INFO   financials           -> OK
+2026-05-11 16:24:16,617 INFO   financials_prev      -> OK
+2026-05-11 16:24:16,897 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105527026798 "HTTP/2 200 OK"
+2026-05-11 16:24:16,910 INFO   ✓ Supabase updated
+2026-05-11 16:24:16,910 INFO [32/148] บริษัทจัดหางาน เทคโน-ไทย อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:24:16,958 INFO   info                 -> OK
+2026-05-11 16:24:17,000 INFO   committees           -> OK
+2026-05-11 16:24:17,040 INFO   committee_signs      -> OK
+2026-05-11 16:24:17,073 INFO   mergers              -> OK
+2026-05-11 16:24:17,117 INFO   financials           -> OK
+2026-05-11 16:24:17,235 INFO   financials_prev      -> OK
+2026-05-11 16:24:17,430 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105528038081 "HTTP/2 200 OK"
+2026-05-11 16:24:17,442 INFO   ✓ Supabase updated
+2026-05-11 16:24:17,442 INFO [33/148] บริษัทจัดหางาน แซม อินเตอร์เนชั่นแนล เอ็นเตอร์ไพรส์ จำกัด
+2026-05-11 16:24:17,530 INFO   info                 -> OK
+2026-05-11 16:24:17,593 INFO   committees           -> OK
+2026-05-11 16:24:17,646 INFO   committee_signs      -> OK
+2026-05-11 16:24:17,755 INFO   mergers              -> OK
+2026-05-11 16:24:17,810 INFO   financials           -> OK
+2026-05-11 16:24:17,858 INFO   financials_prev      -> OK
+2026-05-11 16:24:18,050 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105528039354 "HTTP/2 200 OK"
+2026-05-11 16:24:18,066 INFO   ✓ Supabase updated
+2026-05-11 16:24:18,066 INFO [34/148] บริษัทจัดหางาน วีแอล สยาม ดีเวลลอปเมนท์ จำกัด
+2026-05-11 16:24:18,110 INFO   info                 -> OK
+2026-05-11 16:24:18,143 INFO   committees           -> OK
+2026-05-11 16:24:18,178 INFO   committee_signs      -> OK
+2026-05-11 16:24:18,279 INFO   mergers              -> OK
+2026-05-11 16:24:18,343 INFO   financials           -> OK
+2026-05-11 16:24:18,392 INFO   financials_prev      -> OK
+2026-05-11 16:24:18,584 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105528041901 "HTTP/2 200 OK"
+2026-05-11 16:24:18,601 INFO   ✓ Supabase updated
+2026-05-11 16:24:18,601 INFO [35/148] บริษัทจัดหางาน มาลินโด จำกัด
+2026-05-11 16:24:18,642 INFO   info                 -> OK
+2026-05-11 16:24:18,677 INFO   committees           -> OK
+2026-05-11 16:24:18,807 INFO   committee_signs      -> OK
+2026-05-11 16:24:18,876 INFO   mergers              -> OK
+2026-05-11 16:24:18,927 INFO   financials           -> OK
+2026-05-11 16:24:18,989 INFO   financials_prev      -> OK
+2026-05-11 16:24:19,184 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105528044498 "HTTP/2 200 OK"
+2026-05-11 16:24:19,199 INFO   ✓ Supabase updated
+2026-05-11 16:24:19,199 INFO [36/148] บริษัทจัดหางาน ไทยซินแทค แทรเวิล เซอร์วิส จำกัด
+2026-05-11 16:24:19,329 INFO   info                 -> OK
+2026-05-11 16:24:19,371 INFO   committees           -> OK
+2026-05-11 16:24:19,404 INFO   committee_signs      -> OK
+2026-05-11 16:24:19,450 INFO   mergers              -> OK
+2026-05-11 16:24:19,502 INFO   financials           -> OK
+2026-05-11 16:24:19,545 INFO   financials_prev      -> OK
+2026-05-11 16:24:19,730 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105529017125 "HTTP/2 200 OK"
+2026-05-11 16:24:19,743 INFO   ✓ Supabase updated
+2026-05-11 16:24:19,743 INFO [37/148] บริษัทจัดหางาน วินซ์ เพลสเมนท์ จำกัด
+2026-05-11 16:24:19,856 INFO   info                 -> OK
+2026-05-11 16:24:19,908 INFO   committees           -> OK
+2026-05-11 16:24:19,949 INFO   committee_signs      -> OK
+2026-05-11 16:24:19,988 INFO   mergers              -> OK
+2026-05-11 16:24:20,034 INFO   financials           -> OK
+2026-05-11 16:24:20,088 INFO   financials_prev      -> OK
+2026-05-11 16:24:20,276 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105531036913 "HTTP/2 200 OK"
+2026-05-11 16:24:20,285 INFO   ✓ Supabase updated
+2026-05-11 16:24:20,285 INFO [38/148] บริษัทจัดหางาน เค.แอล.พร็อพเปอร์ตี้ จำกัด
+2026-05-11 16:24:20,412 INFO   info                 -> OK
+2026-05-11 16:24:20,490 INFO   committees           -> OK
+2026-05-11 16:24:20,541 INFO   committee_signs      -> OK
+2026-05-11 16:24:20,592 INFO   mergers              -> OK
+2026-05-11 16:24:20,643 INFO   financials           -> OK
+2026-05-11 16:24:20,691 INFO   financials_prev      -> OK
+2026-05-11 16:24:20,908 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105532049130 "HTTP/2 200 OK"
+2026-05-11 16:24:20,920 INFO   ✓ Supabase updated
+2026-05-11 16:24:20,920 INFO [39/148] บริษัทจัดหางาน มาจู-จายา จำกัด
+2026-05-11 16:24:20,974 INFO   info                 -> OK
+2026-05-11 16:24:21,011 INFO   committees           -> OK
+2026-05-11 16:24:21,047 INFO   committee_signs      -> OK
+2026-05-11 16:24:21,095 INFO   mergers              -> OK
+2026-05-11 16:24:21,160 INFO   financials           -> OK
+2026-05-11 16:24:21,212 INFO   financials_prev      -> OK
+2026-05-11 16:24:21,427 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105532084865 "HTTP/2 200 OK"
+2026-05-11 16:24:21,436 INFO   ✓ Supabase updated
+2026-05-11 16:24:21,436 INFO [40/148] บริษัทจัดหางาน ที ที เอ็ม จำกัด
+2026-05-11 16:24:21,481 INFO   info                 -> OK
+2026-05-11 16:24:21,518 INFO   committees           -> OK
+2026-05-11 16:24:21,568 INFO   committee_signs      -> OK
+2026-05-11 16:24:21,614 INFO   mergers              -> OK
+2026-05-11 16:24:21,661 INFO   financials           -> OK
+2026-05-11 16:24:21,714 INFO   financials_prev      -> OK
+2026-05-11 16:24:21,952 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105533077552 "HTTP/2 200 OK"
+2026-05-11 16:24:21,964 INFO   ✓ Supabase updated
+2026-05-11 16:24:21,964 INFO [41/148] บริษัทจัดหางาน บ๊อสส์ดีไล้ท์ แมนพาวเวอร์ จำกัด
+2026-05-11 16:24:22,010 INFO   info                 -> OK
+2026-05-11 16:24:22,046 INFO   committees           -> OK
+2026-05-11 16:24:22,099 INFO   committee_signs      -> OK
+2026-05-11 16:24:22,146 INFO   mergers              -> OK
+2026-05-11 16:24:22,209 INFO   financials           -> OK
+2026-05-11 16:24:22,282 INFO   financials_prev      -> OK
+2026-05-11 16:24:22,477 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105534049323 "HTTP/2 200 OK"
+2026-05-11 16:24:22,489 INFO   ✓ Supabase updated
+2026-05-11 16:24:22,489 INFO [42/148] บริษัทจัดหางาน พนไพศาล จำกัด
+2026-05-11 16:24:22,549 INFO   info                 -> OK
+2026-05-11 16:24:22,618 INFO   committees           -> OK
+2026-05-11 16:24:22,671 INFO   committee_signs      -> OK
+2026-05-11 16:24:22,744 INFO   mergers              -> OK
+2026-05-11 16:24:22,833 INFO   financials           -> OK
+2026-05-11 16:24:22,898 INFO   financials_prev      -> OK
+2026-05-11 16:24:23,077 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105534087535 "HTTP/2 200 OK"
+2026-05-11 16:24:23,088 INFO   ✓ Supabase updated
+2026-05-11 16:24:23,088 INFO [43/148] บริษัทจัดหางาน บิ๊กวัน โอเวอร์ซี จำกัด
+2026-05-11 16:24:23,145 INFO   info                 -> OK
+2026-05-11 16:24:23,186 INFO   committees           -> OK
+2026-05-11 16:24:23,225 INFO   committee_signs      -> OK
+2026-05-11 16:24:23,277 INFO   mergers              -> OK
+2026-05-11 16:24:23,316 INFO   financials           -> OK
+2026-05-11 16:24:23,387 INFO   financials_prev      -> OK
+2026-05-11 16:24:23,562 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105535008809 "HTTP/2 200 OK"
+2026-05-11 16:24:23,575 INFO   ✓ Supabase updated
+2026-05-11 16:24:23,575 INFO [44/148] บริษัทจัดหางาน บางกอก วินนิ่ง กรุ๊พ จำกัด
+2026-05-11 16:24:23,644 INFO   info                 -> OK
+2026-05-11 16:24:23,683 INFO   committees           -> OK
+2026-05-11 16:24:23,727 INFO   committee_signs      -> OK
+2026-05-11 16:24:23,784 INFO   mergers              -> OK
+2026-05-11 16:24:23,858 INFO   financials           -> OK
+2026-05-11 16:24:23,901 INFO   financials_prev      -> OK
+2026-05-11 16:24:24,091 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105540027972 "HTTP/2 200 OK"
+2026-05-11 16:24:24,102 INFO   ✓ Supabase updated
+2026-05-11 16:24:24,102 INFO [45/148] บริษัทจัดหางาน ไทยอัศวเลิศ จำกัด
+2026-05-11 16:24:24,148 INFO   info                 -> OK
+2026-05-11 16:24:24,186 INFO   committees           -> OK
+2026-05-11 16:24:24,220 INFO   committee_signs      -> OK
+2026-05-11 16:24:24,256 INFO   mergers              -> OK
+2026-05-11 16:24:24,306 INFO   financials           -> OK
+2026-05-11 16:24:24,356 INFO   financials_prev      -> OK
+2026-05-11 16:24:24,577 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105540073320 "HTTP/2 200 OK"
+2026-05-11 16:24:24,589 INFO   ✓ Supabase updated
+2026-05-11 16:24:24,589 INFO [46/148] บริษัทจัดหางาน สเปคทรัม โอเวอร์ซี เอ็นเตอร์ไพรส์ จำกัด
+2026-05-11 16:24:24,626 INFO   info                 -> OK
+2026-05-11 16:24:24,662 INFO   committees           -> OK
+2026-05-11 16:24:24,693 INFO   committee_signs      -> OK
+2026-05-11 16:24:24,735 INFO   mergers              -> OK
+2026-05-11 16:24:24,837 INFO   financials           -> OK
+2026-05-11 16:24:24,881 INFO   financials_prev      -> OK
+2026-05-11 16:24:25,151 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105541044501 "HTTP/2 200 OK"
+2026-05-11 16:24:25,167 INFO   ✓ Supabase updated
+2026-05-11 16:24:25,167 INFO [47/148] บริษัทจัดหางาน เซ้นท์ เมอริท จำกัด
+2026-05-11 16:24:25,210 INFO   info                 -> OK
+2026-05-11 16:24:25,247 INFO   committees           -> OK
+2026-05-11 16:24:25,287 INFO   committee_signs      -> OK
+2026-05-11 16:24:25,325 INFO   mergers              -> OK
+2026-05-11 16:24:25,443 INFO   financials           -> OK
+2026-05-11 16:24:25,481 INFO   financials_prev      -> OK
+2026-05-11 16:24:25,657 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105542025381 "HTTP/2 200 OK"
+2026-05-11 16:24:25,671 INFO   ✓ Supabase updated
+2026-05-11 16:24:25,671 INFO [48/148] บริษัทจัดหางาน ท็อปเทีย จำกัด
+2026-05-11 16:24:25,718 INFO   info                 -> OK
+2026-05-11 16:24:25,767 INFO   committees           -> OK
+2026-05-11 16:24:25,811 INFO   committee_signs      -> OK
+2026-05-11 16:24:25,851 INFO   mergers              -> OK
+2026-05-11 16:24:25,911 INFO   financials           -> OK
+2026-05-11 16:24:25,967 INFO   financials_prev      -> OK
+2026-05-11 16:24:26,147 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105542037401 "HTTP/2 200 OK"
+2026-05-11 16:24:26,155 INFO   ✓ Supabase updated
+2026-05-11 16:24:26,155 INFO [49/148] บริษัทจัดหางาน คันทรี่ อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:24:26,200 INFO   info                 -> OK
+2026-05-11 16:24:26,241 INFO   committees           -> OK
+2026-05-11 16:24:26,283 INFO   committee_signs      -> OK
+2026-05-11 16:24:26,328 INFO   mergers              -> OK
+2026-05-11 16:24:26,382 INFO   financials           -> OK
+2026-05-11 16:24:26,435 INFO   financials_prev      -> OK
+2026-05-11 16:24:26,671 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105542045463 "HTTP/2 200 OK"
+2026-05-11 16:24:26,685 INFO   ✓ Supabase updated
+2026-05-11 16:24:26,685 INFO [50/148] บริษัทจัดหางาน เอสพี ลีดเดอร์ อินเตอร์เนชั่นแนล กรุ๊ป จำกัด
+2026-05-11 16:24:26,741 INFO   info                 -> OK
+2026-05-11 16:24:26,794 INFO   committees           -> OK
+2026-05-11 16:24:26,828 INFO   committee_signs      -> OK
+2026-05-11 16:24:26,878 INFO   mergers              -> OK
+2026-05-11 16:24:26,946 INFO   financials           -> OK
+2026-05-11 16:24:26,989 INFO   financials_prev      -> OK
+2026-05-11 16:24:27,265 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105543002989 "HTTP/2 200 OK"
+2026-05-11 16:24:27,278 INFO   ✓ Supabase updated
+2026-05-11 16:24:27,316 INFO Token refreshed | encKey prefix: UmJ-Zb
+2026-05-11 16:24:27,316 INFO [51/148] บริษัทจัดหางาน เอ็น.ที.เค บิสซิเนส จำกัด
+2026-05-11 16:24:27,361 INFO   info                 -> OK
+2026-05-11 16:24:27,400 INFO   committees           -> OK
+2026-05-11 16:24:27,438 INFO   committee_signs      -> OK
+2026-05-11 16:24:27,546 INFO   mergers              -> OK
+2026-05-11 16:24:27,594 INFO   financials           -> OK
+2026-05-11 16:24:27,720 INFO   financials_prev      -> OK
+2026-05-11 16:24:27,897 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105544052220 "HTTP/2 200 OK"
+2026-05-11 16:24:27,910 INFO   ✓ Supabase updated
+2026-05-11 16:24:27,910 INFO [52/148] บริษัทจัดหางาน เอ.เค.แกรนด์ จำกัด
+2026-05-11 16:24:27,966 INFO   info                 -> OK
+2026-05-11 16:24:27,999 INFO   committees           -> OK
+2026-05-11 16:24:28,031 INFO   committee_signs      -> OK
+2026-05-11 16:24:28,128 INFO   mergers              -> OK
+2026-05-11 16:24:28,243 INFO   financials           -> OK
+2026-05-11 16:24:28,322 INFO   financials_prev      -> OK
+2026-05-11 16:24:28,505 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105545007830 "HTTP/2 200 OK"
+2026-05-11 16:24:28,515 INFO   ✓ Supabase updated
+2026-05-11 16:24:28,515 INFO [53/148] บริษัทจัดหางาน แกรนดิโอส บิสเนส จำกัด
+2026-05-11 16:24:28,558 INFO   info                 -> OK
+2026-05-11 16:24:28,600 INFO   committees           -> OK
+2026-05-11 16:24:28,635 INFO   committee_signs      -> OK
+2026-05-11 16:24:28,672 INFO   mergers              -> OK
+2026-05-11 16:24:28,847 INFO   financials           -> OK
+2026-05-11 16:24:28,944 INFO   financials_prev      -> OK
+2026-05-11 16:24:29,118 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105545027318 "HTTP/2 200 OK"
+2026-05-11 16:24:29,125 INFO   ✓ Supabase updated
+2026-05-11 16:24:29,125 INFO [54/148] บริษัทจัดหางาน แม่บ้านฮ่องกง จำกัด
+2026-05-11 16:24:29,167 INFO   info                 -> OK
+2026-05-11 16:24:29,290 INFO   committees           -> OK
+2026-05-11 16:24:29,330 INFO   committee_signs      -> OK
+2026-05-11 16:24:29,387 INFO   mergers              -> OK
+2026-05-11 16:24:29,437 INFO   financials           -> OK
+2026-05-11 16:24:29,490 INFO   financials_prev      -> OK
+2026-05-11 16:24:29,664 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105545121080 "HTTP/2 200 OK"
+2026-05-11 16:24:29,676 INFO   ✓ Supabase updated
+2026-05-11 16:24:29,676 INFO [55/148] บริษัทจัดหางาน รุ่งชีวิน จำกัด
+2026-05-11 16:24:29,816 INFO   info                 -> OK
+2026-05-11 16:24:29,851 INFO   committees           -> OK
+2026-05-11 16:24:29,934 INFO   committee_signs      -> OK
+2026-05-11 16:24:29,985 INFO   mergers              -> OK
+2026-05-11 16:24:30,086 INFO   financials           -> OK
+2026-05-11 16:24:30,131 INFO   financials_prev      -> OK
+2026-05-11 16:24:30,339 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105546064535 "HTTP/2 200 OK"
+2026-05-11 16:24:30,349 INFO   ✓ Supabase updated
+2026-05-11 16:24:30,349 INFO [56/148] บริษัทจัดหางาน เอสพีที ซัพพลาย อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:24:30,393 INFO   info                 -> OK
+2026-05-11 16:24:30,447 INFO   committees           -> OK
+2026-05-11 16:24:30,489 INFO   committee_signs      -> OK
+2026-05-11 16:24:30,531 INFO   mergers              -> OK
+2026-05-11 16:24:30,576 INFO   financials           -> OK
+2026-05-11 16:24:33,287 INFO   financials_prev      -> OK
+2026-05-11 16:24:33,679 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105546076151 "HTTP/2 200 OK"
+2026-05-11 16:24:33,691 INFO   ✓ Supabase updated
+2026-05-11 16:24:33,691 INFO [57/148] บริษัทจัดหางาน บานซิง จำกัด
+2026-05-11 16:24:33,742 INFO   info                 -> OK
+2026-05-11 16:24:34,015 INFO   committees           -> OK
+2026-05-11 16:24:34,271 INFO   committee_signs      -> OK
+2026-05-11 16:24:34,322 INFO   mergers              -> OK
+2026-05-11 16:24:35,291 INFO   financials           -> OK
+2026-05-11 16:24:35,374 INFO   financials_prev      -> OK
+2026-05-11 16:24:35,584 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105547109460 "HTTP/2 200 OK"
+2026-05-11 16:24:35,589 INFO   ✓ Supabase updated
+2026-05-11 16:24:35,589 INFO [58/148] บริษัทจัดหางาน ที.เอ็น.วาย.ไทร์นิตี้  จำกัด
+2026-05-11 16:24:35,735 INFO   info                 -> OK
+2026-05-11 16:24:35,818 INFO   committees           -> OK
+2026-05-11 16:24:35,924 INFO   committee_signs      -> OK
+2026-05-11 16:24:36,009 INFO   mergers              -> OK
+2026-05-11 16:24:36,149 INFO   financials           -> OK
+2026-05-11 16:24:36,188 INFO   financials_prev      -> OK
+2026-05-11 16:24:36,360 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105548006354 "HTTP/2 200 OK"
+2026-05-11 16:24:36,373 INFO   ✓ Supabase updated
+2026-05-11 16:24:36,374 INFO [59/148] บริษัทจัดหางาน จูงใข อินเตอร์เนชั่นแนล (ประเทศไทย) จำกัด
+2026-05-11 16:24:36,422 INFO   info                 -> OK
+2026-05-11 16:24:39,782 INFO   committees           -> OK
+2026-05-11 16:24:39,822 INFO   committee_signs      -> OK
+2026-05-11 16:24:39,864 INFO   mergers              -> OK
+2026-05-11 16:24:40,527 INFO   financials           -> OK
+2026-05-11 16:24:40,577 INFO   financials_prev      -> OK
+2026-05-11 16:24:40,834 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105548049894 "HTTP/2 200 OK"
+2026-05-11 16:24:40,844 INFO   ✓ Supabase updated
+2026-05-11 16:24:40,844 INFO [60/148] บริษัทจัดหางาน ทีเจ ดับเบิ้ล พลัส จำกัด
+2026-05-11 16:24:40,886 INFO   info                 -> OK
+2026-05-11 16:24:40,973 INFO   committees           -> OK
+2026-05-11 16:24:41,119 INFO   committee_signs      -> OK
+2026-05-11 16:24:41,185 INFO   mergers              -> OK
+2026-05-11 16:24:41,359 INFO   financials           -> OK
+2026-05-11 16:24:41,457 INFO   financials_prev      -> OK
+2026-05-11 16:24:41,638 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105549046171 "HTTP/2 200 OK"
+2026-05-11 16:24:41,655 INFO   ✓ Supabase updated
+2026-05-11 16:24:41,655 INFO [61/148] บริษัทจัดหางาน โอ อี เอ็ม โอเวอร์ซี จำกัด
+2026-05-11 16:24:41,720 INFO   info                 -> OK
+2026-05-11 16:24:41,878 INFO   committees           -> OK
+2026-05-11 16:24:41,932 INFO   committee_signs      -> OK
+2026-05-11 16:24:41,985 INFO   mergers              -> OK
+2026-05-11 16:24:42,043 INFO   financials           -> OK
+2026-05-11 16:24:42,152 INFO   financials_prev      -> OK
+2026-05-11 16:24:42,459 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105550009756 "HTTP/2 200 OK"
+2026-05-11 16:24:42,469 INFO   ✓ Supabase updated
+2026-05-11 16:24:42,469 INFO [62/148] บริษัทจัดหางานชินชัย อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:24:42,512 INFO   info                 -> OK
+2026-05-11 16:24:42,553 INFO   committees           -> OK
+2026-05-11 16:24:42,585 INFO   committee_signs      -> OK
+2026-05-11 16:24:42,622 INFO   mergers              -> OK
+2026-05-11 16:24:42,668 INFO   financials           -> OK
+2026-05-11 16:24:42,710 INFO   financials_prev      -> OK
+2026-05-11 16:24:42,924 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105550098163 "HTTP/2 200 OK"
+2026-05-11 16:24:42,937 INFO   ✓ Supabase updated
+2026-05-11 16:24:42,937 INFO [63/148] บริษัทจัดหางาน เจ.ไอ.เอ็น อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:24:42,999 INFO   info                 -> OK
+2026-05-11 16:24:43,047 INFO   committees           -> OK
+2026-05-11 16:24:43,143 INFO   committee_signs      -> OK
+2026-05-11 16:24:43,205 INFO   mergers              -> OK
+2026-05-11 16:24:43,451 INFO   financials           -> OK
+2026-05-11 16:24:43,652 INFO   financials_prev      -> OK
+2026-05-11 16:24:43,827 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105552005715 "HTTP/2 200 OK"
+2026-05-11 16:24:43,845 INFO   ✓ Supabase updated
+2026-05-11 16:24:43,845 INFO [64/148] บริษัทจัดหางาน เค.ซี.คิวบ์  จำกัด
+2026-05-11 16:24:43,972 INFO   info                 -> OK
+2026-05-11 16:24:44,014 INFO   committees           -> OK
+2026-05-11 16:24:44,101 INFO   committee_signs      -> OK
+2026-05-11 16:24:44,157 INFO   mergers              -> OK
+2026-05-11 16:24:44,274 INFO   financials           -> OK
+2026-05-11 16:24:44,370 INFO   financials_prev      -> OK
+2026-05-11 16:24:44,545 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105552078143 "HTTP/2 200 OK"
+2026-05-11 16:24:44,554 INFO   ✓ Supabase updated
+2026-05-11 16:24:44,554 INFO [65/148] บริษัทจัดหางาน อันเลอร์ เอ็กซ์เพรส จำกัด
+2026-05-11 16:24:44,600 INFO   info                 -> OK
+2026-05-11 16:24:44,642 INFO   committees           -> OK
+2026-05-11 16:24:44,688 INFO   committee_signs      -> OK
+2026-05-11 16:24:44,725 INFO   mergers              -> OK
+2026-05-11 16:24:44,772 INFO   financials           -> OK
+2026-05-11 16:24:44,813 INFO   financials_prev      -> OK
+2026-05-11 16:24:45,021 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105553031281 "HTTP/2 200 OK"
+2026-05-11 16:24:45,030 INFO   ✓ Supabase updated
+2026-05-11 16:24:45,030 INFO [66/148] บริษัทจัดหางาน ไทย ออลไรท์ คอนซัลแทนท์ แอนด์ ดีวีลอปเม้นท์ จำกัด
+2026-05-11 16:24:45,076 INFO   info                 -> OK
+2026-05-11 16:24:45,144 INFO   committees           -> OK
+2026-05-11 16:24:45,187 INFO   committee_signs      -> OK
+2026-05-11 16:24:45,222 INFO   mergers              -> OK
+2026-05-11 16:24:45,269 INFO   financials           -> OK
+2026-05-11 16:24:45,319 INFO   financials_prev      -> OK
+2026-05-11 16:24:45,545 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105553059622 "HTTP/2 200 OK"
+2026-05-11 16:24:45,551 INFO   ✓ Supabase updated
+2026-05-11 16:24:45,551 INFO [67/148] บริษัทจัดหางาน เอฟ เอ็ม เอส เอ็นเตอร์ไพรส์ จำกัด
+2026-05-11 16:24:45,611 INFO   info                 -> OK
+2026-05-11 16:24:45,654 INFO   committees           -> OK
+2026-05-11 16:24:45,695 INFO   committee_signs      -> OK
+2026-05-11 16:24:45,755 INFO   mergers              -> OK
+2026-05-11 16:24:45,947 INFO   financials           -> OK
+2026-05-11 16:24:46,070 INFO   financials_prev      -> OK
+2026-05-11 16:24:46,253 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105554002161 "HTTP/2 200 OK"
+2026-05-11 16:24:46,262 INFO   ✓ Supabase updated
+2026-05-11 16:24:46,262 INFO [68/148] บริษัทจัดหางาน บอร์เดอร์เลส ทาเล้นท์ โซลูชั่น จำกัด
+2026-05-11 16:24:46,314 INFO   info                 -> OK
+2026-05-11 16:24:46,392 INFO   committees           -> OK
+2026-05-11 16:24:46,447 INFO   committee_signs      -> OK
+2026-05-11 16:24:46,495 INFO   mergers              -> OK
+2026-05-11 16:24:46,614 INFO   financials           -> OK
+2026-05-11 16:24:46,674 INFO   financials_prev      -> OK
+2026-05-11 16:24:46,848 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105554056635 "HTTP/2 200 OK"
+2026-05-11 16:24:46,857 INFO   ✓ Supabase updated
+2026-05-11 16:24:46,857 INFO [69/148] บริษัทจัดหางาน เซาท์อีสทเอเซียเลเบอร์ จำกัด
+2026-05-11 16:24:46,953 INFO   info                 -> OK
+2026-05-11 16:24:47,121 INFO   committees           -> OK
+2026-05-11 16:24:47,163 INFO   committee_signs      -> OK
+2026-05-11 16:24:47,220 INFO   mergers              -> OK
+2026-05-11 16:24:47,279 INFO   financials           -> OK
+2026-05-11 16:24:47,339 INFO   financials_prev      -> OK
+2026-05-11 16:24:47,511 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105554116263 "HTTP/2 200 OK"
+2026-05-11 16:24:47,524 INFO   ✓ Supabase updated
+2026-05-11 16:24:47,524 INFO [70/148] บริษัทจัดหางานเถาหยวน จำกัด
+2026-05-11 16:24:47,647 INFO   info                 -> OK
+2026-05-11 16:24:47,734 INFO   committees           -> OK
+2026-05-11 16:24:47,794 INFO   committee_signs      -> OK
+2026-05-11 16:24:47,846 INFO   mergers              -> OK
+2026-05-11 16:24:47,931 INFO   financials           -> OK
+2026-05-11 16:24:47,983 INFO   financials_prev      -> OK
+2026-05-11 16:24:48,171 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105555020685 "HTTP/2 200 OK"
+2026-05-11 16:24:48,187 INFO   ✓ Supabase updated
+2026-05-11 16:24:48,187 INFO [71/148] บริษัทจัดหางาน เจวายที โปรเจคส์ จำกัด
+2026-05-11 16:24:48,234 INFO   info                 -> OK
+2026-05-11 16:24:48,334 INFO   committees           -> OK
+2026-05-11 16:24:48,376 INFO   committee_signs      -> OK
+2026-05-11 16:24:48,427 INFO   mergers              -> OK
+2026-05-11 16:24:48,494 INFO   financials           -> OK
+2026-05-11 16:24:48,538 INFO   financials_prev      -> OK
+2026-05-11 16:24:48,717 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105555057988 "HTTP/2 200 OK"
+2026-05-11 16:24:48,728 INFO   ✓ Supabase updated
+2026-05-11 16:24:48,728 INFO [72/148] บริษัทจัดหางาน ไทย นิปปอน เทรนนิ่ง จำกัด
+2026-05-11 16:24:50,791 INFO   info                 -> OK
+2026-05-11 16:24:50,826 INFO   committees           -> OK
+2026-05-11 16:24:50,866 INFO   committee_signs      -> OK
+2026-05-11 16:24:50,923 INFO   mergers              -> OK
+2026-05-11 16:24:57,246 INFO   financials           -> OK
+2026-05-11 16:24:57,290 INFO   financials_prev      -> OK
+2026-05-11 16:24:57,604 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105555114167 "HTTP/2 200 OK"
+2026-05-11 16:24:57,617 INFO   ✓ Supabase updated
+2026-05-11 16:24:57,617 INFO [73/148] บริษัทจัดหางาน เวิลด์ แม็ป จำกัด
+2026-05-11 16:24:57,663 INFO   info                 -> OK
+2026-05-11 16:24:57,705 INFO   committees           -> OK
+2026-05-11 16:24:57,759 INFO   committee_signs      -> OK
+2026-05-11 16:24:57,812 INFO   mergers              -> OK
+2026-05-11 16:25:08,346 INFO   financials           -> OK
+2026-05-11 16:25:08,386 INFO   financials_prev      -> OK
+2026-05-11 16:25:08,651 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105555130006 "HTTP/2 200 OK"
+2026-05-11 16:25:08,662 INFO   ✓ Supabase updated
+2026-05-11 16:25:08,662 INFO [74/148] บริษัทจัดหางาน เอส.พี.ที.บิ๊กวัน อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:25:21,837 INFO   info                 -> OK
+2026-05-11 16:25:21,889 INFO   committees           -> OK
+2026-05-11 16:25:21,928 INFO   committee_signs      -> OK
+2026-05-11 16:25:21,977 INFO   mergers              -> OK
+2026-05-11 16:25:22,031 INFO   financials           -> OK
+2026-05-11 16:25:22,082 INFO   financials_prev      -> OK
+2026-05-11 16:25:22,456 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105557085725 "HTTP/2 200 OK"
+2026-05-11 16:25:22,468 INFO   ✓ Supabase updated
+2026-05-11 16:25:22,468 INFO [75/148] บริษัทจัดหางาน ซากุระ เค.พี. จำกัด
+2026-05-11 16:25:22,514 INFO   info                 -> OK
+2026-05-11 16:25:22,554 INFO   committees           -> OK
+2026-05-11 16:25:22,604 INFO   committee_signs      -> OK
+2026-05-11 16:25:22,641 INFO   mergers              -> OK
+2026-05-11 16:25:22,777 INFO   financials           -> OK
+2026-05-11 16:25:22,823 INFO   financials_prev      -> OK
+2026-05-11 16:25:22,998 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105557168949 "HTTP/2 200 OK"
+2026-05-11 16:25:23,007 INFO   ✓ Supabase updated
+2026-05-11 16:25:23,007 INFO [76/148] บริษัทจัดหางาน เถาหยวน ไต้หวัน จำกัด
+2026-05-11 16:25:23,062 INFO   info                 -> OK
+2026-05-11 16:25:23,101 INFO   committees           -> OK
+2026-05-11 16:25:25,438 INFO   committee_signs      -> OK
+2026-05-11 16:25:25,476 INFO   mergers              -> OK
+2026-05-11 16:25:25,529 INFO   financials           -> OK
+2026-05-11 16:25:25,571 INFO   financials_prev      -> OK
+2026-05-11 16:25:25,739 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105558049374 "HTTP/2 200 OK"
+2026-05-11 16:25:25,748 INFO   ✓ Supabase updated
+2026-05-11 16:25:25,748 INFO [77/148] บริษัทจัดหางาน เอ็ม ดับบลิว แกรนด์ จำกัด
+2026-05-11 16:25:26,164 INFO   info                 -> OK
+2026-05-11 16:25:26,216 INFO   committees           -> OK
+2026-05-11 16:25:26,279 INFO   committee_signs      -> OK
+2026-05-11 16:25:26,315 INFO   mergers              -> OK
+2026-05-11 16:25:26,443 INFO   financials           -> OK
+2026-05-11 16:25:26,548 INFO   financials_prev      -> OK
+2026-05-11 16:25:26,721 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105558077947 "HTTP/2 200 OK"
+2026-05-11 16:25:26,734 INFO   ✓ Supabase updated
+2026-05-11 16:25:26,734 INFO [78/148] บริษัทจัดหางาน พี แอนด์ พี ดีวีลอปเม้นท์ จำกัด
+2026-05-11 16:25:26,780 INFO   info                 -> OK
+2026-05-11 16:25:26,820 INFO   committees           -> OK
+2026-05-11 16:25:26,860 INFO   committee_signs      -> OK
+2026-05-11 16:25:26,971 INFO   mergers              -> OK
+2026-05-11 16:25:27,025 INFO   financials           -> OK
+2026-05-11 16:25:27,060 INFO   financials_prev      -> OK
+2026-05-11 16:25:27,224 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105559080135 "HTTP/2 200 OK"
+2026-05-11 16:25:27,236 INFO   ✓ Supabase updated
+2026-05-11 16:25:27,236 INFO [79/148] บริษัทจัดหางาน ไทยกรุ๊ปกรีน จำกัด
+2026-05-11 16:25:27,277 INFO   info                 -> OK
+2026-05-11 16:25:27,327 INFO   committees           -> OK
+2026-05-11 16:25:27,392 INFO   committee_signs      -> OK
+2026-05-11 16:25:27,494 INFO   mergers              -> OK
+2026-05-11 16:25:27,553 INFO   financials           -> OK
+2026-05-11 16:25:27,609 INFO   financials_prev      -> OK
+2026-05-11 16:25:27,787 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105560027021 "HTTP/2 200 OK"
+2026-05-11 16:25:27,800 INFO   ✓ Supabase updated
+2026-05-11 16:25:27,800 INFO [80/148] บริษัทจัดหางาน ซิน สตาร์ โอเวอร์ซี จำกัด
+2026-05-11 16:25:27,840 INFO   info                 -> OK
+2026-05-11 16:25:27,881 INFO   committees           -> OK
+2026-05-11 16:25:28,016 INFO   committee_signs      -> OK
+2026-05-11 16:25:28,063 INFO   mergers              -> OK
+2026-05-11 16:25:28,108 INFO   financials           -> OK
+2026-05-11 16:25:28,222 INFO   financials_prev      -> OK
+2026-05-11 16:25:28,400 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105560111197 "HTTP/2 200 OK"
+2026-05-11 16:25:28,418 INFO   ✓ Supabase updated
+2026-05-11 16:25:28,418 INFO [81/148] บริษัทจัดหางาน อัล-กาวาเดอร์ จำกัด
+2026-05-11 16:25:28,543 INFO   info                 -> OK
+2026-05-11 16:25:28,580 INFO   committees           -> OK
+2026-05-11 16:25:28,618 INFO   committee_signs      -> OK
+2026-05-11 16:25:28,666 INFO   mergers              -> OK
+2026-05-11 16:25:28,712 INFO   financials           -> OK
+2026-05-11 16:25:28,757 INFO   financials_prev      -> OK
+2026-05-11 16:25:28,931 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105560191263 "HTTP/2 200 OK"
+2026-05-11 16:25:28,949 INFO   ✓ Supabase updated
+2026-05-11 16:25:28,949 INFO [82/148] บริษัทจัดหางาน เทพส์ 2018 จำกัด
+2026-05-11 16:25:29,069 INFO   info                 -> OK
+2026-05-11 16:25:29,112 INFO   committees           -> OK
+2026-05-11 16:25:29,146 INFO   committee_signs      -> OK
+2026-05-11 16:25:29,180 INFO   mergers              -> OK
+2026-05-11 16:25:29,237 INFO   financials           -> OK
+2026-05-11 16:25:29,284 INFO   financials_prev      -> OK
+2026-05-11 16:25:29,451 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105561022597 "HTTP/2 200 OK"
+2026-05-11 16:25:29,469 INFO   ✓ Supabase updated
+2026-05-11 16:25:29,469 INFO [83/148] บริษัทจัดหางาน บิ๊กวัน อุดร จำกัด
+2026-05-11 16:25:29,591 INFO   info                 -> OK
+2026-05-11 16:25:29,641 INFO   committees           -> OK
+2026-05-11 16:25:29,707 INFO   committee_signs      -> OK
+2026-05-11 16:25:29,748 INFO   mergers              -> OK
+2026-05-11 16:25:29,794 INFO   financials           -> OK
+2026-05-11 16:25:29,833 INFO   financials_prev      -> OK
+2026-05-11 16:25:30,005 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105561038434 "HTTP/2 200 OK"
+2026-05-11 16:25:30,016 INFO   ✓ Supabase updated
+2026-05-11 16:25:30,016 INFO [84/148] บริษัทจัดหางาน เอเชีย ไทย โอเวอร์ซี จำกัด
+2026-05-11 16:25:30,172 INFO   info                 -> OK
+2026-05-11 16:25:30,229 INFO   committees           -> OK
+2026-05-11 16:25:30,272 INFO   committee_signs      -> OK
+2026-05-11 16:25:30,305 INFO   mergers              -> OK
+2026-05-11 16:25:30,348 INFO   financials           -> OK
+2026-05-11 16:25:30,390 INFO   financials_prev      -> OK
+2026-05-11 16:25:30,640 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105561124748 "HTTP/2 200 OK"
+2026-05-11 16:25:30,652 INFO   ✓ Supabase updated
+2026-05-11 16:25:30,652 INFO [85/148] บริษัทจัดหางาน ไทย นิปปอน เฟลโลชิป จำกัด
+2026-05-11 16:25:30,694 INFO   info                 -> OK
+2026-05-11 16:25:30,731 INFO   committees           -> OK
+2026-05-11 16:25:30,762 INFO   committee_signs      -> OK
+2026-05-11 16:25:30,817 INFO   mergers              -> OK
+2026-05-11 16:25:30,858 INFO   financials           -> OK
+2026-05-11 16:25:30,902 INFO   financials_prev      -> OK
+2026-05-11 16:25:31,161 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105562008938 "HTTP/2 200 OK"
+2026-05-11 16:25:31,176 INFO   ✓ Supabase updated
+2026-05-11 16:25:31,176 INFO [86/148] บริษัทจัดหางาน พาโซนา โอเวอร์ซี (ไทยแลนด์) จำกัด
+2026-05-11 16:25:31,244 INFO   info                 -> OK
+2026-05-11 16:25:31,282 INFO   committees           -> OK
+2026-05-11 16:25:31,326 INFO   committee_signs      -> OK
+2026-05-11 16:25:31,372 INFO   mergers              -> OK
+2026-05-11 16:25:31,418 INFO   financials           -> OK
+2026-05-11 16:25:31,474 INFO   financials_prev      -> OK
+2026-05-11 16:25:31,754 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105563070611 "HTTP/2 200 OK"
+2026-05-11 16:25:31,769 INFO   ✓ Supabase updated
+2026-05-11 16:25:31,769 INFO [87/148] บริษัทจัดหางาน ฟลู แต้งค์ส เจพี จำกัด
+2026-05-11 16:25:31,813 INFO   info                 -> OK
+2026-05-11 16:25:31,857 INFO   committees           -> OK
+2026-05-11 16:25:31,893 INFO   committee_signs      -> OK
+2026-05-11 16:25:31,930 INFO   mergers              -> OK
+2026-05-11 16:25:31,987 INFO   financials           -> OK
+2026-05-11 16:25:32,033 INFO   financials_prev      -> OK
+2026-05-11 16:25:32,209 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105563084743 "HTTP/2 200 OK"
+2026-05-11 16:25:32,217 INFO   ✓ Supabase updated
+2026-05-11 16:25:32,217 INFO [88/148] บริษัทจัดหางาน เซฟกรุ๊ป 1819 เอ็นเทอร์ไพรส์ จำกัด
+2026-05-11 16:25:32,387 INFO   info                 -> OK
+2026-05-11 16:25:32,480 INFO   committees           -> OK
+2026-05-11 16:25:32,540 INFO   committee_signs      -> OK
+2026-05-11 16:25:32,577 INFO   mergers              -> OK
+2026-05-11 16:25:32,621 INFO   financials           -> OK
+2026-05-11 16:25:32,739 INFO   financials_prev      -> OK
+2026-05-11 16:25:32,908 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105563090492 "HTTP/2 200 OK"
+2026-05-11 16:25:32,919 INFO   ✓ Supabase updated
+2026-05-11 16:25:32,919 INFO [89/148] บริษัทจัดหางาน จินไซ (ไทยเเลนด์) จำกัด
+2026-05-11 16:25:32,963 INFO   info                 -> OK
+2026-05-11 16:25:33,042 INFO   committees           -> OK
+2026-05-11 16:25:33,089 INFO   committee_signs      -> OK
+2026-05-11 16:25:33,126 INFO   mergers              -> OK
+2026-05-11 16:25:33,259 INFO   financials           -> OK
+2026-05-11 16:25:33,301 INFO   financials_prev      -> OK
+2026-05-11 16:25:33,472 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105563183008 "HTTP/2 200 OK"
+2026-05-11 16:25:33,481 INFO   ✓ Supabase updated
+2026-05-11 16:25:33,481 INFO [90/148] บริษัทจัดหางาน มีทเจแปน จำกัด
+2026-05-11 16:25:33,528 INFO   info                 -> OK
+2026-05-11 16:25:33,566 INFO   committees           -> OK
+2026-05-11 16:25:33,608 INFO   committee_signs      -> OK
+2026-05-11 16:25:33,646 INFO   mergers              -> OK
+2026-05-11 16:25:33,785 INFO   financials           -> OK
+2026-05-11 16:25:33,829 INFO   financials_prev      -> OK
+2026-05-11 16:25:34,019 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105565012898 "HTTP/2 200 OK"
+2026-05-11 16:25:34,031 INFO   ✓ Supabase updated
+2026-05-11 16:25:34,031 INFO [91/148] บริษัทจัดหางาน เมดโค้ช เฮลธ์แคร์ อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:25:34,069 INFO   info                 -> OK
+2026-05-11 16:25:34,116 INFO   committees           -> OK
+2026-05-11 16:25:34,373 INFO   committee_signs      -> OK
+2026-05-11 16:25:34,454 INFO   mergers              -> OK
+2026-05-11 16:25:34,506 INFO   financials           -> OK
+2026-05-11 16:25:34,582 INFO   financials_prev      -> OK
+2026-05-11 16:25:34,834 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105565136660 "HTTP/2 200 OK"
+2026-05-11 16:25:34,848 INFO   ✓ Supabase updated
+2026-05-11 16:25:34,848 INFO [92/148] บริษัทจัดหางาน อธิชล เอส อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:25:34,896 INFO   info                 -> OK
+2026-05-11 16:25:34,930 INFO   committees           -> OK
+2026-05-11 16:25:34,962 INFO   committee_signs      -> OK
+2026-05-11 16:25:34,998 INFO   mergers              -> OK
+2026-05-11 16:25:35,042 INFO   financials           -> OK
+2026-05-11 16:25:35,091 INFO   financials_prev      -> OK
+2026-05-11 16:25:35,359 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105565142031 "HTTP/2 200 OK"
+2026-05-11 16:25:35,372 INFO   ✓ Supabase updated
+2026-05-11 16:25:35,372 INFO [93/148] บริษัทจัดหางาน เอ็มพาวเวอร์สกิล โซลูชันส์ จำกัด
+2026-05-11 16:25:35,418 INFO   info                 -> OK
+2026-05-11 16:25:35,459 INFO   committees           -> OK
+2026-05-11 16:25:35,543 INFO   committee_signs      -> OK
+2026-05-11 16:25:35,630 INFO   mergers              -> OK
+2026-05-11 16:25:35,689 INFO   financials           -> OK
+2026-05-11 16:25:35,726 INFO   financials_prev      -> OK
+2026-05-11 16:25:35,897 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105566050483 "HTTP/2 200 OK"
+2026-05-11 16:25:35,902 INFO   ✓ Supabase updated
+2026-05-11 16:25:35,902 INFO [94/148] บริษัทจัดหางาน แกรนด์ เถาหยวน ไต้หวัน จำกัด
+2026-05-11 16:25:35,950 INFO   info                 -> OK
+2026-05-11 16:25:36,037 INFO   committees           -> OK
+2026-05-11 16:25:36,080 INFO   committee_signs      -> OK
+2026-05-11 16:25:36,131 INFO   mergers              -> OK
+2026-05-11 16:25:36,236 INFO   financials           -> OK
+2026-05-11 16:25:36,291 INFO   financials_prev      -> OK
+2026-05-11 16:25:36,452 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105566057062 "HTTP/2 200 OK"
+2026-05-11 16:25:36,461 INFO   ✓ Supabase updated
+2026-05-11 16:25:36,461 INFO [95/148] บริษัทจัดหางาน จิรกิตติ จำกัด
+2026-05-11 16:25:36,497 INFO   info                 -> OK
+2026-05-11 16:25:36,548 INFO   committees           -> OK
+2026-05-11 16:25:36,579 INFO   committee_signs      -> OK
+2026-05-11 16:25:36,634 INFO   mergers              -> OK
+2026-05-11 16:25:36,684 INFO   financials           -> OK
+2026-05-11 16:25:36,734 INFO   financials_prev      -> OK
+2026-05-11 16:25:36,933 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105566067645 "HTTP/2 200 OK"
+2026-05-11 16:25:36,946 INFO   ✓ Supabase updated
+2026-05-11 16:25:36,947 INFO [96/148] บริษัทจัดหางาน โก เวิร์คเกอร์ จำกัด
+2026-05-11 16:25:37,002 INFO   info                 -> OK
+2026-05-11 16:25:37,046 INFO   committees           -> OK
+2026-05-11 16:25:37,091 INFO   committee_signs      -> OK
+2026-05-11 16:25:37,157 INFO   mergers              -> OK
+2026-05-11 16:25:37,211 INFO   financials           -> OK
+2026-05-11 16:25:37,253 INFO   financials_prev      -> OK
+2026-05-11 16:25:37,455 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105566085139 "HTTP/2 200 OK"
+2026-05-11 16:25:37,499 INFO   ✓ Supabase updated
+2026-05-11 16:25:37,499 INFO [97/148] บริษัทจัดหางาน เอ.เอ.เอ็ม.เอส. จำกัด
+2026-05-11 16:25:37,547 INFO   info                 -> OK
+2026-05-11 16:25:37,590 INFO   committees           -> OK
+2026-05-11 16:25:37,627 INFO   committee_signs      -> OK
+2026-05-11 16:25:38,642 INFO   mergers              -> OK
+2026-05-11 16:25:38,684 INFO   financials           -> OK
+2026-05-11 16:25:38,721 INFO   financials_prev      -> OK
+2026-05-11 16:25:38,883 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105566161528 "HTTP/2 200 OK"
+2026-05-11 16:25:38,898 INFO   ✓ Supabase updated
+2026-05-11 16:25:38,898 INFO [98/148] บริษัทจัดหางาน พีอาร์ทีอาร์ โกลบอล จำกัด
+2026-05-11 16:25:39,028 INFO   info                 -> OK
+2026-05-11 16:25:39,065 INFO   committees           -> OK
+2026-05-11 16:25:39,103 INFO   committee_signs      -> OK
+2026-05-11 16:25:39,143 INFO   mergers              -> OK
+2026-05-11 16:25:39,204 INFO   financials           -> OK
+2026-05-11 16:25:39,249 INFO   financials_prev      -> OK
+2026-05-11 16:25:39,414 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105566170101 "HTTP/2 200 OK"
+2026-05-11 16:25:39,425 INFO   ✓ Supabase updated
+2026-05-11 16:25:39,425 INFO [99/148] บริษัทจัดหางาน ซีซีที ซัคเซส จำกัด
+2026-05-11 16:25:39,552 INFO   info                 -> OK
+2026-05-11 16:25:39,599 INFO   committees           -> OK
+2026-05-11 16:25:39,647 INFO   committee_signs      -> OK
+2026-05-11 16:25:39,690 INFO   mergers              -> OK
+2026-05-11 16:25:39,755 INFO   financials           -> OK
+2026-05-11 16:25:39,803 INFO   financials_prev      -> OK
+2026-05-11 16:25:39,975 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105566188001 "HTTP/2 200 OK"
+2026-05-11 16:25:39,983 INFO   ✓ Supabase updated
+2026-05-11 16:25:39,983 INFO [100/148] บริษัทจัดหางาน เอสซีเอ็ม เทรนนิ่ง จำกัด
+2026-05-11 16:25:40,111 INFO   info                 -> OK
+2026-05-11 16:25:40,149 INFO   committees           -> OK
+2026-05-11 16:25:40,182 INFO   committee_signs      -> OK
+2026-05-11 16:25:40,213 INFO   mergers              -> OK
+2026-05-11 16:25:40,272 INFO   financials           -> OK
+2026-05-11 16:25:40,356 INFO   financials_prev      -> OK
+2026-05-11 16:25:40,601 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105566236536 "HTTP/2 200 OK"
+2026-05-11 16:25:40,614 INFO   ✓ Supabase updated
+2026-05-11 16:25:40,647 INFO Token refreshed | encKey prefix: BbHavr
+2026-05-11 16:25:40,647 INFO [101/148] บริษัทจัดหางาน บิสโก้ 2024 จำกัด
+2026-05-11 16:25:40,710 INFO   info                 -> OK
+2026-05-11 16:25:40,742 INFO   committees           -> OK
+2026-05-11 16:25:40,784 INFO   committee_signs      -> OK
+2026-05-11 16:25:40,826 INFO   mergers              -> OK
+2026-05-11 16:25:40,879 INFO   financials           -> OK
+2026-05-11 16:25:40,918 INFO   financials_prev      -> OK
+2026-05-11 16:25:41,125 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105567002806 "HTTP/2 200 OK"
+2026-05-11 16:25:41,134 INFO   ✓ Supabase updated
+2026-05-11 16:25:41,135 INFO [102/148] บริษัทจัดหางาน เจี่ยง แซม จำกัด
+2026-05-11 16:25:41,187 INFO   info                 -> OK
+2026-05-11 16:25:41,233 INFO   committees           -> OK
+2026-05-11 16:25:41,275 INFO   committee_signs      -> OK
+2026-05-11 16:25:41,328 INFO   mergers              -> OK
+2026-05-11 16:25:41,378 INFO   financials           -> OK
+2026-05-11 16:25:41,429 INFO   financials_prev      -> OK
+2026-05-11 16:25:41,648 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105567099672 "HTTP/2 200 OK"
+2026-05-11 16:25:41,655 INFO   ✓ Supabase updated
+2026-05-11 16:25:41,655 INFO [103/148] บริษัทจัดหางาน สิริรินทร์ อินเตอร์เนชั่นแนล (ไทยแลนด์) จำกัด
+2026-05-11 16:25:41,710 INFO   info                 -> OK
+2026-05-11 16:25:41,753 INFO   committees           -> OK
+2026-05-11 16:25:41,799 INFO   committee_signs      -> OK
+2026-05-11 16:25:41,843 INFO   mergers              -> OK
+2026-05-11 16:25:41,893 INFO   financials           -> OK
+2026-05-11 16:25:41,935 INFO   financials_prev      -> OK
+2026-05-11 16:25:42,177 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105567148495 "HTTP/2 200 OK"
+2026-05-11 16:25:42,187 INFO   ✓ Supabase updated
+2026-05-11 16:25:42,187 INFO [104/148] บริษัทจัดหางาน บีเจซี เวิร์ค คอนเน็กซ์ จำกัด
+2026-05-11 16:25:42,225 INFO   info                 -> OK
+2026-05-11 16:25:42,258 INFO   committees           -> OK
+2026-05-11 16:25:42,294 INFO   committee_signs      -> OK
+2026-05-11 16:25:42,333 INFO   mergers              -> OK
+2026-05-11 16:25:42,375 INFO   financials           -> OK
+2026-05-11 16:25:42,416 INFO   financials_prev      -> OK
+2026-05-11 16:25:42,579 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105568049857 "HTTP/2 200 OK"
+2026-05-11 16:25:42,591 INFO   ✓ Supabase updated
+2026-05-11 16:25:42,591 INFO [105/148] บริษัทจัดหางาน เอ็น.ไอ.ที แมนเพาว์เวอร์ (ไทยแลนด์) จำกัด
+2026-05-11 16:25:42,701 INFO   info                 -> OK
+2026-05-11 16:25:42,737 INFO   committees           -> OK
+2026-05-11 16:25:42,781 INFO   committee_signs      -> OK
+2026-05-11 16:25:42,821 INFO   mergers              -> OK
+2026-05-11 16:25:42,865 INFO   financials           -> OK
+2026-05-11 16:25:42,918 INFO   financials_prev      -> OK
+2026-05-11 16:25:43,088 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105568059011 "HTTP/2 200 OK"
+2026-05-11 16:25:43,096 INFO   ✓ Supabase updated
+2026-05-11 16:25:43,096 INFO [106/148] บริษัทจัดหางาน โลตัส โอเวอร์ซีส์ จำกัด
+2026-05-11 16:25:43,222 INFO   info                 -> OK
+2026-05-11 16:25:43,279 INFO   committees           -> OK
+2026-05-11 16:25:43,346 INFO   committee_signs      -> OK
+2026-05-11 16:25:43,391 INFO   mergers              -> OK
+2026-05-11 16:25:43,446 INFO   financials           -> OK
+2026-05-11 16:25:43,497 INFO   financials_prev      -> OK
+2026-05-11 16:25:43,746 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0115568027543 "HTTP/2 200 OK"
+2026-05-11 16:25:43,754 INFO   ✓ Supabase updated
+2026-05-11 16:25:43,755 INFO [107/148] บริษัทจัดหางาน ดับเบิลยู แอล เอช บิสซิเนส จำกัด
+2026-05-11 16:25:43,801 INFO   info                 -> OK
+2026-05-11 16:25:43,837 INFO   committees           -> OK
+2026-05-11 16:25:43,874 INFO   committee_signs      -> OK
+2026-05-11 16:25:43,931 INFO   mergers              -> OK
+2026-05-11 16:25:43,982 INFO   financials           -> OK
+2026-05-11 16:25:44,026 INFO   financials_prev      -> OK
+2026-05-11 16:25:44,270 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0125544001315 "HTTP/2 200 OK"
+2026-05-11 16:25:44,282 INFO   ✓ Supabase updated
+2026-05-11 16:25:44,282 INFO [108/148] บริษัทจัดหางาน ไทยดีเลิศ เอ็นเตอร์ไพรส์ จำกัด
+2026-05-11 16:25:44,328 INFO   info                 -> OK
+2026-05-11 16:25:44,369 INFO   committees           -> OK
+2026-05-11 16:25:44,424 INFO   committee_signs      -> OK
+2026-05-11 16:25:44,465 INFO   mergers              -> OK
+2026-05-11 16:25:44,521 INFO   financials           -> OK
+2026-05-11 16:25:44,585 INFO   financials_prev      -> OK
+2026-05-11 16:25:44,798 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0125546011822 "HTTP/2 200 OK"
+2026-05-11 16:25:44,811 INFO   ✓ Supabase updated
+2026-05-11 16:25:44,811 INFO [109/148] บริษัทจัดหางาน โนโซมิ จำกัด
+2026-05-11 16:25:44,878 INFO   info                 -> OK
+2026-05-11 16:25:44,925 INFO   committees           -> OK
+2026-05-11 16:25:44,984 INFO   committee_signs      -> OK
+2026-05-11 16:25:45,031 INFO   mergers              -> OK
+2026-05-11 16:25:45,074 INFO   financials           -> OK
+2026-05-11 16:25:45,123 INFO   financials_prev      -> OK
+2026-05-11 16:25:45,320 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0125562000741 "HTTP/2 200 OK"
+2026-05-11 16:25:45,333 INFO   ✓ Supabase updated
+2026-05-11 16:25:45,333 INFO [110/148] บริษัทจัดหางาน เอ็มพล็อท จำกัด
+2026-05-11 16:25:45,374 INFO   info                 -> OK
+2026-05-11 16:25:45,412 INFO   committees           -> OK
+2026-05-11 16:25:45,448 INFO   committee_signs      -> OK
+2026-05-11 16:25:45,496 INFO   mergers              -> OK
+2026-05-11 16:25:45,538 INFO   financials           -> OK
+2026-05-11 16:25:45,627 INFO   financials_prev      -> OK
+2026-05-11 16:25:45,847 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0125564017586 "HTTP/2 200 OK"
+2026-05-11 16:25:45,859 INFO   ✓ Supabase updated
+2026-05-11 16:25:45,859 INFO [111/148] บริษัทจัดหางาน พีพีแอล ควอลิตี้ สตาฟ จำกัด
+2026-05-11 16:25:45,906 INFO   info                 -> OK
+2026-05-11 16:25:45,963 INFO   committees           -> OK
+2026-05-11 16:25:46,004 INFO   committee_signs      -> OK
+2026-05-11 16:25:46,054 INFO   mergers              -> OK
+2026-05-11 16:25:46,109 INFO   financials           -> OK
+2026-05-11 16:25:46,158 INFO   financials_prev      -> OK
+2026-05-11 16:25:46,369 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0125565008530 "HTTP/2 200 OK"
+2026-05-11 16:25:46,383 INFO   ✓ Supabase updated
+2026-05-11 16:25:46,383 INFO [112/148] บริษัทจัดหางาน เจ.แอล.เอเจนซี่ จำกัด
+2026-05-11 16:25:46,423 INFO   info                 -> OK
+2026-05-11 16:25:46,459 INFO   committees           -> OK
+2026-05-11 16:25:46,521 INFO   committee_signs      -> OK
+2026-05-11 16:25:46,567 INFO   mergers              -> OK
+2026-05-11 16:25:46,623 INFO   financials           -> OK
+2026-05-11 16:25:46,671 INFO   financials_prev      -> OK
+2026-05-11 16:25:46,892 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0135547011095 "HTTP/2 200 OK"
+2026-05-11 16:25:46,902 INFO   ✓ Supabase updated
+2026-05-11 16:25:46,902 INFO [113/148] บริษัทจัดหางาน เอพีไอ ดีเวลลอปเม้นท์ จำกัด
+2026-05-11 16:25:46,956 INFO   info                 -> OK
+2026-05-11 16:25:47,004 INFO   committees           -> OK
+2026-05-11 16:25:47,037 INFO   committee_signs      -> OK
+2026-05-11 16:25:47,080 INFO   mergers              -> OK
+2026-05-11 16:25:47,131 INFO   financials           -> OK
+2026-05-11 16:25:47,178 INFO   financials_prev      -> OK
+2026-05-11 16:25:47,416 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0135566023664 "HTTP/2 200 OK"
+2026-05-11 16:25:47,425 INFO   ✓ Supabase updated
+2026-05-11 16:25:47,425 INFO [114/148] บริษัทจัดหางาน เอสเอ็นซีเอส เวิร์ค กรุ๊ป จำกัด
+2026-05-11 16:25:47,473 INFO   info                 -> OK
+2026-05-11 16:25:47,528 INFO   committees           -> OK
+2026-05-11 16:25:47,579 INFO   committee_signs      -> OK
+2026-05-11 16:25:47,630 INFO   mergers              -> OK
+2026-05-11 16:25:47,975 INFO   financials           -> OK
+2026-05-11 16:25:48,025 INFO   financials_prev      -> OK
+2026-05-11 16:25:48,189 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0145566004015 "HTTP/2 200 OK"
+2026-05-11 16:25:48,195 INFO   ✓ Supabase updated
+2026-05-11 16:25:48,195 INFO [115/148] บริษัทจัดหางาน วินเนอร์96 เมเนจเม้นท์ จำกัด
+2026-05-11 16:25:48,350 INFO   info                 -> OK
+2026-05-11 16:25:48,463 INFO   committees           -> OK
+2026-05-11 16:25:48,497 INFO   committee_signs      -> OK
+2026-05-11 16:25:48,538 INFO   mergers              -> OK
+2026-05-11 16:25:48,576 INFO   financials           -> OK
+2026-05-11 16:25:48,617 INFO   financials_prev      -> OK
+2026-05-11 16:25:48,785 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0205568033631 "HTTP/2 200 OK"
+2026-05-11 16:25:48,796 INFO   ✓ Supabase updated
+2026-05-11 16:25:48,796 INFO [116/148] บริษัทจัดหางาน ไทนิชิ ยูโก จำกัด
+2026-05-11 16:25:48,839 INFO   info                 -> OK
+2026-05-11 16:25:48,876 INFO   committees           -> OK
+2026-05-11 16:25:48,989 INFO   committee_signs      -> OK
+2026-05-11 16:25:49,022 INFO   mergers              -> OK
+2026-05-11 16:25:49,062 INFO   financials           -> OK
+2026-05-11 16:25:49,101 INFO   financials_prev      -> OK
+2026-05-11 16:25:49,273 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0215551002797 "HTTP/2 200 OK"
+2026-05-11 16:25:49,320 INFO   ✓ Supabase updated
+2026-05-11 16:25:49,320 INFO [117/148] บริษัทจัดหางาน มิตร เอ็นจิเนีย คอนสตรัคชั่น จำกัด
+2026-05-11 16:25:49,367 INFO   info                 -> OK
+2026-05-11 16:25:49,416 INFO   committees           -> OK
+2026-05-11 16:25:49,513 INFO   committee_signs      -> OK
+2026-05-11 16:25:49,563 INFO   mergers              -> OK
+2026-05-11 16:25:49,616 INFO   financials           -> OK
+2026-05-11 16:25:49,664 INFO   financials_prev      -> OK
+2026-05-11 16:25:49,928 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0215556003902 "HTTP/2 200 OK"
+2026-05-11 16:25:49,936 INFO   ✓ Supabase updated
+2026-05-11 16:25:49,936 INFO [118/148] บริษัทจัดหางาน เอส1968 จำกัด
+2026-05-11 16:25:50,037 INFO   info                 -> OK
+2026-05-11 16:25:50,073 INFO   committees           -> OK
+2026-05-11 16:25:50,115 INFO   committee_signs      -> OK
+2026-05-11 16:25:50,169 INFO   mergers              -> OK
+2026-05-11 16:25:50,217 INFO   financials           -> OK
+2026-05-11 16:25:50,251 INFO   financials_prev      -> OK
+2026-05-11 16:25:50,426 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0145563001881 "HTTP/2 200 OK"
+2026-05-11 16:25:50,438 INFO   ✓ Supabase updated
+2026-05-11 16:25:50,438 INFO [119/148] บริษัทจัดหางาน วี.อาร์.เอส. แทรเวล คอร์ปอเรชั่น จำกัด
+2026-05-11 16:25:50,562 INFO   info                 -> OK
+2026-05-11 16:25:50,598 INFO   committees           -> OK
+2026-05-11 16:25:50,638 INFO   committee_signs      -> OK
+2026-05-11 16:25:50,705 INFO   mergers              -> OK
+2026-05-11 16:25:50,751 INFO   financials           -> OK
+2026-05-11 16:25:50,794 INFO   financials_prev      -> OK
+2026-05-11 16:25:50,960 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0305528000154 "HTTP/2 200 OK"
+2026-05-11 16:25:50,966 INFO   ✓ Supabase updated
+2026-05-11 16:25:50,966 INFO [120/148] บริษัทจัดหางาน เอส.พี.ที. อินเตอร์แมเนจเม้นท์ จำกัด
+2026-05-11 16:25:51,086 INFO   info                 -> OK
+2026-05-11 16:25:51,123 INFO   committees           -> OK
+2026-05-11 16:25:51,219 INFO   committee_signs      -> OK
+2026-05-11 16:25:51,256 INFO   mergers              -> OK
+2026-05-11 16:25:51,300 INFO   financials           -> OK
+2026-05-11 16:25:51,351 INFO   financials_prev      -> OK
+2026-05-11 16:25:51,611 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0305538001455 "HTTP/2 200 OK"
+2026-05-11 16:25:51,627 INFO   ✓ Supabase updated
+2026-05-11 16:25:51,627 INFO [121/148] บริษัทจัดหางาน ไทยเวิร์คเกอร์ เอ็นเทอร์ไพรส์ จำกัด
+2026-05-11 16:25:51,681 INFO   info                 -> OK
+2026-05-11 16:25:51,722 INFO   committees           -> OK
+2026-05-11 16:25:51,763 INFO   committee_signs      -> OK
+2026-05-11 16:25:51,801 INFO   mergers              -> OK
+2026-05-11 16:25:51,853 INFO   financials           -> OK
+2026-05-11 16:25:51,907 INFO   financials_prev      -> OK
+2026-05-11 16:25:52,183 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0305540001220 "HTTP/2 200 OK"
+2026-05-11 16:25:52,192 INFO   ✓ Supabase updated
+2026-05-11 16:25:52,192 INFO [122/148] บริษัทจัดหางาน เอเชียโก จำกัด
+2026-05-11 16:25:52,230 INFO   info                 -> OK
+2026-05-11 16:25:52,281 INFO   committees           -> OK
+2026-05-11 16:25:52,321 INFO   committee_signs      -> OK
+2026-05-11 16:25:52,375 INFO   mergers              -> OK
+2026-05-11 16:25:52,426 INFO   financials           -> OK
+2026-05-11 16:25:52,470 INFO   financials_prev      -> OK
+2026-05-11 16:25:52,661 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0305566005460 "HTTP/2 200 OK"
+2026-05-11 16:25:52,672 INFO   ✓ Supabase updated
+2026-05-11 16:25:52,673 INFO [123/148] บริษัทจัดหางาน บิ๊กวัน ซัพพลาย จำกัด
+2026-05-11 16:25:52,723 INFO   info                 -> OK
+2026-05-11 16:25:52,756 INFO   committees           -> OK
+2026-05-11 16:25:52,796 INFO   committee_signs      -> OK
+2026-05-11 16:25:52,828 INFO   mergers              -> OK
+2026-05-11 16:25:52,881 INFO   financials           -> OK
+2026-05-11 16:25:52,923 INFO   financials_prev      -> OK
+2026-05-11 16:25:53,085 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0305567004581 "HTTP/2 200 OK"
+2026-05-11 16:25:53,096 INFO   ✓ Supabase updated
+2026-05-11 16:25:53,096 INFO [124/148] บริษัทจัดหางาน ทรู โพซิชั่น จำกัด
+2026-05-11 16:25:53,221 INFO   info                 -> OK
+2026-05-11 16:25:53,256 INFO   committees           -> OK
+2026-05-11 16:25:53,304 INFO   committee_signs      -> OK
+2026-05-11 16:25:53,353 INFO   mergers              -> OK
+2026-05-11 16:25:53,395 INFO   financials           -> OK
+2026-05-11 16:25:53,441 INFO   financials_prev      -> OK
+2026-05-11 16:25:53,706 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0325550000285 "HTTP/2 200 OK"
+2026-05-11 16:25:53,712 INFO   ✓ Supabase updated
+2026-05-11 16:25:53,712 INFO [125/148] บริษัทจัดหางาน วัน ทีเจ จำกัด
+2026-05-11 16:25:53,754 INFO   info                 -> OK
+2026-05-11 16:25:53,797 INFO   committees           -> OK
+2026-05-11 16:25:53,829 INFO   committee_signs      -> OK
+2026-05-11 16:25:53,866 INFO   mergers              -> OK
+2026-05-11 16:25:53,913 INFO   financials           -> OK
+2026-05-11 16:25:53,967 INFO   financials_prev      -> OK
+2026-05-11 16:25:54,139 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0325566001766 "HTTP/2 200 OK"
+2026-05-11 16:25:54,145 INFO   ✓ Supabase updated
+2026-05-11 16:25:54,145 INFO [126/148] บริษัทจัดหางาน เซบา เอ็นเตอร์ไพร์ส จำกัด
+2026-05-11 16:25:54,272 INFO   info                 -> OK
+2026-05-11 16:25:54,320 INFO   committees           -> OK
+2026-05-11 16:25:54,354 INFO   committee_signs      -> OK
+2026-05-11 16:25:54,396 INFO   mergers              -> OK
+2026-05-11 16:25:54,451 INFO   financials           -> OK
+2026-05-11 16:25:54,507 INFO   financials_prev      -> OK
+2026-05-11 16:25:54,781 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0335543000089 "HTTP/2 200 OK"
+2026-05-11 16:25:54,789 INFO   ✓ Supabase updated
+2026-05-11 16:25:54,789 INFO [127/148] บริษัทจัดหางาน อุบลไทยเวลเดอร์ จำกัด
+2026-05-11 16:25:54,832 INFO   info                 -> OK
+2026-05-11 16:25:54,866 INFO   committees           -> OK
+2026-05-11 16:25:54,907 INFO   committee_signs      -> OK
+2026-05-11 16:25:54,944 INFO   mergers              -> OK
+2026-05-11 16:25:54,996 INFO   financials           -> OK
+2026-05-11 16:25:55,057 INFO   financials_prev      -> OK
+2026-05-11 16:25:55,281 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0345550000307 "HTTP/2 200 OK"
+2026-05-11 16:25:55,288 INFO   ✓ Supabase updated
+2026-05-11 16:25:55,288 INFO [128/148] บริษัทจัดหางาน อ.บ.ไทย จำกัด
+2026-05-11 16:25:55,330 INFO   info                 -> OK
+2026-05-11 16:25:55,366 INFO   committees           -> OK
+2026-05-11 16:25:55,416 INFO   committee_signs      -> OK
+2026-05-11 16:25:55,475 INFO   mergers              -> OK
+2026-05-11 16:25:55,544 INFO   financials           -> OK
+2026-05-11 16:25:55,588 INFO   financials_prev      -> OK
+2026-05-11 16:25:55,805 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0345562000081 "HTTP/2 200 OK"
+2026-05-11 16:25:55,818 INFO   ✓ Supabase updated
+2026-05-11 16:25:55,818 INFO [129/148] บริษัทจัดหางาน ทีเจ กรุ๊ป 2019 (ประเทศไทย) จำกัด
+2026-05-11 16:25:55,893 INFO   info                 -> OK
+2026-05-11 16:25:55,955 INFO   committees           -> OK
+2026-05-11 16:25:56,047 INFO   committee_signs      -> OK
+2026-05-11 16:25:56,091 INFO   mergers              -> OK
+2026-05-11 16:25:56,140 INFO   financials           -> OK
+2026-05-11 16:25:56,187 INFO   financials_prev      -> OK
+2026-05-11 16:25:56,368 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0345562000820 "HTTP/2 200 OK"
+2026-05-11 16:25:56,383 INFO   ✓ Supabase updated
+2026-05-11 16:25:56,384 INFO [130/148] บริษัทจัดหางาน ดับเบิ้ลยู อินเตอร์เนชั่นแนล 2020 จำกัด
+2026-05-11 16:25:56,423 INFO   info                 -> OK
+2026-05-11 16:25:56,464 INFO   committees           -> OK
+2026-05-11 16:25:56,508 INFO   committee_signs      -> OK
+2026-05-11 16:25:56,551 INFO   mergers              -> OK
+2026-05-11 16:25:56,662 INFO   financials           -> OK
+2026-05-11 16:25:56,714 INFO   financials_prev      -> OK
+2026-05-11 16:25:56,899 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0345563001692 "HTTP/2 200 OK"
+2026-05-11 16:25:56,909 INFO   ✓ Supabase updated
+2026-05-11 16:25:56,909 INFO [131/148] บริษัทจัดหางาน อี.พี.เอ. อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:25:56,954 INFO   info                 -> OK
+2026-05-11 16:25:56,993 INFO   committees           -> OK
+2026-05-11 16:25:57,031 INFO   committee_signs      -> OK
+2026-05-11 16:25:57,086 INFO   mergers              -> OK
+2026-05-11 16:25:57,190 INFO   financials           -> OK
+2026-05-11 16:25:57,238 INFO   financials_prev      -> OK
+2026-05-11 16:25:57,408 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0415527000125 "HTTP/2 200 OK"
+2026-05-11 16:25:57,424 INFO   ✓ Supabase updated
+2026-05-11 16:25:57,424 INFO [132/148] บริษัทจัดหางาน อุดร เอ็น ที ยูเนี่ยน จำกัด
+2026-05-11 16:25:57,486 INFO   info                 -> OK
+2026-05-11 16:25:57,536 INFO   committees           -> OK
+2026-05-11 16:25:57,586 INFO   committee_signs      -> OK
+2026-05-11 16:25:57,630 INFO   mergers              -> OK
+2026-05-11 16:25:57,672 INFO   financials           -> OK
+2026-05-11 16:25:57,712 INFO   financials_prev      -> OK
+2026-05-11 16:25:57,902 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0415544000332 "HTTP/2 200 OK"
+2026-05-11 16:25:57,915 INFO   ✓ Supabase updated
+2026-05-11 16:25:57,915 INFO [133/148] บริษัทจัดหางาน อุดร เอส.เค.เอ็ม.อินเตอร์เนชั่นแนล (2001) จำกัด
+2026-05-11 16:25:57,966 INFO   info                 -> OK
+2026-05-11 16:25:58,013 INFO   committees           -> OK
+2026-05-11 16:25:58,062 INFO   committee_signs      -> OK
+2026-05-11 16:25:58,101 INFO   mergers              -> OK
+2026-05-11 16:25:58,155 INFO   financials           -> OK
+2026-05-11 16:25:58,202 INFO   financials_prev      -> OK
+2026-05-11 16:25:58,428 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0415544000456 "HTTP/2 200 OK"
+2026-05-11 16:25:58,437 INFO   ✓ Supabase updated
+2026-05-11 16:25:58,437 INFO [134/148] บริษัทจัดหางาน นอร์ทอีสท์ โอเวอร์ซี (ไทยแลนด์) จำกัด
+2026-05-11 16:25:58,481 INFO   info                 -> OK
+2026-05-11 16:25:58,527 INFO   committees           -> OK
+2026-05-11 16:25:58,567 INFO   committee_signs      -> OK
+2026-05-11 16:25:58,604 INFO   mergers              -> OK
+2026-05-11 16:25:58,654 INFO   financials           -> OK
+2026-05-11 16:25:58,754 INFO   financials_prev      -> OK
+2026-05-11 16:25:58,953 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0415549000764 "HTTP/2 200 OK"
+2026-05-11 16:25:58,964 INFO   ✓ Supabase updated
+2026-05-11 16:25:58,964 INFO [135/148] บริษัทจัดหางาน ยู.ไอ จำกัด
+2026-05-11 16:25:59,001 INFO   info                 -> OK
+2026-05-11 16:25:59,047 INFO   committees           -> OK
+2026-05-11 16:25:59,102 INFO   committee_signs      -> OK
+2026-05-11 16:25:59,155 INFO   mergers              -> OK
+2026-05-11 16:25:59,207 INFO   financials           -> OK
+2026-05-11 16:25:59,252 INFO   financials_prev      -> OK
+2026-05-11 16:25:59,475 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0415558000216 "HTTP/2 200 OK"
+2026-05-11 16:25:59,489 INFO   ✓ Supabase updated
+2026-05-11 16:25:59,490 INFO [136/148] บริษัทจัดหางาน เอส เอ็น เวิลด์ อินเตอร์เนชั่นแนล จำกัด
+2026-05-11 16:25:59,529 INFO   info                 -> OK
+2026-05-11 16:25:59,566 INFO   committees           -> OK
+2026-05-11 16:25:59,629 INFO   committee_signs      -> OK
+2026-05-11 16:25:59,676 INFO   mergers              -> OK
+2026-05-11 16:25:59,722 INFO   financials           -> OK
+2026-05-11 16:25:59,769 INFO   financials_prev      -> OK
+2026-05-11 16:26:00,000 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0415566003415 "HTTP/2 200 OK"
+2026-05-11 16:26:00,010 INFO   ✓ Supabase updated
+2026-05-11 16:26:00,010 INFO [137/148] บริษัทจัดหางาน วี.ดรากอน (อุดรธานี ) จำกัด
+2026-05-11 16:26:00,055 INFO   info                 -> OK
+2026-05-11 16:26:00,092 INFO   committees           -> OK
+2026-05-11 16:26:00,132 INFO   committee_signs      -> OK
+2026-05-11 16:26:00,187 INFO   mergers              -> OK
+2026-05-11 16:26:00,259 INFO   financials           -> OK
+2026-05-11 16:26:00,304 INFO   financials_prev      -> OK
+2026-05-11 16:26:00,526 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0415568000677 "HTTP/2 200 OK"
+2026-05-11 16:26:00,537 INFO   ✓ Supabase updated
+2026-05-11 16:26:00,537 INFO [138/148] บริษัทจัดหางาน ธนากร บราเธอร์ จำกัด
+2026-05-11 16:26:00,578 INFO   info                 -> OK
+2026-05-11 16:26:00,622 INFO   committees           -> OK
+2026-05-11 16:26:00,670 INFO   committee_signs      -> OK
+2026-05-11 16:26:00,717 INFO   mergers              -> OK
+2026-05-11 16:26:00,759 INFO   financials           -> OK
+2026-05-11 16:26:00,797 INFO   financials_prev      -> OK
+2026-05-11 16:26:00,959 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0435559000210 "HTTP/2 200 OK"
+2026-05-11 16:26:00,963 INFO   ✓ Supabase updated
+2026-05-11 16:26:00,963 INFO [139/148] บริษัทจัดหางาน เบสท์ คิงด้อม อินเตอร์กรุ๊ป จำกัด
+2026-05-11 16:26:01,083 INFO   info                 -> OK
+2026-05-11 16:26:01,123 INFO   committees           -> OK
+2026-05-11 16:26:01,157 INFO   committee_signs      -> OK
+2026-05-11 16:26:01,201 INFO   mergers              -> OK
+2026-05-11 16:26:01,271 INFO   financials           -> OK
+2026-05-11 16:26:01,311 INFO   financials_prev      -> OK
+2026-05-11 16:26:01,481 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0455565001052 "HTTP/2 200 OK"
+2026-05-11 16:26:01,486 INFO   ✓ Supabase updated
+2026-05-11 16:26:01,486 INFO [140/148] บริษัทจัดหางาน ตากาต จำกัด
+2026-05-11 16:26:01,672 INFO   info                 -> OK
+2026-05-11 16:26:01,749 INFO   committees           -> OK
+2026-05-11 16:26:01,794 INFO   committee_signs      -> OK
+2026-05-11 16:26:01,838 INFO   mergers              -> OK
+2026-05-11 16:26:01,889 INFO   financials           -> OK
+2026-05-11 16:26:01,939 INFO   financials_prev      -> OK
+2026-05-11 16:26:02,106 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0505565008960 "HTTP/2 200 OK"
+2026-05-11 16:26:02,114 INFO   ✓ Supabase updated
+2026-05-11 16:26:02,114 INFO [141/148] บริษัทจัดหางาน เอเชียอินเตอร์เนชั่นแนลเน็ตเวิร์ค จำกัด
+2026-05-11 16:26:02,160 INFO   info                 -> OK
+2026-05-11 16:26:02,213 INFO   committees           -> OK
+2026-05-11 16:26:02,259 INFO   committee_signs      -> OK
+2026-05-11 16:26:02,299 INFO   mergers              -> OK
+2026-05-11 16:26:02,352 INFO   financials           -> OK
+2026-05-11 16:26:02,396 INFO   financials_prev      -> OK
+2026-05-11 16:26:02,622 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0575553000799 "HTTP/2 200 OK"
+2026-05-11 16:26:02,633 INFO   ✓ Supabase updated
+2026-05-11 16:26:02,634 INFO [142/148] บริษัทจัดหางาน ไทย เจแปน บิสซิเนส เน็ทเวิร์ค จำกัด
+2026-05-11 16:26:02,670 INFO   info                 -> OK
+2026-05-11 16:26:02,705 INFO   committees           -> OK
+2026-05-11 16:26:02,750 INFO   committee_signs      -> OK
+2026-05-11 16:26:02,789 INFO   mergers              -> OK
+2026-05-11 16:26:02,837 INFO   financials           -> OK
+2026-05-11 16:26:02,887 INFO   financials_prev      -> OK
+2026-05-11 16:26:03,148 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0575556000340 "HTTP/2 200 OK"
+2026-05-11 16:26:03,159 INFO   ✓ Supabase updated
+2026-05-11 16:26:03,159 INFO [143/148] บริษัทจัดหางาน เอ บี ซี ไทย-เจแปน จำกัด
+2026-05-11 16:26:03,206 INFO   info                 -> OK
+2026-05-11 16:26:03,244 INFO   committees           -> OK
+2026-05-11 16:26:03,277 INFO   committee_signs      -> OK
+2026-05-11 16:26:03,326 INFO   mergers              -> OK
+2026-05-11 16:26:03,373 INFO   financials           -> OK
+2026-05-11 16:26:03,415 INFO   financials_prev      -> OK
+2026-05-11 16:26:03,672 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0575558002048 "HTTP/2 200 OK"
+2026-05-11 16:26:03,682 INFO   ✓ Supabase updated
+2026-05-11 16:26:03,682 INFO [144/148] บริษัทจัดหางาน ฮิดะ ฮิคารุ จำกัด
+2026-05-11 16:26:03,725 INFO   info                 -> OK
+2026-05-11 16:26:03,770 INFO   committees           -> OK
+2026-05-11 16:26:03,806 INFO   committee_signs      -> OK
+2026-05-11 16:26:03,880 INFO   mergers              -> OK
+2026-05-11 16:26:03,939 INFO   financials           -> OK
+2026-05-11 16:26:04,007 INFO   financials_prev      -> OK
+2026-05-11 16:26:04,195 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0575561002126 "HTTP/2 200 OK"
+2026-05-11 16:26:04,202 INFO   ✓ Supabase updated
+2026-05-11 16:26:04,202 INFO [145/148] บริษัทจัดหางาน เอสทีเอ็นพี จำกัด
+2026-05-11 16:26:04,239 INFO   info                 -> OK
+2026-05-11 16:26:04,288 INFO   committees           -> OK
+2026-05-11 16:26:04,343 INFO   committee_signs      -> OK
+2026-05-11 16:26:04,449 INFO   mergers              -> OK
+2026-05-11 16:26:04,522 INFO   financials           -> OK
+2026-05-11 16:26:04,607 INFO   financials_prev      -> OK
+2026-05-11 16:26:04,783 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0575562001522 "HTTP/2 200 OK"
+2026-05-11 16:26:04,791 INFO   ✓ Supabase updated
+2026-05-11 16:26:04,791 INFO [146/148] บริษัทจัดหางาน เอ็นซี โกลบอลเอ็นเตอร์ไพรส์ จำกัด
+2026-05-11 16:26:04,885 INFO   info                 -> OK
+2026-05-11 16:26:04,954 INFO   committees           -> OK
+2026-05-11 16:26:05,031 INFO   committee_signs      -> OK
+2026-05-11 16:26:05,093 INFO   mergers              -> OK
+2026-05-11 16:26:05,248 INFO   financials           -> OK
+2026-05-11 16:26:05,306 INFO   financials_prev      -> OK
+2026-05-11 16:26:05,472 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0575563000279 "HTTP/2 200 OK"
+2026-05-11 16:26:05,480 INFO   ✓ Supabase updated
+2026-05-11 16:26:05,480 INFO [147/148] บริษัทจัดหางาน ไทย แจแปน แฟมิลี่ จำกัด
+2026-05-11 16:26:05,579 INFO   info                 -> OK
+2026-05-11 16:26:05,643 INFO   committees           -> OK
+2026-05-11 16:26:05,766 INFO   committee_signs      -> OK
+2026-05-11 16:26:05,816 INFO   mergers              -> OK
+2026-05-11 16:26:05,873 INFO   financials           -> OK
+2026-05-11 16:26:05,911 INFO   financials_prev      -> OK
+2026-05-11 16:26:06,079 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0705566001100 "HTTP/2 200 OK"
+2026-05-11 16:26:06,084 INFO   ✓ Supabase updated
+2026-05-11 16:26:06,084 INFO [148/148] บริษัทจัดหางาน การีมี คอนแทรคติ้ง จำกัด
+2026-05-11 16:26:06,126 INFO   info                 -> OK
+2026-05-11 16:26:06,165 INFO   committees           -> OK
+2026-05-11 16:26:06,293 INFO   committee_signs      -> OK
+2026-05-11 16:26:06,338 INFO   mergers              -> OK
+2026-05-11 16:26:06,387 INFO   financials           -> OK
+2026-05-11 16:26:06,423 INFO   financials_prev      -> OK
+2026-05-11 16:26:06,589 INFO HTTP Request: PATCH https://btbwqsvqshjozunwienf.supabase.co/rest/v1/agencies?juristic_id=eq.0105568040558 "HTTP/2 200 OK"
+2026-05-11 16:26:06,596 INFO   ✓ Supabase updated
+2026-05-11 16:26:06,596 INFO Done — 148 updated, 0 failed
+===== 2026-05-11 16:26:06 Done (exit=0) =====
