@@ -12,7 +12,15 @@ import {
   FileText,
   AlertCircle,
   ShieldCheck,
+  UploadCloud,
 } from "lucide-react";
+
+const QUICK_TAGS = [
+  "หลอกเก็บค่าธรรมเนียมจัดหางานล่วงหน้า",
+  "แอบอ้างชื่อบริษัทจัดหางานถูกกฎหมาย",
+  "ชวนทำงานต่างประเทศรายได้สูงเกินจริง",
+  "โพสต์รับสมัครงานผ่านกลุ่มโซเชียลมีเดียส่วนตัว",
+];
 
 export default function ReportScamClient() {
   const [formData, setFormData] = useState({
@@ -24,6 +32,7 @@ export default function ReportScamClient() {
     reporterName: "",
     reporterPhone: "",
   });
+  const [previewUrl, setPreviewUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState({ type: "", message: "" });
 
@@ -31,8 +40,45 @@ export default function ReportScamClient() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   }, []);
 
+  const handleAddTag = useCallback((tag) => {
+    setFormData((prev) => {
+      const tagText = `[รูปแบบ: ${tag}]`;
+      const description = prev.description ? `${prev.description}\n${tagText}` : tagText;
+      return { ...prev, description };
+    });
+  }, []);
+
+  const handleFileChange = useCallback((e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert("ไฟล์รูปภาพต้องมีขนาดไม่เกิน 5MB");
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      alert("กรุณาเลือกไฟล์รูปภาพเท่านั้น (JPEG, PNG, WebP)");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      handleInputChange("evidence", reader.result);
+      setPreviewUrl(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }, [handleInputChange]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.evidence) {
+      setStatus({
+        type: "error",
+        message: "กรุณาอัปโหลดรูปภาพหลักฐานความเสียหายหรือการคุยแชต",
+      });
+      return;
+    }
     setIsLoading(true);
     setStatus({ type: "", message: "" });
 
@@ -61,6 +107,7 @@ export default function ReportScamClient() {
         reporterName: "",
         reporterPhone: "",
       });
+      setPreviewUrl("");
     } catch (error) {
       setStatus({
         type: "error",
@@ -194,20 +241,50 @@ export default function ReportScamClient() {
                 </legend>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="report-evidence" className="text-sm font-extrabold text-slate-700">
-                    รูปแบบหลักฐาน <span className="text-red-500" aria-label="จำเป็น">*</span>
+                  <label className="text-sm font-extrabold text-slate-700">
+                    รูปภาพหลักฐานการหลอกลวง (สกรีนช็อตแชต/โอนเงิน) <span className="text-red-500" aria-label="จำเป็น">*</span>
                   </label>
                   <div className="relative">
-                    <FileText className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
-                    <input
-                      id="report-evidence"
-                      required
-                      type="text"
-                      placeholder="เช่น ภาพสกรีนแชต, ข้อความ SMS"
-                      className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-primary outline-none transition-all text-base"
-                      value={formData.evidence}
-                      onChange={(e) => handleInputChange("evidence", e.target.value)}
-                    />
+                    {!previewUrl ? (
+                      <label
+                        htmlFor="report-evidence-file"
+                        className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-slate-300 hover:border-brand-primary bg-slate-50 hover:bg-brand-primary/5 rounded-2xl cursor-pointer transition-all duration-300 group"
+                      >
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
+                          <div className="p-3 bg-white rounded-full shadow-sm text-slate-400 group-hover:text-brand-primary group-hover:scale-110 transition-all duration-300 mb-3">
+                            <UploadCloud size={24} />
+                          </div>
+                          <p className="text-sm text-slate-600 font-bold mb-1">คลิกเพื่อเลือกไฟล์ หรือลากไฟล์มาวางที่นี่</p>
+                          <p className="text-xs text-slate-400">รองรับ JPEG, PNG, WebP ขนาดไม่เกิน 5MB</p>
+                        </div>
+                        <input
+                          id="report-evidence-file"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleFileChange}
+                        />
+                      </label>
+                    ) : (
+                      <div className="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex items-center justify-center p-4">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={previewUrl}
+                          alt="Evidence preview"
+                          className="max-h-60 rounded-xl object-contain shadow-md"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            handleInputChange("evidence", "");
+                            setPreviewUrl("");
+                          }}
+                          className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow transition-all hover:scale-105"
+                        >
+                          ลบรูปภาพ
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -215,6 +292,18 @@ export default function ReportScamClient() {
                   <label htmlFor="report-description" className="text-sm font-extrabold text-slate-700">
                     รายละเอียดการหลอกลวง <span className="text-red-500" aria-label="จำเป็น">*</span>
                   </label>
+                  <div className="flex flex-wrap gap-2 mb-1">
+                    {QUICK_TAGS.map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => handleAddTag(tag)}
+                        className="px-3 py-1.5 bg-slate-100 hover:bg-brand-primary/10 hover:text-brand-primary text-slate-600 border border-slate-200 hover:border-brand-primary/20 rounded-lg text-xs font-semibold transition-all duration-200"
+                      >
+                        + {tag}
+                      </button>
+                    ))}
+                  </div>
                   <textarea
                     id="report-description"
                     required

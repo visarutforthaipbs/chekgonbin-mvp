@@ -16,6 +16,7 @@ import {
   Share2,
   Copy,
   Check,
+  Printer,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -33,6 +34,14 @@ function ResultContent() {
       }
     }
     return null;
+  });
+
+  const [checklist, setChecklist] = useState({
+    doe: false,
+    dbd: false,
+    noPersonalTransfer: false,
+    blacklist: false,
+    receipt: false,
   });
 
   useEffect(() => {
@@ -59,6 +68,8 @@ function ResultContent() {
       text: "ความเสี่ยงต่ำ",
       description: "ไม่พบสัญญาณอันตรายที่ชัดเจน แต่ควรตรวจสอบอย่างละเอียดอีกครั้ง",
       icon: CheckCircle2,
+      strokeColor: "stroke-signal-green",
+      glowClass: "shadow-xl shadow-green-500/5 border border-green-200/50",
     },
     medium: {
       color: "text-signal-orange",
@@ -68,6 +79,8 @@ function ResultContent() {
       text: "ความเสี่ยงปานกลาง",
       description: "พบข้อควรระวังบางประการ ควรตรวจสอบข้อมูลเพิ่มเติมกับกรมการจัดหางาน",
       icon: AlertTriangle,
+      strokeColor: "stroke-signal-orange",
+      glowClass: "shadow-xl shadow-orange-500/5 border border-orange-200/50",
     },
     high: {
       color: "text-signal-red",
@@ -77,6 +90,8 @@ function ResultContent() {
       text: "ความเสี่ยงสูง",
       description: "พบสัญญาณอันตราย! โปรดระมัดระวังอย่างยิ่งและหลีกเลี่ยงการโอนเงิน",
       icon: AlertCircle,
+      strokeColor: "stroke-signal-red",
+      glowClass: "shadow-xl shadow-red-500/10 border border-red-200/50",
     },
   };
 
@@ -101,6 +116,40 @@ function ResultContent() {
 
   return (
     <div className={`w-full min-h-screen ${config.bg} transition-colors duration-500 flex flex-col items-center`}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media print {
+          body, html {
+            background: white !important;
+            color: #000 !important;
+          }
+          header, footer, nav, button, a.no-print-link, .no-print {
+            display: none !important;
+          }
+          .min-h-screen {
+            min-height: 0 !important;
+            background-color: white !important;
+          }
+          .container {
+            padding: 0 !important;
+            margin: 0 auto !important;
+            max-width: 100% !important;
+          }
+          .shadow-lg, .shadow-xl, .shadow-md, .shadow-sm {
+            box-shadow: none !important;
+            border: 1px solid #cbd5e1 !important;
+          }
+          .bg-slate-50 {
+            background-color: #f8fafc !important;
+          }
+          .bg-green-50\\/20 {
+            background-color: #f0fdf4 !important;
+          }
+          section, .shadow-lg {
+            page-break-inside: avoid;
+          }
+        }
+      `}} />
+      
       <div className="container mx-auto px-4 md:px-6 py-8 md:py-20 flex flex-col items-center gap-8 md:gap-12 max-w-3xl">
         
         {/* Layer 1: Subconscious Hook - Threat Level */}
@@ -109,8 +158,34 @@ function ResultContent() {
           animate={{ opacity: 1, scale: 1 }}
           className="flex flex-col items-center text-center gap-4 md:gap-6"
         >
-          <div className={`p-5 md:p-6 bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-xl ${config.threatClass}`}>
-            <config.icon className={`${config.color} w-16 h-16 md:w-20 md:h-20`} />
+          {/* Circular SVG Gauge */}
+          <div className="relative w-36 h-36 md:w-44 md:h-44 flex items-center justify-center bg-white rounded-full shadow-md border border-slate-100 p-2">
+            <svg className="w-full h-full transform -rotate-90">
+              <circle
+                cx="50%"
+                cy="50%"
+                r="40%"
+                className="stroke-slate-100 fill-none"
+                strokeWidth="8"
+              />
+              <motion.circle
+                cx="50%"
+                cy="50%"
+                r="40%"
+                className={`fill-none ${config.strokeColor}`}
+                strokeWidth="10"
+                strokeLinecap="round"
+                strokeDasharray="251.2"
+                initial={{ strokeDashoffset: 251.2 }}
+                animate={{ strokeDashoffset: 251.2 - (251.2 * result.score) / 100 }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+              />
+            </svg>
+            <div className="absolute flex flex-col items-center justify-center">
+              <config.icon className={`${config.color} w-8.5 h-8.5 md:w-10 md:h-10 mb-1`} />
+              <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">คะแนนความเสี่ยง</span>
+              <span className={`text-2xl md:text-4xl font-black ${config.color} leading-none mt-1`}>{result.score}%</span>
+            </div>
           </div>
           
           <div className="flex flex-col gap-2">
@@ -121,15 +196,10 @@ function ResultContent() {
               {config.description}
             </p>
           </div>
-
-          <div className="flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white rounded-full border border-slate-100 shadow-sm">
-            <span className="text-[10px] md:text-xs font-extrabold text-slate-400 uppercase tracking-widest">Risk Score</span>
-            <span className={`text-lg md:text-xl font-black ${config.color}`}>{result.score}</span>
-          </div>
         </motion.div>
 
         {/* Layer 2: Chunked Gateway - Assessment Details */}
-        <section className="w-full bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg overflow-hidden">
+        <section className={`w-full bg-white rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden transition-all duration-300 ${config.glowClass}`}>
           <div className="p-6 md:p-8 flex flex-col gap-4 md:gap-6">
             <h3 className="text-base md:text-lg font-extrabold text-slate-800 flex items-center gap-2">
               <Info className="text-slate-400 w-[18px] h-[18px] md:w-5 md:h-5" />
@@ -156,6 +226,50 @@ function ResultContent() {
                   <span className="text-green-800 font-medium text-sm md:text-base">ไม่พบปัจจัยเสี่ยงในฐานข้อมูลเบื้องต้น</span>
                 </div>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* Verification Checklist */}
+        <section className="w-full bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg overflow-hidden">
+          <div className="p-6 md:p-8 flex flex-col gap-4 md:gap-6">
+            <div>
+              <h3 className="text-base md:text-lg font-extrabold text-slate-800 flex items-center gap-2 mb-1">
+                <ClipboardList className="text-brand-primary w-[18px] h-[18px] md:w-5 md:h-5" />
+                ขั้นตอนปฏิบัติเพื่อความปลอดภัย (Safety Checklist)
+              </h3>
+              <p className="text-xs text-slate-500">ตรวจสอบและทำเครื่องหมายเพื่อบันทึกประวัติการป้องกัน</p>
+            </div>
+            
+            <div className="flex flex-col gap-3">
+              {[
+                { id: "doe", label: "ตรวจสอบรายชื่อผู้รับอนุญาตจัดหางานในระบบของกรมการจัดหางาน (DOE)" },
+                { id: "dbd", label: "ค้นหาข้อมูลจดทะเบียนนิติบุคคลและงบการเงินกับกรมพัฒนาธุรกิจการค้า (DBD)" },
+                { id: "noPersonalTransfer", label: "หลีกเลี่ยงการโอนเงินมัดจำหรือค่าธรรมเนียมเข้าบัญชีส่วนบุคคล (ต้องเป็นบัญชีบริษัทเท่านั้น)" },
+                { id: "blacklist", label: "ตรวจสอบรายชื่อคนโกงในระบบรายงานและค้นหาประวัติการหลอกลวงทั่วไป" },
+                { id: "receipt", label: "เรียกขอหนังสือสัญญาจ้างงานและหลักฐานการรับเงินที่ถูกต้องทุกครั้ง" },
+              ].map((item) => (
+                <motion.label
+                  key={item.id}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.99 }}
+                  className={`flex items-start gap-3 p-3.5 rounded-xl border hover:border-brand-primary/30 hover:bg-slate-50/50 cursor-pointer transition-all duration-300 ${
+                    checklist[item.id]
+                      ? "bg-green-50/30 border-green-300 shadow-xs"
+                      : "bg-white border-slate-100"
+                  }`}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checklist[item.id]}
+                    onChange={(e) => setChecklist(prev => ({ ...prev, [item.id]: e.target.checked }))}
+                    className="w-5 h-5 rounded-md border-slate-300 text-brand-primary focus:ring-brand-primary cursor-pointer shrink-0 mt-0.5 transition-transform duration-200 hover:scale-105"
+                  />
+                  <span className={`text-sm leading-relaxed select-none transition-all duration-300 ${checklist[item.id] ? "text-slate-400 line-through font-normal" : "text-slate-700 font-medium"}`}>
+                    {item.label}
+                  </span>
+                </motion.label>
+              ))}
             </div>
           </div>
         </section>
@@ -195,15 +309,21 @@ function ResultContent() {
            </div>
            
            <div className="flex gap-6 md:gap-8">
-             <div className="flex flex-col items-center">
-               <span className="text-[9px] md:text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter">สายด่วนแรงงาน</span>
-               <span className={`text-2xl md:text-3xl font-black ${config.color}`}>1694</span>
-             </div>
+             <a href="tel:1694" className="flex flex-col items-center group/phone hover:opacity-85 transition-opacity">
+               <span className="text-[9px] md:text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter group-hover/phone:text-brand-primary transition-colors">สายด่วนแรงงาน</span>
+               <span className={`text-2xl md:text-3xl font-black ${config.color} group-hover/phone:underline flex items-center gap-1.5`}>
+                 <Phone size={18} className="shrink-0" />
+                 1694
+               </span>
+             </a>
              <div className="w-px h-10 bg-slate-100" />
-             <div className="flex flex-col items-center">
-               <span className="text-[9px] md:text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter">กรมการจัดหางาน</span>
-               <span className={`text-2xl md:text-3xl font-black ${config.color}`}>1300</span>
-             </div>
+             <a href="tel:1300" className="flex flex-col items-center group/phone hover:opacity-85 transition-opacity">
+               <span className="text-[9px] md:text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter group-hover/phone:text-brand-primary transition-colors">กรมการจัดหางาน</span>
+               <span className={`text-2xl md:text-3xl font-black ${config.color} group-hover/phone:underline flex items-center gap-1.5`}>
+                 <Phone size={18} className="shrink-0" />
+                 1300
+               </span>
+             </a>
            </div>
         </section>
 
@@ -212,8 +332,8 @@ function ResultContent() {
             *ผลลัพธ์นี้เป็นการประเมินเบื้องต้นจากข้อมูลที่คุณให้มาเท่านั้น ไม่สามารถรับรองความปลอดภัยได้ 100% โปรดตรวจสอบกับกรมการจัดหางานโดยตรงอีกครั้ง
           </p>
 
-          {/* Share buttons */}
-          <div className="flex flex-col items-center gap-3 w-full max-w-sm">
+          {/* Share & Download actions */}
+          <div className="flex flex-col items-center gap-3 w-full max-w-sm no-print">
             <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
               <Share2 size={12} /> แชร์ให้เพื่อน
             </p>
@@ -245,10 +365,20 @@ function ResultContent() {
             </div>
           </div>
 
-          <Link href="/" className="flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg active:scale-95 mb-10">
-            <RotateCcw className="w-[18px] h-[18px] md:w-5 md:h-5" />
-            ตรวจสอบใหม่
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 no-print">
+            <button
+              onClick={() => window.print()}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-slate-950 text-slate-950 rounded-2xl font-bold hover:bg-slate-50 transition-all shadow-md active:scale-95"
+            >
+              <Printer className="w-[18px] h-[18px] md:w-5 md:h-5" />
+              พิมพ์รายงาน / บันทึก PDF
+            </button>
+
+            <Link href="/" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg active:scale-95">
+              <RotateCcw className="w-[18px] h-[18px] md:w-5 md:h-5" />
+              ตรวจสอบใหม่
+            </Link>
+          </div>
         </div>
 
         {/* Cognitive Breather */}

@@ -82,6 +82,29 @@ export default function AboutClient() {
           </div>
 
           <div className="flex flex-col gap-5 md:gap-6">
+            <h2 className="text-xl md:text-2xl font-extrabold text-slate-900">ภาคีร่วมโครงการ</h2>
+            <div className="bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-10 flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-16">
+              <div className="flex items-center justify-center h-16 md:h-20 w-48 md:w-56 relative group">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/partners/prachatham.png"
+                  alt="สำนักข่าวประชาธรรม"
+                  className="max-h-12 md:max-h-14 max-w-full object-contain grayscale hover:grayscale-0 transition-all duration-300 transform group-hover:scale-105"
+                />
+              </div>
+              <div className="w-px h-12 bg-slate-200 hidden sm:block" />
+              <div className="flex items-center justify-center h-16 md:h-20 w-48 md:w-56 relative group">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/partners/thai-migrant-watch.png"
+                  alt="Thai Migrant Watch"
+                  className="max-h-16 md:max-h-20 max-w-full object-contain grayscale hover:grayscale-0 transition-all duration-300 transform group-hover:scale-105"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-5 md:gap-6">
             <h2 className="text-xl md:text-2xl font-extrabold text-slate-900">ช่องทางติดต่อ</h2>
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
               <a href="mailto:thaimigrantwatchs@gmail.com" className="flex items-center gap-3 px-6 py-4 bg-white border border-slate-200 rounded-xl md:rounded-[2rem] hover:border-brand-primary transition-all group">

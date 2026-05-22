@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/utils/supabase/admin";
+import { getClientIp, isRateLimited } from "@/utils/request";
 import { NextResponse } from "next/server";
 
 function normalizeText(text) {
@@ -42,23 +43,14 @@ export async function POST(request) {
     }
 
     const supabase = createAdminClient();
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+    const ip = getClientIp(request);
 
     // Rate limiting: max 30 checks per IP per hour
-    if (ip !== "unknown") {
-      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
-      const { count } = await supabase
-        .from("risk_checks")
-        .select("*", { count: "exact", head: true })
-        .eq("ip_address", ip)
-        .gte("created_at", oneHourAgo);
-
-      if (count >= 30) {
-        return NextResponse.json(
-          { error: "คุณตรวจสอบบ่อยเกินไป กรุณารอสักครู่แล้วลองใหม่" },
-          { status: 429 }
-        );
-      }
+    if (await isRateLimited(supabase, ip, 30)) {
+      return NextResponse.json(
+        { error: "คุณตรวจสอบบ่อยเกินไป กรุณารอสักครู่แล้วลองใหม่" },
+        { status: 429 }
+      );
     }
 
     let score = 0;

@@ -7,7 +7,10 @@ const STORAGE_KEY = "cgb_admin_key";
 
 function useAdminKey() {
   const [key, setKey] = useState("");
-  useEffect(() => { setKey(localStorage.getItem(STORAGE_KEY) ?? ""); }, []);
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEY) ?? "";
+    Promise.resolve().then(() => setKey(stored));
+  }, []);
   const save = (k) => { localStorage.setItem(STORAGE_KEY, k); setKey(k); };
   const clear = () => { localStorage.removeItem(STORAGE_KEY); setKey(""); };
   return { key, save, clear };
@@ -129,6 +132,7 @@ function ReportsTab({ adminKey }) {
   const [loading, setLoading]           = useState(false);
 
   const load = useCallback(async (s) => {
+    await Promise.resolve();
     setLoading(true);
     try {
       const res = await fetch(`/api/admin/reports?status=${s}`, { headers: headers(adminKey) });
@@ -141,7 +145,12 @@ function ReportsTab({ adminKey }) {
     }
   }, [adminKey]);
 
-  useEffect(() => { load(statusFilter); }, [statusFilter, load]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      load(statusFilter);
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [statusFilter, load]);
 
   const updateStatus = async (id, status) => {
     await fetch("/api/admin/reports", { method: "PATCH", headers: headers(adminKey), body: JSON.stringify({ id, status }) });

@@ -63,7 +63,11 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
-      <body className="min-h-screen flex flex-col" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col relative overflow-x-hidden" suppressHydrationWarning>
+        {/* Ambient Blur Background Blobs */}
+        <div className="fixed -top-40 -left-40 w-96 h-96 bg-brand-primary/5 rounded-full blur-[120px] pointer-events-none z-0" aria-hidden="true" />
+        <div className="fixed bottom-10 -right-40 w-[30rem] h-[30rem] bg-brand-secondary/5 rounded-full blur-[140px] pointer-events-none z-0" aria-hidden="true" />
+
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-brand-primary focus:text-white focus:rounded-lg focus:font-bold focus:shadow-lg"

@@ -21,7 +21,9 @@ import {
   Banknote,
   Scale,
   Calendar,
-  Activity
+  Activity,
+  Copy,
+  Check
 } from "lucide-react";
 
 const PAGE_SIZE = 20;
@@ -62,8 +64,48 @@ const getFlagEmoji = (countryCode) => {
   return String.fromCodePoint(...codePoints);
 };
 
+function AgencySkeletonCard() {
+  return (
+    <div className="bg-white border border-slate-100 rounded-xl md:rounded-2xl overflow-hidden shadow-sm p-4 md:p-5 flex flex-col gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4">
+        <div className="flex-1 flex flex-col gap-2.5">
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Title shimmer */}
+            <div className="h-5 w-48 md:w-64 rounded-md animate-shimmer" />
+            {/* Badges shimmers */}
+            <div className="h-4 w-12 rounded-full animate-shimmer" />
+            <div className="h-4 w-16 rounded-full animate-shimmer" />
+          </div>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            {/* Subtitle shimmer */}
+            <div className="h-4 w-32 rounded-md animate-shimmer" />
+            {/* Cap amount shimmer */}
+            <div className="h-4 w-24 rounded-md animate-shimmer" />
+          </div>
+        </div>
+
+        <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-x-4 gap-y-2 md:items-end lg:items-center border-t md:border-t-0 pt-3 md:pt-0 border-slate-50">
+          <div className="flex items-center gap-2">
+            <div className="h-4 w-4 rounded-full animate-shimmer" />
+            <div className="h-4 w-20 rounded-md animate-shimmer" />
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="h-4 w-4 rounded-full animate-shimmer" />
+            <div className="h-4 w-16 rounded-md animate-shimmer" />
+          </div>
+          <div className="h-8 w-28 rounded-lg animate-shimmer md:ml-auto" />
+        </div>
+      </div>
+      
+      {/* Bottom accordion button shimmer */}
+      <div className="h-8 w-full bg-slate-50/50 rounded-lg animate-shimmer border-t border-slate-50" />
+    </div>
+  );
+}
+
 function AgencyCard({ agency, index }) {
   const [expanded, setExpanded] = useState(false);
+  const [phoneCopied, setPhoneCopied] = useState(false);
 
   const getBusinessSizeLabel = (code) => {
     switch (code) {
@@ -119,7 +161,7 @@ function AgencyCard({ agency, index }) {
       initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.03 }}
-      className="bg-white border border-slate-100 rounded-xl md:rounded-2xl overflow-hidden shadow-sm hover:border-brand-primary/30 hover:shadow-md transition-all"
+      className="bg-white border border-slate-100 rounded-xl md:rounded-2xl overflow-hidden shadow-sm hover:border-brand-primary/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
     >
       <div className="p-4 md:p-5 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
         <div className="flex-1 flex flex-col gap-1">
@@ -173,15 +215,30 @@ function AgencyCard({ agency, index }) {
           </div>
           
           {agency.phone && (
-            <a
-              href={`tel:${agency.phone.replace(/\s/g, "")}`}
-              className="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors group w-fit md:ml-auto"
-              title="เบอร์โทรทางการที่จดทะเบียนไว้กับกรมการจัดหางาน"
-            >
-              <ShieldCheck className="shrink-0 text-signal-green w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
-              <span className="font-bold text-green-800 group-hover:underline">{agency.phone}</span>
-              <span className="hidden sm:inline text-[9px] md:text-[10px] font-extrabold text-green-700 bg-green-100 border border-green-200 px-1.5 py-0.5 rounded-full uppercase tracking-wide whitespace-nowrap">เบอร์ทางการ</span>
-            </a>
+            <div className="flex items-center gap-1.5 md:ml-auto w-fit shrink-0">
+              <a
+                href={`tel:${agency.phone.replace(/\s/g, "")}`}
+                className="flex items-center gap-1.5 px-2.5 py-1 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors group"
+                title="เบอร์โทรทางการที่จดทะเบียนไว้กับกรมการจัดหางาน"
+              >
+                <ShieldCheck className="shrink-0 text-signal-green w-[13px] h-[13px] md:w-3.5 md:h-3.5" aria-hidden="true" />
+                <span className="font-bold text-green-800 group-hover:underline">{agency.phone}</span>
+                <span className="hidden sm:inline text-[9px] md:text-[10px] font-extrabold text-green-700 bg-green-100 border border-green-200 px-1.5 py-0.5 rounded-full uppercase tracking-wide whitespace-nowrap">เบอร์ทางการ</span>
+              </a>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigator.clipboard.writeText(agency.phone);
+                  setPhoneCopied(true);
+                  setTimeout(() => setPhoneCopied(false), 2000);
+                }}
+                className="p-1.5 text-slate-400 hover:text-brand-primary hover:bg-slate-100 rounded-lg transition-colors shrink-0"
+                title="คัดลอกเบอร์โทร"
+              >
+                {phoneCopied ? <Check size={14} className="text-signal-green" /> : <Copy size={14} />}
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -293,71 +350,56 @@ function AgencyCard({ agency, index }) {
 
 export default function AgenciesClient() {
   const [query, setQuery] = useState("");
-  const [allAgencies, setAllAgencies] = useState([]);
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+  const [results, setResults] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalResults, setTotalResults] = useState(0);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
 
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+      setPage(1);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [query]);
+
+  // Server-side paginated search
   useEffect(() => {
     let mounted = true;
 
-    const loadAll = async () => {
+    const fetchAgencies = async () => {
       setLoading(true);
       try {
-        const res = await fetch("/api/agencies?all=1");
+        const res = await fetch(
+          `/api/agencies?q=${encodeURIComponent(debouncedQuery)}&page=${page}`
+        );
+        if (!res.ok) throw new Error("Failed to fetch agencies");
         const json = await res.json();
         if (!mounted) return;
 
-        setAllAgencies(json.data ?? []);
+        setResults(json.data ?? []);
+        const totalCount = json.total ?? 0;
+        setTotalResults(totalCount);
+        setTotalPages(Math.ceil(totalCount / PAGE_SIZE) || 1);
         if (json.last_updated) setLastUpdated(json.last_updated);
         setSearched(true);
       } catch (e) {
-        console.error("Load agencies failed:", e);
+        console.error("Fetch agencies failed:", e);
       } finally {
         if (mounted) setLoading(false);
       }
     };
 
-    loadAll();
+    fetchAgencies();
     return () => {
       mounted = false;
     };
-  }, []);
-
-  const fuse = useMemo(() => {
-    if (!allAgencies.length) return null;
-
-    return new Fuse(allAgencies, {
-      includeScore: true,
-      ignoreLocation: true,
-      threshold: 0.35,
-      minMatchCharLength: 2,
-      keys: [
-        { name: "name_th", weight: 0.55 },
-        { name: "name_en", weight: 0.2 },
-        { name: "license_no", weight: 0.15 },
-        { name: "province", weight: 0.1 },
-      ],
-      getFn: (obj, path) => normalizeSearchText(obj?.[path]),
-    });
-  }, [allAgencies]);
-
-  const filteredResults = useMemo(() => {
-    const normalizedQuery = normalizeSearchText(query);
-    if (!normalizedQuery) return allAgencies;
-    if (!fuse) return [];
-
-    return fuse.search(normalizedQuery).map((result) => result.item);
-  }, [allAgencies, fuse, query]);
-
-  const total = filteredResults.length;
-  const totalPages = Math.ceil(total / PAGE_SIZE) || 1;
-
-  const results = useMemo(() => {
-    const start = (page - 1) * PAGE_SIZE;
-    return filteredResults.slice(start, start + PAGE_SIZE);
-  }, [filteredResults, page]);
+  }, [debouncedQuery, page]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -365,7 +407,6 @@ export default function AgenciesClient() {
 
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
-    setPage(1);
   };
 
   const goToPage = (nextPage) => {
@@ -375,10 +416,17 @@ export default function AgenciesClient() {
   const handleRefresh = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/agencies?all=1");
-      const json = await res.json();
-      setAllAgencies(json.data ?? []);
-      if (json.last_updated) setLastUpdated(json.last_updated);
+      const res = await fetch(
+        `/api/agencies?q=${encodeURIComponent(debouncedQuery)}&page=${page}`
+      );
+      if (res.ok) {
+        const json = await res.json();
+        setResults(json.data ?? []);
+        const totalCount = json.total ?? 0;
+        setTotalResults(totalCount);
+        setTotalPages(Math.ceil(totalCount / PAGE_SIZE) || 1);
+        if (json.last_updated) setLastUpdated(json.last_updated);
+      }
     } catch (e) {
       console.error("Refresh failed:", e);
     } finally {
@@ -403,7 +451,7 @@ export default function AgenciesClient() {
           <div className="flex flex-wrap items-center justify-center gap-2">
             <div className="flex items-center gap-2 px-3 py-1.5 bg-green-50 border border-green-100 rounded-full">
               <CheckCircle2 className="text-signal-green w-3 h-3 md:w-3.5 md:h-3.5" aria-hidden="true" />
-              <span className="text-[10px] md:text-xs font-extrabold text-green-700">{total.toLocaleString()} บริษัทในฐานข้อมูล</span>
+              <span className="text-[10px] md:text-xs font-extrabold text-green-700">{totalResults.toLocaleString()} บริษัทในฐานข้อมูล</span>
             </div>
             {lastUpdated && (
               <div className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 border border-blue-100 rounded-full">
@@ -456,9 +504,10 @@ export default function AgenciesClient() {
         </form>
 
         {loading ? (
-          <div role="status" className="flex justify-center py-20">
-            <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" aria-hidden="true" />
-            <span className="sr-only">กำลังค้นหา...</span>
+          <div className="flex flex-col gap-3" aria-label="กำลังโหลดรายชื่อบริษัทจัดหางาน">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <AgencySkeletonCard key={i} />
+            ))}
           </div>
         ) : (
           <>

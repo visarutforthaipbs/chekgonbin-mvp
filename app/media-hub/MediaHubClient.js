@@ -102,6 +102,7 @@ export default function MediaHubClient() {
                 className="bg-white rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group cursor-pointer"
               >
                 <div className="relative aspect-video overflow-hidden">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={story.thumbnail} alt={story.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
                     <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-lg" aria-hidden="true">
@@ -130,6 +131,7 @@ export default function MediaHubClient() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
             {infographics.map((item) => (
               <div key={item.id} className="relative rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden group">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.image} alt={item.title} className="w-full aspect-[4/3] object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8">
                   <div className="flex justify-between items-center gap-3">
