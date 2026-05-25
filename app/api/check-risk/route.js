@@ -65,27 +65,17 @@ export async function POST(request) {
       if (patterns.length > 0) { score += 15; reasons.push(...patterns); }
     }
 
-    // Blacklist check (Supabase)
+    // Blacklist check — bidirectional fuzzy match pushed into Postgres via RPC.
+    // The check_blacklist function handles both "blacklist name contains search term"
+    // and "search term contains blacklist name", plus contacts array matching.
     let inBlacklist = false;
     try {
-      const { data: blMatches } = await supabase
-        .from("blacklist")
-        .select("name, contacts")
-        .eq("status", "active");
-
-      inBlacklist = (blMatches ?? []).some((item) => {
-        const itemCore = normalizeCompanyName(item.name);
-        if (normalizedCoreName && itemCore) {
-          if (itemCore.includes(normalizedCoreName) || normalizedCoreName.includes(itemCore)) return true;
-        }
-        if (normalizedContact && item.contacts?.length) {
-          return item.contacts.some((c) => {
-            const nc = normalizeText(c);
-            return nc && (normalizedContact.includes(nc) || nc.includes(normalizedContact));
-          });
-        }
-        return false;
+      const { data: blMatch, error: blErr } = await supabase.rpc("check_blacklist", {
+        name_query:    normalizedCoreName ?? "",
+        contact_query: normalizedContact  ?? "",
       });
+      if (blErr) throw blErr;
+      inBlacklist = blMatch === true;
     } catch (err) {
       console.error("Blacklist lookup failed:", err.message);
     }

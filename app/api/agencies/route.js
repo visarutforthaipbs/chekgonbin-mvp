@@ -18,7 +18,7 @@ export async function GET(request) {
       total_asset, total_income, net_profit, total_equity,
       current_ratio, debt_to_equity, return_on_asset, return_on_equity,
       net_profit_margin, gross_profit_margin, business_size_code, company_age,
-      committees, financials, financials_prev, dbd_scraped_at
+      committees, dbd_scraped_at
     `, { count: "exact" })
     .order("name_th");
 

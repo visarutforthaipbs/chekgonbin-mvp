@@ -263,6 +263,31 @@ def main():
             token, enc_key = get_token(session)
 
     log.info("Done — %d updated, %d failed", ok, fail)
+
+    # Post-run freshness report: warn if any agencies still have no DBD data
+    try:
+        result = supabase.rpc("dbd_freshness_report").execute()
+        if result.data:
+            r = result.data[0]
+            if r["dbd_missing"] > 0:
+                log.warning(
+                    "DBD coverage: %d/%d populated, %d missing dbd_scraped_at "
+                    "(not matched in company-id.csv)",
+                    r["dbd_populated"], r["total_agencies"], r["dbd_missing"],
+                )
+            if r["dbd_stale"] > 0:
+                log.warning(
+                    "%d agencies have dbd_scraped_at older than 40 days — "
+                    "consider re-running the DBD scraper",
+                    r["dbd_stale"],
+                )
+            log.info(
+                "DBD freshness: %d/%d populated | last update: %s",
+                r["dbd_populated"], r["total_agencies"], r["last_dbd_update"],
+            )
+    except Exception as e:
+        log.warning("Could not fetch DBD freshness report: %s", e)
+
     # Exit non-zero so CI marks the run as failed if too many records failed
     if fail > max(5, total // 20):
         sys.exit(1)
