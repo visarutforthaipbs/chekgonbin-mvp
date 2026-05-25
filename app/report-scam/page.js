@@ -10,6 +10,21 @@ export const metadata = {
     description:
       "แจ้งเบาะแสบริษัทจัดหางานหลอกลวงเพื่อปกป้องแรงงานไทย",
     url: "https://checkgonbin.in.th/report-scam",
+    type: "website",
+    images: [
+      {
+        url: "/thumnail.png",
+        width: 1200,
+        height: 630,
+        alt: "รายงานมิจฉาชีพ | เช็คก่อนบิน",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "รายงานมิจฉาชีพงานต่างประเทศ",
+    description: "แจ้งเบาะแสบริษัทจัดหางานหลอกลวงเพื่อปกป้องแรงงานไทย",
+    images: ["/thumnail.png"],
   },
 };
 

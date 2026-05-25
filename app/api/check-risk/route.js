@@ -18,8 +18,31 @@ function normalizeCompanyName(name) {
     .replace(/จำกัด/g, "")
     .replace(/จก\./g, "")
     .replace(/\(มหาชน\)/g, "")
+    .replace(/กรุ๊ป|กรุ๊พ|กรู๊ป|group|grp\.?/g, "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function canonicalizeCompanyName(name) {
+  if (!name || typeof name !== "string") return "";
+  return name
+    .toLowerCase()
+    .replace(/บริษัทจัดหางาน/g, "")
+    .replace(/บริษัท/g, "")
+    .replace(/บจก\./g, "")
+    .replace(/จำกัด/g, "")
+    .replace(/จก\./g, "")
+    .replace(/\(มหาชน\)/g, "")
+    .replace(/กรุ๊ป|กรุ๊พ|กรู๊ป|group|grp\.?/g, "")
+    // Keep only Thai, English and digits to neutralize spacing/punctuation variants.
+    .replace(/[^\u0E00-\u0E7Fa-z0-9]/g, "")
+    .trim();
+}
+
+function toLooseLikePattern(text) {
+  const compact = (text || "").replace(/\s+/g, "").trim();
+  if (compact.length < 4) return "";
+  return compact.split("").join("%");
 }
 
 function detectSuspiciousPatterns(text) {
@@ -89,16 +112,39 @@ export async function POST(request) {
     let inWhitelist = false;
     if (agencyName) {
       try {
+        const canonicalInput = canonicalizeCompanyName(agencyName);
+        const looseCorePattern = toLooseLikePattern(normalizedCoreName);
+        const orFilters = [
+          `name_th.ilike.%${normalizedCoreName}%`,
+          `name_en.ilike.%${normalizedCoreName}%`,
+          `name_th.ilike.%${agencyName}%`,
+          `name_en.ilike.%${agencyName}%`,
+        ];
+
+        if (looseCorePattern) {
+          orFilters.push(`name_th.ilike.%${looseCorePattern}%`);
+          orFilters.push(`name_en.ilike.%${looseCorePattern}%`);
+        }
+
         const { data: wlMatches } = await supabase
           .from("agencies")
           .select("name_th, name_en, license_no")
-          .or(
-            `name_th.ilike.%${normalizedCoreName}%,name_en.ilike.%${normalizedCoreName}%,` +
-            `name_th.ilike.%${agencyName}%,name_en.ilike.%${agencyName}%`
-          )
-          .limit(1);
+          .or(orFilters.join(","))
+          .limit(30);
 
-        inWhitelist = wlMatches && wlMatches.length > 0;
+        if (wlMatches && wlMatches.length > 0) {
+          inWhitelist = wlMatches.some((row) => {
+            const th = canonicalizeCompanyName(row.name_th || "");
+            const en = canonicalizeCompanyName(row.name_en || "");
+            if (!canonicalInput) return !!(th || en);
+            return [th, en].some(
+              (candidate) =>
+                candidate &&
+                (candidate.includes(canonicalInput) ||
+                  canonicalInput.includes(candidate))
+            );
+          });
+        }
       } catch (err) {
         console.error("Whitelist lookup failed:", err.message);
       }

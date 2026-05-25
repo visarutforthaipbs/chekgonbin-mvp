@@ -19,6 +19,7 @@ import {
   Printer,
 } from "lucide-react";
 import Link from "next/link";
+import { trackEvent } from "@/utils/analytics";
 
 function ResultContent() {
   const router = useRouter();
@@ -49,6 +50,14 @@ function ResultContent() {
       router.push("/");
     }
   }, [result, router]);
+
+  useEffect(() => {
+    if (!result) return;
+    trackEvent("risk_result_view", {
+      risk_level: result.riskLevel || "unknown",
+      score: typeof result.score === "number" ? result.score : undefined,
+    });
+  }, [result]);
 
   if (!result) {
     return (
@@ -134,17 +143,13 @@ function ResultContent() {
             margin: 0 auto !important;
             max-width: 100% !important;
           }
-          .shadow-lg, .shadow-xl, .shadow-md, .shadow-sm {
-            box-shadow: none !important;
-            border: 1px solid #cbd5e1 !important;
-          }
           .bg-slate-50 {
             background-color: #f8fafc !important;
           }
           .bg-green-50\\/20 {
             background-color: #f0fdf4 !important;
           }
-          section, .shadow-lg {
+          section {
             page-break-inside: avoid;
           }
         }
@@ -199,10 +204,10 @@ function ResultContent() {
         </motion.div>
 
         {/* Layer 2: Chunked Gateway - Assessment Details */}
-        <section className={`w-full bg-white rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden transition-all duration-300 ${config.glowClass}`}>
+        <section className={`w-full bg-white rounded-3xl md:rounded-5xl overflow-hidden transition-all duration-300 ${config.glowClass}`}>
           <div className="p-6 md:p-8 flex flex-col gap-4 md:gap-6">
             <h3 className="text-base md:text-lg font-extrabold text-slate-800 flex items-center gap-2">
-              <Info className="text-slate-400 w-[18px] h-[18px] md:w-5 md:h-5" />
+              <Info className="text-slate-400 w-4.5 h-4.5 md:w-5 md:h-5" />
               รายละเอียดการประเมิน
             </h3>
             
@@ -231,11 +236,11 @@ function ResultContent() {
         </section>
 
         {/* Verification Checklist */}
-        <section className="w-full bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden">
+        <section className="w-full bg-white border border-slate-200 rounded-3xl md:rounded-5xl overflow-hidden">
           <div className="p-6 md:p-8 flex flex-col gap-4 md:gap-6">
             <div>
               <h3 className="text-base md:text-lg font-extrabold text-slate-800 flex items-center gap-2 mb-1">
-                <ClipboardList className="text-brand-primary w-[18px] h-[18px] md:w-5 md:h-5" />
+                <ClipboardList className="text-brand-primary w-4.5 h-4.5 md:w-5 md:h-5" />
                 ขั้นตอนปฏิบัติเพื่อความปลอดภัย (Safety Checklist)
               </h3>
               <p className="text-xs text-slate-500">ตรวจสอบและทำเครื่องหมายเพื่อบันทึกประวัติการป้องกัน</p>
@@ -287,7 +292,7 @@ function ResultContent() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 + idx * 0.1 }}
-                className="p-5 md:p-6 bg-white border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] shadow-sm flex items-start gap-4 group hover:border-brand-primary transition-all"
+                className="p-5 md:p-6 bg-white border border-slate-100 rounded-3xl md:rounded-4xl flex items-start gap-4 group hover:border-brand-primary transition-all"
               >
                 <div className="p-2.5 md:p-3 bg-slate-50 rounded-xl group-hover:bg-brand-primary/10 transition-colors">
                   <action.icon className="text-slate-600 group-hover:text-brand-primary w-5 h-5 md:w-6 md:h-6" />
@@ -302,10 +307,14 @@ function ResultContent() {
         </section>
 
         {/* Emergency Hotlines */}
-        <section className={`w-full p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 bg-white flex flex-col md:flex-row items-center md:justify-between gap-6 md:gap-8 ${config.threatClass}`}>
+        <section className={`w-full p-6 md:p-8 rounded-3xl md:rounded-5xl border border-slate-100 bg-white flex flex-col md:flex-row items-center md:justify-between gap-6 md:gap-8 ${config.threatClass}`}>
            <div className="flex flex-col gap-1 md:gap-2 text-center md:text-left">
              <h3 className="text-base md:text-lg font-extrabold text-slate-900">สายด่วนช่วยเหลือ</h3>
              <p className="text-xs md:text-sm text-slate-500">ติดต่อเจ้าหน้าที่ทันทีเมื่อพบสัญญาณอันตราย</p>
+             <p className="text-xs md:text-sm font-bold text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2 mt-2 inline-flex items-center gap-2 w-fit mx-auto md:mx-0">
+               <CheckCircle2 size={14} className="shrink-0" />
+               ใช้เบอร์ทางการเท่านั้น หลีกเลี่ยงบัญชีหรือเบอร์ส่วนตัว
+             </p>
            </div>
            
            <div className="flex gap-6 md:gap-8">
@@ -341,14 +350,14 @@ function ResultContent() {
               <a
                 href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent("https://checkgonbin.in.th")}`}
                 target="_blank" rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#06C755] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95 min-w-[100px]"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#06C755] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95 min-w-25"
               >
                 LINE
               </a>
               <a
                 href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://checkgonbin.in.th")}`}
                 target="_blank" rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#1877F2] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95 min-w-[100px]"
+                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#1877F2] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95 min-w-25"
               >
                 Facebook
               </a>
@@ -370,12 +379,12 @@ function ResultContent() {
               onClick={() => window.print()}
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-slate-950 text-slate-950 rounded-2xl font-bold hover:bg-slate-50 transition-all active:scale-95"
             >
-              <Printer className="w-[18px] h-[18px] md:w-5 md:h-5" />
+              <Printer className="w-4.5 h-4.5 md:w-5 md:h-5" />
               พิมพ์รายงาน / บันทึก PDF
             </button>
 
-            <Link href="/" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg active:scale-95">
-              <RotateCcw className="w-[18px] h-[18px] md:w-5 md:h-5" />
+            <Link href="/" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all active:scale-95">
+              <RotateCcw className="w-4.5 h-4.5 md:w-5 md:h-5" />
               ตรวจสอบใหม่
             </Link>
           </div>

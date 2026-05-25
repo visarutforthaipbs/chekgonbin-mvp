@@ -3,6 +3,36 @@ import Footer from "@/components/Footer";
 import Script from "next/script";
 import "./globals.css";
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "เช็คก่อนบิน",
+  alternateName: "ChekGonBin",
+  url: "https://checkgonbin.in.th",
+  logo: "https://checkgonbin.in.th/thumnail.png",
+  sameAs: ["https://www.facebook.com/profile.php?id=61570127262236"],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "customer support",
+    email: "thaimigrantwatchs@gmail.com",
+    availableLanguage: ["th", "en"],
+  },
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "เช็คก่อนบิน",
+  alternateName: "ChekGonBin",
+  url: "https://checkgonbin.in.th",
+  inLanguage: "th-TH",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://checkgonbin.in.th/agencies?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
+};
+
 export const metadata = {
   metadataBase: new URL("https://checkgonbin.in.th"),
   title: "เช็คก่อนบิน - ตรวจสอบความเสี่ยงงานต่างประเทศ | ป้องกันมิจฉาชีพ",
@@ -66,14 +96,22 @@ export default function RootLayout({ children }) {
       <body className="min-h-screen flex flex-col relative overflow-x-hidden" suppressHydrationWarning>
         {/* Ambient Blur Background Blobs */}
         <div className="fixed -top-40 -left-40 w-96 h-96 bg-brand-primary/5 rounded-full blur-[120px] pointer-events-none z-0" aria-hidden="true" />
-        <div className="fixed bottom-10 -right-40 w-[30rem] h-[30rem] bg-brand-secondary/5 rounded-full blur-[140px] pointer-events-none z-0" aria-hidden="true" />
+        <div className="fixed bottom-10 -right-40 w-120 h-120 bg-brand-secondary/5 rounded-full blur-[140px] pointer-events-none z-0" aria-hidden="true" />
 
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-brand-primary focus:text-white focus:rounded-lg focus:font-bold focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-9999 focus:px-4 focus:py-2 focus:bg-brand-primary focus:text-white focus:rounded-lg focus:font-bold"
         >
           ข้ามไปเนื้อหาหลัก
         </a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KR47Y7TTK7"

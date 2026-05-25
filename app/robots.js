@@ -5,6 +5,7 @@ export default function robots() {
       allow: "/",
       disallow: ["/api/", "/admin"],
     },
+    host: "https://checkgonbin.in.th",
     sitemap: "https://checkgonbin.in.th/sitemap.xml",
   };
 }

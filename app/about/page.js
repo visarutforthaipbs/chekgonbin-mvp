@@ -10,6 +10,22 @@ export const metadata = {
     description:
       "โครงการเพื่อสังคมที่มุ่งปกป้องแรงงานไทยจากการหลอกลวงไปทำงานต่างประเทศ",
     url: "https://checkgonbin.in.th/about",
+    type: "website",
+    images: [
+      {
+        url: "/thumnail.png",
+        width: 1200,
+        height: 630,
+        alt: "เกี่ยวกับเช็คก่อนบิน",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "เกี่ยวกับเช็คก่อนบิน",
+    description:
+      "โครงการเพื่อสังคมที่มุ่งปกป้องแรงงานไทยจากการหลอกลวงไปทำงานต่างประเทศ",
+    images: ["/thumnail.png"],
   },
 };
 

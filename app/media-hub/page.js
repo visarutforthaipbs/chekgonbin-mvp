@@ -10,6 +10,22 @@ export const metadata = {
     description:
       "เนื้อหาความรู้ อินโฟกราฟิก และแนวทางปลอดภัยสำหรับแรงงานไทย",
     url: "https://checkgonbin.in.th/media-hub",
+    type: "website",
+    images: [
+      {
+        url: "/thumnail.png",
+        width: 1200,
+        height: 630,
+        alt: "ศูนย์ความรู้เช็คก่อนบิน",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ศูนย์ความรู้เช็คก่อนบิน",
+    description:
+      "เนื้อหาความรู้ อินโฟกราฟิก และแนวทางปลอดภัยสำหรับแรงงานไทย",
+    images: ["/thumnail.png"],
   },
 };
 

@@ -1,6 +1,54 @@
 import { createAdminClient } from "@/utils/supabase/admin";
 import { NextResponse } from "next/server";
 
+function normalizeCompanySearch(text) {
+  if (!text || typeof text !== "string") return "";
+  return text
+    .toLowerCase()
+    .replace(/บริษัทจัดหางาน/g, "")
+    .replace(/บริษัท/g, "")
+    .replace(/บจก\./g, "")
+    .replace(/จำกัด/g, "")
+    .replace(/จก\./g, "")
+    .replace(/\(มหาชน\)/g, "")
+    .replace(/กรุ๊ป|กรุ๊พ|กรู๊ป|group|grp\.?/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function toLooseLikePattern(text) {
+  const compact = (text || "").replace(/\s+/g, "").trim();
+  if (compact.length < 4) return "";
+  return compact.split("").join("%");
+}
+
+function buildAgencySearchFilters(rawQuery) {
+  const raw = (rawQuery || "").trim();
+  const normalized = normalizeCompanySearch(raw);
+  const loose = toLooseLikePattern(normalized);
+  const filters = new Set();
+
+  const addTerm = (value) => {
+    const v = (value || "").trim();
+    if (!v) return;
+    filters.add(`name_th.ilike.%${v}%`);
+    filters.add(`name_en.ilike.%${v}%`);
+  };
+
+  addTerm(raw);
+  addTerm(normalized);
+
+  if (loose) {
+    filters.add(`name_th.ilike.%${loose}%`);
+    filters.add(`name_en.ilike.%${loose}%`);
+  }
+
+  // Keep license lookup direct and simple.
+  if (raw) filters.add(`license_no.ilike.%${raw}%`);
+
+  return [...filters].join(",");
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q")?.trim() ?? "";
@@ -27,7 +75,7 @@ export async function GET(request) {
   }
 
   if (q) {
-    query = query.or(`name_th.ilike.%${q}%,name_en.ilike.%${q}%,license_no.ilike.%${q}%`);
+    query = query.or(buildAgencySearchFilters(q));
   }
 
   const [{ data, count, error }, { data: lastRow }] = await Promise.all([

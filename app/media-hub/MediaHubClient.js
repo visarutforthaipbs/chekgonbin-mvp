@@ -99,14 +99,14 @@ export default function MediaHubClient() {
               <motion.div
                 key={story.id}
                 whileHover={{ y: -4 }}
-                className="bg-white rounded-[1.5rem] md:rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 group cursor-pointer"
+                className="bg-white rounded-3xl md:rounded-4xl overflow-hidden border border-slate-100 group cursor-pointer"
               >
                 <div className="relative aspect-video overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={story.thumbnail} alt={story.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center shadow-lg" aria-hidden="true">
-                      <Play className="text-brand-primary fill-brand-primary ml-1 w-[18px] h-[18px] md:w-5 md:h-5" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
+                      <Play className="text-brand-primary fill-brand-primary ml-1 w-4.5 h-4.5 md:w-5 md:h-5" />
                     </div>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ export default function MediaHubClient() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
             {infographics.map((item) => (
-              <div key={item.id} className="relative rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden group">
+              <div key={item.id} className="relative rounded-3xl md:rounded-5xl overflow-hidden group">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={item.image} alt={item.title} className="w-full aspect-[4/3] object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8">
@@ -139,9 +139,9 @@ export default function MediaHubClient() {
                     <button
                       type="button"
                       aria-label={`ดาวน์โหลด ${item.title}`}
-                      className="p-2.5 bg-white text-brand-primary rounded-xl hover:bg-brand-primary hover:text-white transition-all shadow-xl shrink-0"
+                      className="p-2.5 bg-white text-brand-primary rounded-xl hover:bg-brand-primary hover:text-white transition-all shrink-0"
                     >
-                      <Download className="w-[18px] h-[18px] md:w-5 md:h-5" aria-hidden="true" />
+                      <Download className="w-4.5 h-4.5 md:w-5 md:h-5" aria-hidden="true" />
                     </button>
                   </div>
                 </div>
@@ -161,7 +161,7 @@ export default function MediaHubClient() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
             {routes.map((route) => (
-              <div key={route.id} className="p-6 md:p-8 bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] shadow-sm flex flex-col gap-6 md:gap-8">
+              <div key={route.id} className="p-6 md:p-8 bg-white border border-slate-200 rounded-3xl md:rounded-5xl flex flex-col gap-6 md:gap-8">
                 <h3 className="text-lg md:text-xl font-extrabold text-slate-900 flex items-center gap-3">
                    <div className="w-1.5 h-6 md:w-2 md:h-8 bg-brand-primary rounded-full" aria-hidden="true" />
                    {route.title}
@@ -183,7 +183,7 @@ export default function MediaHubClient() {
 
         <motion.section
           whileHover={{ scale: 1.01 }}
-          className="bg-brand-primary rounded-[2rem] md:rounded-[3rem] p-8 md:p-20 text-center flex flex-col items-center gap-6 md:gap-8 shadow-2xl shadow-brand-primary/20 mx-2 md:mx-0"
+          className="bg-brand-primary rounded-4xl md:rounded-6xl p-8 md:p-20 text-center flex flex-col items-center gap-6 md:gap-8 mx-2 md:mx-0"
         >
           <h2 className="text-2xl md:text-5xl font-extrabold text-white leading-tight max-w-2xl">
             พบเบาะแสใหม่? ร่วมเป็นหูเป็นตาให้สังคม
@@ -191,7 +191,7 @@ export default function MediaHubClient() {
           <p className="text-white/80 text-base md:text-lg max-w-md font-medium">
             ทุกข้อมูลของคุณมีค่าและช่วยป้องกันไม่ให้คนอื่นตกเป็นเหยื่อ
           </p>
-          <Link href="/report-scam" className="px-8 py-4 bg-white text-brand-primary rounded-xl md:rounded-[2rem] font-extrabold text-lg md:text-xl hover:shadow-2xl transition-all active:scale-95 flex items-center gap-2 md:gap-3">
+          <Link href="/report-scam" className="px-8 py-4 bg-white text-brand-primary rounded-xl md:rounded-4xl font-extrabold text-lg md:text-xl transition-all active:scale-95 flex items-center gap-2 md:gap-3">
             ไปที่หน้ารายงาน
             <ArrowRight className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
           </Link>

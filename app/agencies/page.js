@@ -10,6 +10,22 @@ export const metadata = {
     description:
       "ค้นหาและตรวจสอบบริษัทจัดหางานที่ถูกกฎหมายจากฐานข้อมูลกรมการจัดหางาน",
     url: "https://checkgonbin.in.th/agencies",
+    type: "website",
+    images: [
+      {
+        url: "/thumnail.png",
+        width: 1200,
+        height: 630,
+        alt: "บริษัทจัดหางานที่ได้รับอนุญาต | เช็คก่อนบิน",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "บริษัทจัดหางานที่ได้รับอนุญาต",
+    description:
+      "ค้นหาและตรวจสอบบริษัทจัดหางานที่ถูกกฎหมายจากฐานข้อมูลกรมการจัดหางาน",
+    images: ["/thumnail.png"],
   },
 };
 

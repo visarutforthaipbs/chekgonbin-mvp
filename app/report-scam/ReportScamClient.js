@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   UploadCloud,
 } from "lucide-react";
+import { trackEvent } from "@/utils/analytics";
 
 const QUICK_TAGS = [
   "หลอกเก็บค่าธรรมเนียมจัดหางานล่วงหน้า",
@@ -98,6 +99,11 @@ export default function ReportScamClient() {
         message: "ขอบคุณสำหรับการรายงาน เราจะตรวจสอบและอัปเดตฐานข้อมูล",
       });
 
+      trackEvent("report_scam_submit", {
+        has_evidence: formData.evidence ? "yes" : "no",
+        has_contact_info: formData.contactInfo?.trim() ? "yes" : "no",
+      });
+
       setFormData({
         agencyName: "",
         contactPerson: "",
@@ -126,7 +132,7 @@ export default function ReportScamClient() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-3 md:p-4 bg-brand-primary/10 rounded-[1.5rem] md:rounded-[2rem]"
+            className="p-3 md:p-4 bg-brand-primary/10 rounded-3xl md:rounded-4xl"
           >
             <Bell className="text-brand-primary w-8 h-8 md:w-12 md:h-12" aria-hidden="true" />
           </motion.div>
@@ -146,9 +152,9 @@ export default function ReportScamClient() {
         <motion.section
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="p-5 md:p-6 bg-brand-primary/5 border border-brand-primary/10 rounded-[1.5rem] md:rounded-[2rem] flex items-start gap-3 md:gap-4"
+          className="p-5 md:p-6 bg-brand-primary/5 border border-brand-primary/10 rounded-3xl md:rounded-4xl flex items-start gap-3 md:gap-4"
         >
-          <div className="p-2 bg-white rounded-lg shadow-sm shrink-0">
+          <div className="p-2 bg-white rounded-lg shrink-0">
             <ShieldCheck className="text-brand-primary w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
           </div>
           <div>
@@ -157,7 +163,7 @@ export default function ReportScamClient() {
           </div>
         </motion.section>
 
-        <section className="bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden shadow-xl">
+        <section className="bg-white border border-slate-200 rounded-3xl md:rounded-5xl overflow-hidden">
           <div className="h-1.5 md:h-2 bg-brand-primary w-full" />
           <div className="p-6 md:p-12 flex flex-col gap-8 md:gap-10">
 
@@ -251,7 +257,7 @@ export default function ReportScamClient() {
                         className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-slate-300 hover:border-brand-primary bg-slate-50 hover:bg-brand-primary/5 rounded-2xl cursor-pointer transition-all duration-300 group"
                       >
                         <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center px-4">
-                          <div className="p-3 bg-white rounded-full shadow-sm text-slate-400 group-hover:text-brand-primary group-hover:scale-110 transition-all duration-300 mb-3">
+                          <div className="p-3 bg-white rounded-full text-slate-400 group-hover:text-brand-primary group-hover:scale-110 transition-all duration-300 mb-3">
                             <UploadCloud size={24} />
                           </div>
                           <p className="text-sm text-slate-600 font-bold mb-1">คลิกเพื่อเลือกไฟล์ หรือลากไฟล์มาวางที่นี่</p>
@@ -271,7 +277,7 @@ export default function ReportScamClient() {
                         <img
                           src={previewUrl}
                           alt="Evidence preview"
-                          className="max-h-60 rounded-xl object-contain shadow-md"
+                          className="max-h-60 rounded-xl object-contain"
                         />
                         <button
                           type="button"
@@ -308,7 +314,7 @@ export default function ReportScamClient() {
                     id="report-description"
                     required
                     placeholder="อธิบายพฤติกรรมที่น่าสงสัย..."
-                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-primary outline-none transition-all min-h-[120px] resize-none text-base"
+                    className="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:border-brand-primary outline-none transition-all min-h-30 resize-none text-base"
                     value={formData.description}
                     onChange={(e) => handleInputChange("description", e.target.value)}
                   />
@@ -354,7 +360,7 @@ export default function ReportScamClient() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-5 bg-brand-primary text-white rounded-xl md:rounded-[2rem] font-extrabold text-lg shadow-lg shadow-brand-primary/20 hover:shadow-xl hover:-translate-y-1 active:translate-y-0 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
+                className="w-full py-5 bg-brand-primary text-white rounded-xl md:rounded-4xl font-extrabold text-lg active:translate-y-0 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
                 aria-busy={isLoading}
               >
                 {isLoading ? "กำลังส่งข้อมูล..." : "ส่งรายงานเบาะแส"}

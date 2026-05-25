@@ -34,7 +34,7 @@ function LoginScreen({ onLogin }) {
 
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-      <form onSubmit={attempt} className="bg-white rounded-3xl p-10 w-full max-w-sm flex flex-col gap-6 shadow-2xl">
+      <form onSubmit={attempt} className="bg-white rounded-3xl p-10 w-full max-w-sm flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3">
           <div className="p-3 bg-brand-primary/10 rounded-xl">
             <ShieldCheck className="text-brand-primary" size={32} />
@@ -80,7 +80,7 @@ function AnalyticsTab({ adminKey }) {
           { label: "ความเสี่ยงปานกลาง", value: riskCounts.medium, color: "text-signal-orange" },
           { label: "ความเสี่ยงสูง", value: riskCounts.high, color: "text-signal-red" },
         ].map((s) => (
-          <div key={s.label} className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm flex flex-col gap-1">
+          <div key={s.label} className="bg-white rounded-2xl p-6 border border-slate-100 flex flex-col gap-1">
             <span className="text-xs text-slate-400 uppercase tracking-wide">{s.label}</span>
             <span className={`text-3xl font-black ${s.color}`}>{s.value}</span>
           </div>
@@ -94,14 +94,14 @@ function AnalyticsTab({ adminKey }) {
           { label: "ปฏิเสธ", value: reportCounts.rejected, color: "text-slate-400" },
           { label: "เพิ่ม Blacklist", value: reportCounts.added_to_blacklist, color: "text-signal-red" },
         ].map((s) => (
-          <div key={s.label} className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm flex flex-col gap-1">
+          <div key={s.label} className="bg-white rounded-2xl p-6 border border-slate-100 flex flex-col gap-1">
             <span className="text-xs text-slate-400 uppercase tracking-wide">{s.label}</span>
             <span className={`text-3xl font-black ${s.color}`}>{s.value}</span>
           </div>
         ))}
       </div>
 
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
         <div className="p-5 border-b border-slate-50 flex items-center gap-2">
           <Clock size={16} className="text-slate-400" />
           <h3 className="font-bold text-slate-800">การตรวจสอบล่าสุด</h3>
@@ -193,7 +193,7 @@ function ReportsTab({ adminKey }) {
       ) : (
         <div className="flex flex-col gap-4">
           {reports.map((r) => (
-            <div key={r.id} className="bg-white border border-slate-100 rounded-2xl p-6 flex flex-col gap-4 shadow-sm">
+            <div key={r.id} className="bg-white border border-slate-100 rounded-2xl p-6 flex flex-col gap-4">
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div className="flex flex-col gap-1">
                   <h4 className="font-bold text-slate-900">{r.agency_name}</h4>

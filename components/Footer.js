@@ -1,32 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { Users } from "lucide-react";
+import { ShieldCheck, Users } from "lucide-react";
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-slate-900 text-slate-400 py-8 md:py-10 mt-auto border-t border-slate-800">
+    <footer className="mt-auto border-t border-brand-primary/25 bg-brand-secondary text-slate-200">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-6 text-center md:text-left">
-          {/* Branding & Mission - Layer 2 */}
-          <div className="flex flex-col gap-1.5 md:gap-1">
+        <div className="flex flex-col gap-8 py-8 md:py-10">
+          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-12">
             <a
               href="https://www.facebook.com/profile.php?id=61570127262236"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center md:justify-start gap-2 text-white hover:text-brand-primary transition-colors py-1"
+              className="inline-flex items-center gap-3 text-white hover:text-brand-primary transition-colors"
+              aria-label="Thai Migrant Watch"
             >
-              <Users size={18} />
-              <span className="font-extrabold text-lg">Thai Migrant Watch</span>
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-primary/15 text-brand-primary">
+                <ShieldCheck size={18} />
+              </span>
+              <span className="flex flex-col leading-tight">
+                <span className="text-xl font-bold">เช็คก่อนบิน</span>
+                <span className="text-sm text-slate-300">โครงการจาก Thai Migrant Watch</span>
+              </span>
             </a>
-            <p className="text-[11px] md:text-xs text-slate-500 italic">
-              เพื่อให้คนไทยต้องไม่ไปตายดาบหน้า
-            </p>
-          </div>
 
-          {/* Pathfinding & Status - Combined Layer 1/2 */}
-          <div className="flex flex-col items-center md:items-end gap-4 md:gap-3">
-            <div className="flex flex-wrap justify-center md:justify-end gap-x-8 gap-y-4">
+            <div className="flex flex-col gap-3 md:items-end">
+              <p className="text-sm text-slate-300">เมนูลัด</p>
+              <div className="flex flex-wrap gap-2 md:justify-end">
               {[
                 { href: "/report-scam", label: "รายงาน" },
                 { href: "/about", label: "เกี่ยวกับ" },
@@ -35,15 +38,21 @@ export default function Footer() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs font-bold hover:text-white transition-colors uppercase tracking-widest py-1"
+                  className="rounded-xl border border-slate-600/70 px-4 py-2 text-sm font-bold text-slate-100 hover:border-brand-primary hover:text-white transition-colors"
                 >
                   {link.label}
                 </Link>
               ))}
+              </div>
             </div>
-            <p className="text-[10px] text-slate-600 uppercase tracking-widest">
-              © 2025 เช็คก่อนบิน - ป้องกันมิจฉาชีพ
+          </div>
+
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 border-t border-slate-700/70 pt-4">
+            <p className="text-sm text-slate-300 flex items-center gap-2">
+              <Users size={16} className="text-brand-primary" />
+              เพื่อให้คนไทยต้องไม่ไปตายดาบหน้า
             </p>
+            <p className="text-sm text-slate-400">© {year} เช็คก่อนบิน | ป้องกันมิจฉาชีพก่อนตัดสินใจเดินทาง</p>
           </div>
         </div>
       </div>
