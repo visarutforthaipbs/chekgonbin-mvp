@@ -69,7 +69,7 @@ function ResultContent() {
       description: "ไม่พบสัญญาณอันตรายที่ชัดเจน แต่ควรตรวจสอบอย่างละเอียดอีกครั้ง",
       icon: CheckCircle2,
       strokeColor: "stroke-signal-green",
-      glowClass: "shadow-xl shadow-green-500/5 border border-green-200/50",
+      glowClass: "border border-green-200/50",
     },
     medium: {
       color: "text-signal-orange",
@@ -80,7 +80,7 @@ function ResultContent() {
       description: "พบข้อควรระวังบางประการ ควรตรวจสอบข้อมูลเพิ่มเติมกับกรมการจัดหางาน",
       icon: AlertTriangle,
       strokeColor: "stroke-signal-orange",
-      glowClass: "shadow-xl shadow-orange-500/5 border border-orange-200/50",
+      glowClass: "border border-orange-200/50",
     },
     high: {
       color: "text-signal-red",
@@ -91,7 +91,7 @@ function ResultContent() {
       description: "พบสัญญาณอันตราย! โปรดระมัดระวังอย่างยิ่งและหลีกเลี่ยงการโอนเงิน",
       icon: AlertCircle,
       strokeColor: "stroke-signal-red",
-      glowClass: "shadow-xl shadow-red-500/10 border border-red-200/50",
+      glowClass: "border border-red-200/50",
     },
   };
 
@@ -159,7 +159,7 @@ function ResultContent() {
           className="flex flex-col items-center text-center gap-4 md:gap-6"
         >
           {/* Circular SVG Gauge */}
-          <div className="relative w-36 h-36 md:w-44 md:h-44 flex items-center justify-center bg-white rounded-full shadow-md border border-slate-100 p-2">
+          <div className="relative w-36 h-36 md:w-44 md:h-44 flex items-center justify-center bg-white rounded-full border border-slate-100 p-2">
             <svg className="w-full h-full transform -rotate-90">
               <circle
                 cx="50%"
@@ -231,7 +231,7 @@ function ResultContent() {
         </section>
 
         {/* Verification Checklist */}
-        <section className="w-full bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] shadow-lg overflow-hidden">
+        <section className="w-full bg-white border border-slate-200 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden">
           <div className="p-6 md:p-8 flex flex-col gap-4 md:gap-6">
             <div>
               <h3 className="text-base md:text-lg font-extrabold text-slate-800 flex items-center gap-2 mb-1">
@@ -255,7 +255,7 @@ function ResultContent() {
                   whileTap={{ scale: 0.99 }}
                   className={`flex items-start gap-3 p-3.5 rounded-xl border hover:border-brand-primary/30 hover:bg-slate-50/50 cursor-pointer transition-all duration-300 ${
                     checklist[item.id]
-                      ? "bg-green-50/30 border-green-300 shadow-xs"
+                      ? "bg-green-50/30 border-green-300"
                       : "bg-white border-slate-100"
                   }`}
                 >
@@ -302,7 +302,7 @@ function ResultContent() {
         </section>
 
         {/* Emergency Hotlines */}
-        <section className={`w-full p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 bg-white shadow-md flex flex-col md:flex-row items-center md:justify-between gap-6 md:gap-8 ${config.threatClass}`}>
+        <section className={`w-full p-6 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-slate-100 bg-white flex flex-col md:flex-row items-center md:justify-between gap-6 md:gap-8 ${config.threatClass}`}>
            <div className="flex flex-col gap-1 md:gap-2 text-center md:text-left">
              <h3 className="text-base md:text-lg font-extrabold text-slate-900">สายด่วนช่วยเหลือ</h3>
              <p className="text-xs md:text-sm text-slate-500">ติดต่อเจ้าหน้าที่ทันทีเมื่อพบสัญญาณอันตราย</p>
@@ -368,7 +368,7 @@ function ResultContent() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 no-print">
             <button
               onClick={() => window.print()}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-slate-950 text-slate-950 rounded-2xl font-bold hover:bg-slate-50 transition-all shadow-md active:scale-95"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-slate-950 text-slate-950 rounded-2xl font-bold hover:bg-slate-50 transition-all active:scale-95"
             >
               <Printer className="w-[18px] h-[18px] md:w-5 md:h-5" />
               พิมพ์รายงาน / บันทึก PDF

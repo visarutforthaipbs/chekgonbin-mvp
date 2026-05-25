@@ -188,11 +188,8 @@ export default function Home() {
       <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 flex flex-col gap-8 md:gap-12 max-w-4xl">
         
         {/* Layer 3: Conscious Deep-Dive - The Action Tool */}
-        <section className="relative" id="risk-assessment">
-          <div className="absolute -inset-2 md:-inset-3 bg-brand-primary/10 rounded-[2rem] md:rounded-[2.5rem] blur-2xl pointer-events-none" />
-
-          <div className="relative bg-white border-2 border-brand-primary/25 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl shadow-brand-primary/10">
-            <div className="h-1.5 md:h-2 bg-linear-to-r from-brand-primary via-orange-400 to-brand-primary w-full" />
+        <section id="risk-assessment">
+          <div className="bg-white border-2 border-brand-primary/25 rounded-[2rem] md:rounded-[2.5rem] overflow-hidden">
 
             <div className="p-6 md:p-12">
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-8 md:mb-10 border-b border-slate-100 pb-6">
@@ -447,7 +444,7 @@ export default function Home() {
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <motion.div
             whileHover={{ y: -2 }}
-            className="p-6 md:p-8 bg-white border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] shadow-sm flex flex-col gap-3 md:gap-4"
+            className="p-6 md:p-8 bg-white border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] flex flex-col gap-3 md:gap-4"
           >
             <h2 className="text-lg md:text-xl font-extrabold text-slate-800 flex items-center gap-2">
               <BarChart3 className="text-brand-primary w-[18px] h-[18px] md:w-5 md:h-5" />
@@ -461,7 +458,7 @@ export default function Home() {
 
           <motion.div
             whileHover={{ y: -2 }}
-            className="p-6 md:p-8 bg-white border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] shadow-sm flex flex-col gap-3 md:gap-4"
+            className="p-6 md:p-8 bg-white border border-slate-100 rounded-[1.5rem] md:rounded-[2rem] flex flex-col gap-3 md:gap-4"
           >
             <h2 className="text-lg md:text-xl font-extrabold text-slate-800 flex items-center gap-2">
               <CheckCircle2 className="text-brand-primary w-[18px] h-[18px] md:w-5 md:h-5" />
@@ -495,7 +492,7 @@ export default function Home() {
                 a: "เราช่วยคุณวิเคราะห์ข้อมูลเบื้องต้นจากฐานข้อมูล Blacklist และ Whitelist ของกรมการจัดหางานแบบเรียลไทม์ เพื่อลดความเสี่ยงก่อนที่คุณจะเสียเงินหรือเสียโอกาส",
               },
             ].map((faq, index) => (
-              <div key={index} className="bg-white border border-slate-200 rounded-xl md:rounded-2xl shadow-sm overflow-hidden">
+              <div key={index} className="bg-white border border-slate-200 rounded-xl md:rounded-2xl overflow-hidden">
                 <button
                   type="button"
                   className="w-full text-left px-5 md:px-6 py-4 md:py-5 flex items-center justify-between gap-4 hover:bg-slate-50 transition-colors"

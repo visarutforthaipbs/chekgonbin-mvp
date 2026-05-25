@@ -35,7 +35,7 @@ export default function Navbar() {
           <div className="flex justify-between items-center min-h-[44px]">
             {/* Logo - Layer 1: Subconscious Hook */}
             <Link href="/" className="flex items-center gap-2 md:gap-3 group">
-              <div className="bg-brand-primary/10 rounded-full p-1.5 shadow-xs transition-transform group-hover:scale-105">
+              <div className="bg-brand-primary/10 rounded-full p-1.5 transition-transform group-hover:scale-105">
                 <ShieldCheck 
                   className="text-brand-primary" 
                   size={scrolled ? 20 : 24} 
