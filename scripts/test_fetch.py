@@ -12,6 +12,8 @@ Usage:
     python test_fetch.py
 """
 
+from __future__ import annotations
+
 import base64
 import csv
 import gzip

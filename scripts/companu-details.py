@@ -13,6 +13,8 @@ Run manually:
 Or call from the Next.js cron route at /api/cron/scrape-agencies (set X-Secret).
 """
 
+from __future__ import annotations
+
 import base64
 import csv
 import gzip
