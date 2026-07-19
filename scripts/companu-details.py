@@ -131,9 +131,9 @@ def api_get(session, url: str, token: str, enc_key: str) -> dict | None:
 def parse_iso_datetime(s: str) -> datetime | None:
     if not s:
         return None
-    s = s.replace("Z", "+00:00")
     try:
-        return datetime.fromisoformat(s)
+        # Take the YYYY-MM-DDTHH:MM:SS part (first 19 chars) to parse as naive UTC
+        return datetime.strptime(s[:19], "%Y-%m-%dT%H:%M:%S")
     except Exception:
         return None
 
@@ -151,7 +151,8 @@ def should_scrape(row: dict, force: bool = False) -> bool:
     scraped_at = parse_iso_datetime(scraped_at_str)
     if not scraped_at:
         return True
-    now = datetime.now(timezone.utc) if scraped_at.tzinfo else datetime.utcnow()
+    # Compare naive datetimes (both represent UTC time)
+    now = datetime.utcnow()
     if now - scraped_at > timedelta(days=30):
         return True
     return False
