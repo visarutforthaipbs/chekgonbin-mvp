@@ -1,19 +1,19 @@
 #!/bin/bash
-# Install (or reinstall) the DBD monthly scraper as a launchd agent on THIS Mac.
+# Install (or reinstall) the DBD launchd agents on THIS Mac:
+#   - com.chekgonbin.dbd-monthly : runs the scraper on the 1st at 03:00
+#   - com.chekgonbin.dbd-check   : local pipeline supervisor, daily at 09:00
 # Run it on the target machine, e.g. lighthouse-core:
 #     ssh lighthouse-core
 #     cd ~/chekgonbin-mvp && git pull && bash scripts/install-dbd-launchd.sh
 #
-# Idempotent: unloads any existing agent, rewrites the plist with this
-# machine's real paths, and loads it. Verifies .env.local and Python first.
+# Idempotent: unloads any existing agents, rewrites the plists with this
+# machine's real paths, and loads them. Verifies .env.local and Python first.
 set -euo pipefail
 
-LABEL="com.chekgonbin.dbd-monthly"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$(cd "$SCRIPT_DIR/.." && pwd)"
-TEMPLATE="$SCRIPT_DIR/$LABEL.plist"
 DEST_DIR="$HOME/Library/LaunchAgents"
-DEST="$DEST_DIR/$LABEL.plist"
+LABELS=(com.chekgonbin.dbd-monthly com.chekgonbin.dbd-check)
 
 echo "Repo:   $REPO"
 echo "Host:   $(hostname -s)"
@@ -44,18 +44,27 @@ if ! "$PYTHON" -c "import supabase, curl_cffi, cryptography, bs4, dotenv" 2>/dev
     echo "    $PYTHON -m pip install -r $REPO/scripts/requirements.txt"
 fi
 
-# --- Write plist with real absolute paths ---
+# --- Write + (re)load each agent with real absolute paths ---
 mkdir -p "$DEST_DIR" "$REPO/scripts/logs"
-sed "s#__REPO__#$REPO#g" "$TEMPLATE" > "$DEST"
-echo "Wrote:  $DEST"
+for LABEL in "${LABELS[@]}"; do
+    TEMPLATE="$SCRIPT_DIR/$LABEL.plist"
+    DEST="$DEST_DIR/$LABEL.plist"
+    if [[ ! -f "$TEMPLATE" ]]; then
+        echo "WARNING: template $TEMPLATE missing — skipping $LABEL"
+        continue
+    fi
+    sed "s#__REPO__#$REPO#g" "$TEMPLATE" > "$DEST"
+    launchctl unload "$DEST" 2>/dev/null || true
+    launchctl load "$DEST"
+    echo "Loaded: $LABEL"
+done
 
-# --- (Re)load the agent ---
-launchctl unload "$DEST" 2>/dev/null || true
-launchctl load "$DEST"
 echo
-echo "Loaded. Current state:"
-launchctl list | grep "$LABEL" || echo "  (not shown — check 'launchctl list | grep $LABEL')"
+echo "Current state:"
+launchctl list | grep chekgonbin || echo "  (none shown — check 'launchctl list | grep chekgonbin')"
 echo
-echo "Done. Next scheduled run: 1st of next month at 03:00 local time."
-echo "To trigger a test run now:  launchctl start $LABEL"
-echo "Then watch:                 tail -f $REPO/scripts/logs/dbd-scrape-\$(date +%Y-%m-%d).log"
+echo "Done."
+echo "  Scraper : 1st of each month at 03:00  (test: launchctl start com.chekgonbin.dbd-monthly)"
+echo "  Checker : every day at 09:00          (test: launchctl start com.chekgonbin.dbd-check)"
+echo "Watch a scrape:  tail -f $REPO/scripts/logs/dbd-scrape-\$(date +%Y-%m-%d).log"
+echo "Latest status:   cat $REPO/scripts/logs/PIPELINE-STATUS.txt"

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  TEMPLATE — do not load directly. __REPO__ is substituted by
+  scripts/install-dbd-launchd.sh, which writes the result to
+  ~/Library/LaunchAgents/ and loads it.
+
+  Daily local pipeline check (replaces the old cloud Claude routine).
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyLists-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.chekgonbin.dbd-check</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>__REPO__/scripts/check-pipeline.sh</string>
+    </array>
+
+    <!-- Run every day at 09:00 local time -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>__REPO__/scripts/logs/check-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>__REPO__/scripts/logs/check-stderr.log</string>
+
+    <key>WorkingDirectory</key>
+    <string>__REPO__</string>
+</dict>
+</plist>
