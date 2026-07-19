@@ -127,21 +127,25 @@ def api_get(session, url: str, token: str, enc_key: str) -> dict | None:
 
 # ── Company data ──────────────────────────────────────────────────────────────
 
-def load_companies() -> list[dict]:
+def load_companies(supabase) -> list[dict]:
+    response = supabase.table("agencies").select("juristic_id, name_th").execute()
     companies = []
-    with open(CSV_PATH, encoding="utf-8-sig") as f:
-        for row in csv.DictReader(f):
+    for row in response.data:
+        juristic_id = row.get("juristic_id")
+        if juristic_id:
             companies.append({
-                "name_th":    row["name_th"].strip(),
-                "company_id": row["company_Id"].strip(),
+                "name_th":    row.get("name_th", "").strip(),
+                "company_id": juristic_id.strip(),
             })
-    log.info("Loaded %d companies from CSV", len(companies))
+    log.info("Loaded %d companies from Supabase", len(companies))
     return companies
 
 
 def parse_ids(company_id: str) -> tuple[str, str]:
     if len(company_id) == 14:
         return company_id[0], company_id[1:]
+    if len(company_id) == 13:
+        return "5", company_id
     return "5", "0" + company_id
 
 
@@ -239,7 +243,7 @@ def main():
         sys.exit("ERROR: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_KEY in .env.local")
 
     supabase  = create_client(SUPABASE_URL, SUPABASE_KEY)
-    companies = load_companies()
+    companies = load_companies(supabase)
     total     = len(companies)
 
     session    = get_session()
