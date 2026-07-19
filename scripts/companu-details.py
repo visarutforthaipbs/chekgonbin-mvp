@@ -15,6 +15,7 @@ Or call from the Next.js cron route at /api/cron/scrape-agencies (set X-Secret).
 
 from __future__ import annotations
 
+import argparse
 import base64
 import csv
 import gzip
@@ -23,7 +24,7 @@ import logging
 import os
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -127,17 +128,52 @@ def api_get(session, url: str, token: str, enc_key: str) -> dict | None:
 
 # ── Company data ──────────────────────────────────────────────────────────────
 
-def load_companies(supabase) -> list[dict]:
-    response = supabase.table("agencies").select("juristic_id, name_th").execute()
+def parse_iso_datetime(s: str) -> datetime | None:
+    if not s:
+        return None
+    s = s.replace("Z", "+00:00")
+    try:
+        return datetime.fromisoformat(s)
+    except Exception:
+        return None
+
+
+def should_scrape(row: dict, force: bool = False) -> bool:
+    if force:
+        return True
+    # Always scrape everything on the 1st of every month
+    if datetime.now().day == 1:
+        return True
+    scraped_at_str = row.get("dbd_scraped_at")
+    if not scraped_at_str:
+        # Never scraped before (new company!)
+        return True
+    scraped_at = parse_iso_datetime(scraped_at_str)
+    if not scraped_at:
+        return True
+    now = datetime.now(timezone.utc) if scraped_at.tzinfo else datetime.utcnow()
+    if now - scraped_at > timedelta(days=30):
+        return True
+    return False
+
+
+def load_companies(supabase, force: bool = False) -> list[dict]:
+    response = supabase.table("agencies").select("juristic_id, name_th, dbd_scraped_at").execute()
     companies = []
+    skipped = 0
     for row in response.data:
         juristic_id = row.get("juristic_id")
         if juristic_id:
-            companies.append({
-                "name_th":    row.get("name_th", "").strip(),
-                "company_id": juristic_id.strip(),
-            })
-    log.info("Loaded %d companies from Supabase", len(companies))
+            comp = {
+                "name_th":        row.get("name_th", "").strip(),
+                "company_id":     juristic_id.strip(),
+                "dbd_scraped_at": row.get("dbd_scraped_at"),
+            }
+            if should_scrape(comp, force):
+                companies.append(comp)
+            else:
+                skipped += 1
+    log.info("Loaded %d companies to scrape from Supabase (skipped %d already up-to-date)", len(companies), skipped)
     return companies
 
 
@@ -242,12 +278,18 @@ def main():
     if not SUPABASE_URL or not SUPABASE_KEY:
         sys.exit("ERROR: Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_KEY in .env.local")
 
+    parser = argparse.ArgumentParser(description="DBD Scraper")
+    parser.add_argument("--force", action="store_true", help="Force scrape all companies")
+    args = parser.parse_args(sys.argv[1:])
+
     supabase  = create_client(SUPABASE_URL, SUPABASE_KEY)
-    companies = load_companies(supabase)
+    companies = load_companies(supabase, force=args.force)
     total     = len(companies)
 
     session    = get_session()
-    token, enc_key = get_token(session)
+    token = enc_key = ""
+    if total > 0:
+        token, enc_key = get_token(session)
 
     ok = fail = 0
     for i, company in enumerate(companies, 1):

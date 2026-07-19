@@ -1,5 +1,5 @@
 #!/bin/bash
-# Wrapper invoked by launchd to run the DBD monthly scraper.
+# Wrapper invoked by launchd to run the DBD daily scraper.
 # Portable: derives the repo root from this script's own location and
 # auto-detects Python, so it runs on any Mac (no hardcoded home path).
 # Logs to scripts/logs/dbd-scrape-YYYY-MM-DD.log
@@ -25,7 +25,7 @@ mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/dbd-scrape-$(date +%Y-%m-%d).log"
 
 cd "$REPO"
-echo "===== $(date '+%Y-%m-%d %H:%M:%S') Starting DBD scrape (host=$(hostname -s), python=$PYTHON) =====" >> "$LOG_FILE"
+echo "===== $(date '+%Y-%m-%d %H:%M:%S') Starting DBD daily scrape (host=$(hostname -s), python=$PYTHON) =====" >> "$LOG_FILE"
 set +e
 "$PYTHON" scripts/companu-details.py >> "$LOG_FILE" 2>&1
 EXIT=$?

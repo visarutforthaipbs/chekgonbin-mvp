@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install (or reinstall) the DBD monthly scraper as a launchd agent on THIS Mac.
+# Install (or reinstall) the DBD daily scraper as a launchd agent on THIS Mac.
 # Run it on the target machine, e.g. lighthouse-core:
 #     ssh lighthouse-core
 #     cd ~/chekgonbin-mvp && git pull && bash scripts/install-dbd-launchd.sh
@@ -8,7 +8,7 @@
 # machine's real paths, and loads it. Verifies .env.local and Python first.
 set -euo pipefail
 
-LABEL="com.chekgonbin.dbd-monthly"
+LABEL="com.chekgonbin.dbd-daily"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$(cd "$SCRIPT_DIR/.." && pwd)"
 TEMPLATE="$SCRIPT_DIR/$LABEL.plist"
@@ -56,6 +56,6 @@ echo
 echo "Loaded. Current state:"
 launchctl list | grep "$LABEL" || echo "  (not shown — check 'launchctl list | grep $LABEL')"
 echo
-echo "Done. Next scheduled run: 1st of next month at 03:00 local time."
+echo "Done. Next scheduled run: daily at 03:00 local time."
 echo "To trigger a test run now:  launchctl start $LABEL"
 echo "Then watch:                 tail -f $REPO/scripts/logs/dbd-scrape-\$(date +%Y-%m-%d).log"
