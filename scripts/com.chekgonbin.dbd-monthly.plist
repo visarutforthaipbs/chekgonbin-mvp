@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  TEMPLATE — do not load this file directly. The __REPO__ placeholders are
+  substituted with real absolute paths by scripts/install-dbd-launchd.sh,
+  which writes the result to ~/Library/LaunchAgents/ and loads it.
+  launchd requires absolute paths, so they must be filled in per-machine.
+-->
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyLists-1.0.dtd">
 <plist version="1.0">
 <dict>
@@ -8,7 +14,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>/Users/visarutsankham/chekgonbin-mvp-1/scripts/run-dbd-monthly.sh</string>
+        <string>__REPO__/scripts/run-dbd-monthly.sh</string>
     </array>
 
     <!-- Run on the 1st of every month at 03:00 local time -->
@@ -22,16 +28,16 @@
         <integer>0</integer>
     </dict>
 
-    <!-- If the Mac was asleep at the scheduled time, run it on next wake -->
+    <!-- launchd runs a missed StartCalendarInterval job on next wake -->
     <key>RunAtLoad</key>
     <false/>
 
     <key>StandardOutPath</key>
-    <string>/Users/visarutsankham/chekgonbin-mvp-1/scripts/logs/launchd-stdout.log</string>
+    <string>__REPO__/scripts/logs/launchd-stdout.log</string>
     <key>StandardErrorPath</key>
-    <string>/Users/visarutsankham/chekgonbin-mvp-1/scripts/logs/launchd-stderr.log</string>
+    <string>__REPO__/scripts/logs/launchd-stderr.log</string>
 
     <key>WorkingDirectory</key>
-    <string>/Users/visarutsankham/chekgonbin-mvp-1</string>
+    <string>__REPO__</string>
 </dict>
 </plist>
