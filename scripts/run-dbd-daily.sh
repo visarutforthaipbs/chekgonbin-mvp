@@ -31,4 +31,14 @@ set +e
 EXIT=$?
 set -e
 echo "===== $(date '+%Y-%m-%d %H:%M:%S') Done (exit=$EXIT) =====" >> "$LOG_FILE"
+
+# Post-scrape freshness report: verifies BOTH pipelines (DOE Vercel cron and
+# DBD) from Supabase. Written to its own dated file AND appended to the log,
+# so there is a fresh report every day right after the scrape.
+REPORT_FILE="$LOG_DIR/dbd-report-$(date +%Y-%m-%d).log"
+{
+    echo "===== $(date '+%Y-%m-%d %H:%M:%S') Pipeline freshness report (host=$(hostname -s)) ====="
+    "$PYTHON" scripts/dbd-diagnose.py 2>&1
+} | tee "$REPORT_FILE" >> "$LOG_FILE"
+
 exit $EXIT
