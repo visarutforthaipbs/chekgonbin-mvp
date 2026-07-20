@@ -37,6 +37,20 @@ tail -f scripts/logs/dbd-scrape-$(date +%Y-%m-%d).log
 ```
 A successful run ends with `Done (exit=0)` and `148 updated, 0 failed`.
 
+## Daily freshness report
+After each scrape, the wrapper runs `scripts/dbd-diagnose.py` and writes a
+report to `scripts/logs/dbd-report-$(date +%Y-%m-%d).log` (also appended to the
+scrape log). It verifies **both** pipelines from Supabase in one place:
+- **DOE whitelist** (Vercel daily cron → `scraped_at`): total agencies + latest scrape.
+- **DBD** (this scraper → `dbd_scraped_at`): populated / missing / stale counts,
+  plus any agency behind a coverage gap.
+
+Read today's report, or run it on demand:
+```bash
+cat scripts/logs/dbd-report-$(date +%Y-%m-%d).log     # today's report
+./.venv/bin/python3 scripts/dbd-diagnose.py           # run on demand (read-only)
+```
+
 ## Remove from the old Mac
 On the previous host (visarutsankham's laptop), so it doesn't double-run:
 ```bash

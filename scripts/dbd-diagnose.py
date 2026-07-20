@@ -80,8 +80,8 @@ def main() -> None:
     print("=" * 60)
     try:
         total = supabase.table("agencies").select(
-            "id", count="exact"
-        ).limit(1).execute()
+            "*", count="exact", head=True
+        ).execute()
         latest = supabase.table("agencies").select("scraped_at").order(
             "scraped_at", desc=True
         ).limit(1).execute()
