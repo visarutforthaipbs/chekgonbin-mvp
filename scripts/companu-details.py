@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import argparse
 import base64
-import csv
 import gzip
 import json
 import logging
@@ -45,7 +44,6 @@ log = logging.getLogger(__name__)
 SUPABASE_URL = os.getenv("NEXT_PUBLIC_SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_KEY")
 DBD_BASE     = "https://datawarehouse.dbd.go.th"
-CSV_PATH     = Path(__file__).parent / "company-id.csv"
 
 BROWSER_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
@@ -321,7 +319,7 @@ def main():
             if r["dbd_missing"] > 0:
                 log.warning(
                     "DBD coverage: %d/%d populated, %d missing dbd_scraped_at "
-                    "(not matched in company-id.csv)",
+                    "(agency has no juristic_id in Supabase)",
                     r["dbd_populated"], r["total_agencies"], r["dbd_missing"],
                 )
             if r["dbd_stale"] > 0:
