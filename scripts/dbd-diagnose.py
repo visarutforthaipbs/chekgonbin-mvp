@@ -1,16 +1,21 @@
 """
 dbd-diagnose.py
 ---------------
-Standalone diagnostic for the "148/149 — 1 missing dbd_scraped_at" gap.
+Standalone freshness check for BOTH agency-data pipelines, and diagnostic for
+the "148/149 — 1 missing dbd_scraped_at" gap.
 
 Reuses the same Supabase client setup as companu-details.py, so run it
 anywhere that scraper runs (e.g. the lighthouse-core host). No arguments.
 
 It prints:
-  1. The dbd_freshness_report summary (total / populated / missing / stale).
+  0. DOE whitelist freshness — the Vercel daily cron
+     (app/api/cron/scrape-agencies) upserts agencies and stamps scraped_at.
+     A recent max(scraped_at) means the daily cron is running.
+  1. The dbd_freshness_report summary (total / populated / missing / stale) —
+     the DBD scraper on lighthouse-core (companu-details.py).
   2. Every agency with dbd_scraped_at IS NULL   — the actual gap.
   3. Every agency with a null/empty juristic_id  — the most likely cause
-     (companu-details.py:167 skips these, so they never get scraped).
+     (companu-details.py skips these, so they never get scraped).
 
 Prerequisites (same as the scraper):
     pip install supabase python-dotenv
@@ -65,7 +70,30 @@ def main() -> None:
 
     supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+    # ── 0. DOE whitelist freshness (Vercel daily cron) ──────────────────────
+    # The Vercel cron route (app/api/cron/scrape-agencies) upserts agencies
+    # and stamps `scraped_at`. A recent max(scraped_at) means the daily cron
+    # is running. total_agencies here is also the source count the DBD
+    # scraper works from.
+    print("=" * 60)
+    print("DOE whitelist freshness (Vercel daily cron -> scraped_at)")
+    print("=" * 60)
+    try:
+        total = supabase.table("agencies").select(
+            "id", count="exact"
+        ).limit(1).execute()
+        latest = supabase.table("agencies").select("scraped_at").order(
+            "scraped_at", desc=True
+        ).limit(1).execute()
+        last_doe = latest.data[0]["scraped_at"] if latest.data else None
+        print(f"  total_agencies : {total.count}")
+        print(f"  last DOE scrape: {last_doe}  (max scraped_at)")
+        print("  cron schedule  : 0 20 * * *  (20:00 UTC daily, vercel.json)")
+    except Exception as e:  # noqa: BLE001
+        print(f"  (could not read DOE freshness: {e})")
+
     # ── 1. Summary via the same RPC the scraper logs ────────────────────────
+    print()
     print("=" * 60)
     print("DBD freshness summary (dbd_freshness_report RPC)")
     print("=" * 60)
