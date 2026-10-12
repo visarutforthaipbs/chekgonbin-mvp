@@ -70,14 +70,14 @@ const routes = [
 
 export default function MediaHubClient() {
   return (
-    <div className="w-full min-h-screen bg-slate-50 flex flex-col items-center">
+    <div className="w-full flex flex-col items-center">
 
-      <header className="w-full bg-white border-b border-slate-100 py-12 md:py-24">
+      <header className="w-full bg-surface border-b border-separator py-12 md:py-24">
         <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center gap-4 md:gap-6">
-          <h1 className="text-3xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            ศูนย์ความรู้ <span className="text-brand-primary">CHEK GON BIN</span>
+          <h1 className="text-3xl md:text-6xl font-bold text-label tracking-tight leading-tight">
+            ศูนย์ความรู้ <span className="text-accent-ink">CHEK GON BIN</span>
           </h1>
-          <p className="text-base md:text-xl text-slate-600 max-w-2xl leading-relaxed">
+          <p className="text-body md:text-title3 text-label-2 max-w-2xl leading-relaxed">
             เรียนรู้วิธีปกป้องตัวเองจากการหลอกลวง และร่วมเป็นส่วนหนึ่งในการทำให้ชุมชนของเราปลอดภัยขึ้น
           </p>
         </div>
@@ -86,12 +86,12 @@ export default function MediaHubClient() {
       <div className="container mx-auto px-4 md:px-6 py-10 md:py-12 flex flex-col gap-12 md:gap-20 max-w-5xl">
 
         <section className="flex flex-col gap-6 md:gap-8">
-          <div className="flex flex-col gap-1 md:gap-2 border-l-4 border-brand-primary pl-4 md:pl-6">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 flex items-center gap-2 md:gap-3">
-              <Video className="text-brand-primary w-6 h-6 md:w-7 md:h-7" aria-hidden="true" />
+          <div className="flex flex-col gap-1 md:gap-2 border-l-4 border-accent pl-4 md:pl-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-label flex items-center gap-2 md:gap-3">
+              <Video className="text-accent-ink w-6 h-6 md:w-7 md:h-7" aria-hidden="true" />
               เรื่องเล่าจากประสบการณ์จริง
             </h2>
-            <p className="text-xs md:text-sm text-slate-500">เรียนรู้จากบทเรียนของผู้ที่เคยเผชิญหน้ากับความเสี่ยง</p>
+            <p className="text-footnote text-label-2">เรียนรู้จากบทเรียนของผู้ที่เคยเผชิญหน้ากับความเสี่ยง</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 md:gap-6">
@@ -99,20 +99,20 @@ export default function MediaHubClient() {
               <motion.div
                 key={story.id}
                 whileHover={{ y: -4 }}
-                className="bg-white rounded-3xl md:rounded-4xl overflow-hidden border border-slate-100 group cursor-pointer"
+                className="bg-surface rounded-3xl md:rounded-4xl overflow-hidden border border-separator group cursor-pointer"
               >
                 <div className="relative aspect-video overflow-hidden">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={story.thumbnail} alt={story.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-100 md:opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center" aria-hidden="true">
-                      <Play className="text-brand-primary fill-brand-primary ml-1 w-4.5 h-4.5 md:w-5 md:h-5" />
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-surface rounded-full flex items-center justify-center" aria-hidden="true">
+                      <Play className="text-accent-ink fill-current ml-1 w-4.5 h-4.5 md:w-5 md:h-5" />
                     </div>
                   </div>
                 </div>
                 <div className="p-5 md:p-6">
-                  <h3 className="font-extrabold text-slate-900 mb-2 text-base md:text-lg leading-tight">{story.title}</h3>
-                  <p className="text-xs md:text-sm text-slate-500 leading-relaxed">{story.description}</p>
+                  <h3 className="font-bold text-label mb-2 text-body leading-tight">{story.title}</h3>
+                  <p className="text-footnote text-label-2 leading-relaxed">{story.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -120,12 +120,12 @@ export default function MediaHubClient() {
         </section>
 
         <section className="flex flex-col gap-6 md:gap-8">
-          <div className="flex flex-col gap-1 md:gap-2 border-l-4 border-brand-primary pl-4 md:pl-6">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 flex items-center gap-2 md:gap-3">
-              <FileImage className="text-brand-primary w-6 h-6 md:w-7 md:h-7" aria-hidden="true" />
+          <div className="flex flex-col gap-1 md:gap-2 border-l-4 border-accent pl-4 md:pl-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-label flex items-center gap-2 md:gap-3">
+              <FileImage className="text-accent-ink w-6 h-6 md:w-7 md:h-7" aria-hidden="true" />
               เนื้อหาข้อมูลประกอบภาพ
             </h2>
-            <p className="text-xs md:text-sm text-slate-500">สรุปข้อมูลสำคัญในรูปแบบที่เข้าใจง่ายและจดจำได้ทันที</p>
+            <p className="text-footnote text-label-2">สรุปข้อมูลสำคัญในรูปแบบที่เข้าใจง่ายและจดจำได้ทันที</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
@@ -135,11 +135,11 @@ export default function MediaHubClient() {
                 <img src={item.image} alt={item.title} className="w-full aspect-[4/3] object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 md:p-8">
                   <div className="flex justify-between items-center gap-3">
-                    <h3 className="text-lg md:text-xl font-extrabold text-white leading-tight">{item.title}</h3>
+                    <h3 className="text-lg md:text-xl font-bold text-white leading-tight">{item.title}</h3>
                     <button
                       type="button"
                       aria-label={`ดาวน์โหลด ${item.title}`}
-                      className="p-2.5 bg-white text-brand-primary rounded-xl hover:bg-brand-primary hover:text-white transition-all shrink-0"
+                      className="p-2.5 bg-surface text-accent-ink rounded-xl hover:bg-fill transition-all shrink-0"
                     >
                       <Download className="w-4.5 h-4.5 md:w-5 md:h-5" aria-hidden="true" />
                     </button>
@@ -151,28 +151,28 @@ export default function MediaHubClient() {
         </section>
 
         <section className="flex flex-col gap-6 md:gap-8">
-          <div className="flex flex-col gap-1 md:gap-2 border-l-4 border-brand-primary pl-4 md:pl-6">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 flex items-center gap-2 md:gap-3">
-              <Navigation className="text-brand-primary w-6 h-6 md:w-7 md:h-7" aria-hidden="true" />
+          <div className="flex flex-col gap-1 md:gap-2 border-l-4 border-accent pl-4 md:pl-6">
+            <h2 className="text-2xl md:text-3xl font-bold text-label flex items-center gap-2 md:gap-3">
+              <Navigation className="text-accent-ink w-6 h-6 md:w-7 md:h-7" aria-hidden="true" />
               เส้นทางปลอดภัย
             </h2>
-            <p className="text-xs md:text-sm text-slate-500">ขั้นตอนการดำเนินงานที่ถูกต้องและปลอดภัย</p>
+            <p className="text-footnote text-label-2">ขั้นตอนการดำเนินงานที่ถูกต้องและปลอดภัย</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
             {routes.map((route) => (
-              <div key={route.id} className="p-6 md:p-8 bg-white border border-slate-200 rounded-3xl md:rounded-5xl flex flex-col gap-6 md:gap-8">
-                <h3 className="text-lg md:text-xl font-extrabold text-slate-900 flex items-center gap-3">
-                   <div className="w-1.5 h-6 md:w-2 md:h-8 bg-brand-primary rounded-full" aria-hidden="true" />
+              <div key={route.id} className="p-6 md:p-8 bg-surface border border-separator rounded-3xl md:rounded-5xl flex flex-col gap-6 md:gap-8">
+                <h3 className="text-lg md:text-xl font-bold text-label flex items-center gap-3">
+                   <div className="w-1.5 h-6 md:w-2 md:h-8 bg-accent rounded-full" aria-hidden="true" />
                    {route.title}
                 </h3>
                 <ol className="flex flex-col gap-4">
                   {route.steps.map((step, idx) => (
                     <li key={idx} className="flex gap-3 md:gap-4 items-start">
-                      <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 text-xs md:text-sm font-extrabold text-slate-400" aria-hidden="true">
+                      <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-surface-2 border border-separator flex items-center justify-center shrink-0 text-footnote font-bold text-label-2" aria-hidden="true">
                         {idx + 1}
                       </div>
-                      <p className="text-slate-700 font-medium pt-0.5 text-sm md:text-base">{step}</p>
+                      <p className="text-label font-medium pt-0.5 text-callout">{step}</p>
                     </li>
                   ))}
                 </ol>
@@ -183,15 +183,15 @@ export default function MediaHubClient() {
 
         <motion.section
           whileHover={{ scale: 1.01 }}
-          className="bg-brand-primary rounded-4xl md:rounded-6xl p-8 md:p-20 text-center flex flex-col items-center gap-6 md:gap-8 mx-2 md:mx-0"
+          className="bg-accent rounded-4xl md:rounded-6xl p-8 md:p-20 text-center flex flex-col items-center gap-6 md:gap-8 mx-2 md:mx-0"
         >
-          <h2 className="text-2xl md:text-5xl font-extrabold text-white leading-tight max-w-2xl">
+          <h2 className="text-2xl md:text-5xl font-bold text-white leading-tight max-w-2xl">
             พบเบาะแสใหม่? ร่วมเป็นหูเป็นตาให้สังคม
           </h2>
-          <p className="text-white/80 text-base md:text-lg max-w-md font-medium">
+          <p className="text-white/90 text-body max-w-md font-medium">
             ทุกข้อมูลของคุณมีค่าและช่วยป้องกันไม่ให้คนอื่นตกเป็นเหยื่อ
           </p>
-          <Link href="/report-scam" className="px-8 py-4 bg-white text-brand-primary rounded-xl md:rounded-4xl font-extrabold text-lg md:text-xl transition-all active:scale-95 flex items-center gap-2 md:gap-3">
+          <Link href="/report-scam" className="px-8 py-4 min-h-11 bg-white text-[#c8371f] rounded-xl md:rounded-4xl font-bold text-lg md:text-xl transition-all active:scale-95 flex items-center gap-2 md:gap-3">
             ไปที่หน้ารายงาน
             <ArrowRight className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
           </Link>

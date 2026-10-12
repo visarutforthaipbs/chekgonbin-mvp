@@ -75,16 +75,9 @@ export async function POST(request) {
           throw uploadError;
         }
 
-        // Get public URL
-        const { data: publicUrlData } = supabase.storage
-          .from("evidence")
-          .getPublicUrl(filename);
-
-        if (publicUrlData && publicUrlData.publicUrl) {
-          evidenceValue = publicUrlData.publicUrl;
-        } else {
-          throw new Error("Failed to retrieve public URL for uploaded evidence");
-        }
+        // Bucket is PRIVATE (victims' chat screenshots / slips). Store the object
+        // path; the admin API signs short-lived URLs when a moderator views it.
+        evidenceValue = `storage:evidence/${filename}`;
       }
     }
 

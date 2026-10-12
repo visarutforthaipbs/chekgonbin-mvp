@@ -19,7 +19,27 @@ export async function GET(request) {
     .limit(100);
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data);
+
+  // Evidence lives in a private bucket — attach a 10-minute signed URL per report.
+  // Handles both the new "storage:evidence/<file>" form and legacy public URLs.
+  const supabase = createAdminClient();
+  const withUrls = await Promise.all(
+    (data ?? []).map(async (r) => {
+      const path = evidencePath(r.evidence);
+      if (!path) return { ...r, evidence_url: null };
+      const { data: signed } = await supabase.storage.from("evidence").createSignedUrl(path, 600);
+      return { ...r, evidence_url: signed?.signedUrl ?? null };
+    })
+  );
+  return NextResponse.json(withUrls);
+}
+
+function evidencePath(value) {
+  if (!value || typeof value !== "string") return null;
+  if (value.startsWith("storage:evidence/")) return value.slice("storage:evidence/".length);
+  const marker = "/storage/v1/object/public/evidence/";
+  const i = value.indexOf(marker);
+  return i >= 0 ? decodeURIComponent(value.slice(i + marker.length)) : null;
 }
 
 export async function PATCH(request) {

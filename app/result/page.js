@@ -1,55 +1,169 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState, Suspense } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   CheckCircle2,
   AlertTriangle,
-  AlertCircle,
-  RotateCcw,
+  OctagonAlert,
   Phone,
-  Globe,
-  ClipboardList,
-  Info,
-  ArrowLeft,
+  RotateCcw,
   Share2,
   Copy,
   Check,
   Printer,
+  Building2,
+  SearchX,
 } from "lucide-react";
-import Link from "next/link";
 import { trackEvent } from "@/utils/analytics";
+import { parsePhones } from "@/utils/phone";
+
+const SITE_URL = "https://checkgonbin.in.th";
+
+// Layer 1 — each level is encoded by color + icon shape + words (never color alone).
+const LEVELS = {
+  low: {
+    key: "low",
+    title: "ความเสี่ยงต่ำ",
+    description: "ไม่พบสัญญาณอันตรายที่ชัดเจน แต่ยังควรยืนยันกับบริษัทผ่านเบอร์ทางการก่อนจ่ายเงิน",
+    Icon: CheckCircle2,
+    ink: "text-safe-ink",
+    tint: "bg-safe-tint",
+    fill: "bg-safe-fill",
+  },
+  medium: {
+    key: "medium",
+    title: "ต้องระวัง",
+    description: "พบข้อควรระวังบางอย่าง อย่าเพิ่งโอนเงิน — ยืนยันข้อมูลกับกรมการจัดหางานก่อน",
+    Icon: AlertTriangle,
+    ink: "text-caution-ink",
+    tint: "bg-caution-tint",
+    fill: "bg-caution-fill",
+  },
+  high: {
+    key: "high",
+    title: "ความเสี่ยงสูง",
+    description: "พบสัญญาณอันตราย หยุดโอนเงินและหยุดส่งเอกสารส่วนตัว แล้วโทรปรึกษาสายด่วนทันที",
+    Icon: OctagonAlert,
+    ink: "text-danger-ink",
+    tint: "bg-danger-tint",
+    fill: "bg-danger-fill",
+  },
+};
+const ORDER = ["low", "medium", "high"];
+const METER_LABEL = { low: "ต่ำ", medium: "ระวัง", high: "สูง" };
+
+const HOTLINES = {
+  labour: { tel: "1694", label: "สายด่วนกระทรวงแรงงาน", sub: "ปรึกษาหรือแจ้งถูกหลอก ฟรี 24 ชม." },
+  doe: { tel: "1300", label: "กรมการจัดหางาน", sub: "ยืนยันใบอนุญาตและการรับสมัคร" },
+};
+
+const CHECKLIST = [
+  { id: "doe", label: "บริษัทมีชื่อในรายชื่อผู้ได้รับอนุญาตของกรมการจัดหางาน" },
+  { id: "phone", label: "โทรคุยผ่านเบอร์ทางการของบริษัท ไม่ใช่เบอร์ในแชต" },
+  { id: "noPersonalTransfer", label: "ไม่โอนเงินเข้าบัญชีส่วนตัว — ต้องเป็นบัญชีบริษัทเท่านั้น" },
+  { id: "contract", label: "ได้สัญญาจ้างที่ระบุนายจ้าง ประเทศ ค่าจ้าง ชัดเจน" },
+  { id: "receipt", label: "ได้ใบเสร็จในนามบริษัททุกครั้งที่จ่ายเงิน" },
+];
+
+const POSITIVE_PATTERNS = ["ตรวจพบชื่อบริษัทในรายชื่อผู้ได้รับอนุญาต", "ไม่พบความเสี่ยง"];
+
+function ShareRow() {
+  const [copied, setCopied] = useState(false);
+  const [canNativeShare, setCanNativeShare] = useState(false);
+  useEffect(() => {
+    queueMicrotask(() => setCanNativeShare(typeof navigator !== "undefined" && !!navigator.share));
+  }, []);
+
+  const text = "เช็คบริษัทจัดหางานก่อนโอนเงิน ฟรีที่ เช็คก่อนบิน";
+
+  if (canNativeShare) {
+    return (
+      <button
+        type="button"
+        className="btn btn-gray flex-1"
+        onClick={() => {
+          trackEvent("result_share", { method: "native" });
+          navigator.share({ title: "เช็คก่อนบิน", text, url: SITE_URL }).catch(() => {});
+        }}
+      >
+        <Share2 size={18} aria-hidden="true" /> แชร์ให้เพื่อน
+      </button>
+    );
+  }
+
+  return (
+    <>
+      <a
+        href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(SITE_URL)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn btn-gray flex-1"
+        onClick={() => trackEvent("result_share", { method: "line" })}
+      >
+        แชร์ทาง LINE
+      </a>
+      <a
+        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(SITE_URL)}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="btn btn-gray flex-1"
+        onClick={() => trackEvent("result_share", { method: "facebook" })}
+      >
+        แชร์ทาง Facebook
+      </a>
+      <button
+        type="button"
+        className="btn btn-gray flex-1"
+        onClick={() => {
+          navigator.clipboard?.writeText(SITE_URL);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        }}
+      >
+        {copied ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
+        <span aria-live="polite">{copied ? "คัดลอกแล้ว" : "คัดลอกลิงก์"}</span>
+      </button>
+    </>
+  );
+}
+
+function HotlineRow({ line, prominent = false }) {
+  return (
+    <a
+      href={`tel:${line.tel}`}
+      onClick={() => trackEvent("result_hotline_click", { tel: line.tel })}
+      className={`btn ${prominent ? "btn-prominent btn-lg" : "btn-gray"} w-full justify-between text-left`}
+    >
+      <span className="flex items-center gap-3">
+        <Phone size={20} aria-hidden="true" />
+        <span className="flex flex-col leading-tight">
+          <span>{line.label}</span>
+          <span className={`text-footnote font-medium ${prominent ? "opacity-90" : "text-label-2"}`}>{line.sub}</span>
+        </span>
+      </span>
+      <span className="text-title3 font-bold tabular-nums">{line.tel}</span>
+    </a>
+  );
+}
 
 function ResultContent() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const [copied, setCopied] = useState(false);
-  const [result, setResult] = useState(() => {
+  const result = useMemo(() => {
     const data = searchParams.get("data");
-    if (data) {
-      try {
-        return JSON.parse(data);
-      } catch (e) {
-        return null;
-      }
+    if (!data) return null;
+    try {
+      const parsed = JSON.parse(data);
+      return parsed && parsed.riskLevel ? parsed : null;
+    } catch {
+      return null;
     }
-    return null;
-  });
+  }, [searchParams]);
 
-  const [checklist, setChecklist] = useState({
-    doe: false,
-    dbd: false,
-    noPersonalTransfer: false,
-    blacklist: false,
-    receipt: false,
-  });
-
-  useEffect(() => {
-    if (!result) {
-      router.push("/");
-    }
-  }, [result, router]);
+  const [checklist, setChecklist] = useState({});
+  const doneCount = CHECKLIST.filter((c) => checklist[c.id]).length;
 
   useEffect(() => {
     if (!result) return;
@@ -61,337 +175,188 @@ function ResultContent() {
 
   if (!result) {
     return (
-      <div role="status" className="flex flex-col items-center justify-center py-20 gap-4">
-        <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" aria-hidden="true" />
-        <p className="text-slate-500">กำลังโหลดผลลัพธ์...</p>
+      <div className="w-full max-w-md px-4 py-20 flex flex-col items-center text-center gap-4">
+        <SearchX size={44} className="text-label-3" aria-hidden="true" />
+        <h1 className="text-title2 font-bold text-label">ไม่พบผลการตรวจ</h1>
+        <p className="text-body text-label-2">ลิงก์นี้อาจไม่สมบูรณ์ ลองตรวจสอบบริษัทใหม่อีกครั้ง</p>
+        <Link href="/" className="btn btn-prominent btn-lg mt-2">
+          ตรวจสอบบริษัท
+        </Link>
       </div>
     );
   }
 
-  const riskConfig = {
-    low: {
-      color: "text-signal-green",
-      bg: "bg-green-50/50",
-      borderColor: "border-signal-green/20",
-      threatClass: "threat-low",
-      text: "ความเสี่ยงต่ำ",
-      description: "ไม่พบสัญญาณอันตรายที่ชัดเจน แต่ควรตรวจสอบอย่างละเอียดอีกครั้ง",
-      icon: CheckCircle2,
-      strokeColor: "stroke-signal-green",
-      glowClass: "border border-green-200/50",
-    },
-    medium: {
-      color: "text-signal-orange",
-      bg: "bg-orange-50/50",
-      borderColor: "border-signal-orange/20",
-      threatClass: "threat-medium",
-      text: "ความเสี่ยงปานกลาง",
-      description: "พบข้อควรระวังบางประการ ควรตรวจสอบข้อมูลเพิ่มเติมกับกรมการจัดหางาน",
-      icon: AlertTriangle,
-      strokeColor: "stroke-signal-orange",
-      glowClass: "border border-orange-200/50",
-    },
-    high: {
-      color: "text-signal-red",
-      bg: "bg-red-50/50",
-      borderColor: "border-signal-red/20",
-      threatClass: "threat-high",
-      text: "ความเสี่ยงสูง",
-      description: "พบสัญญาณอันตราย! โปรดระมัดระวังอย่างยิ่งและหลีกเลี่ยงการโอนเงิน",
-      icon: AlertCircle,
-      strokeColor: "stroke-signal-red",
-      glowClass: "border border-red-200/50",
-    },
-  };
+  const level = LEVELS[result.riskLevel] || LEVELS.medium;
+  const reasons = Array.isArray(result.reasons) ? result.reasons : [];
+  const agency = result.agency || null;
+  const agencyPhone = agency ? parsePhones(agency.phone)[0] : null;
 
-  const config = riskConfig[result.riskLevel] || riskConfig.medium;
-
-  const actionPlans = {
-    low: [
-      { icon: Globe, title: "ตรวจสอบใบอนุญาต", desc: "ยืนยันว่าบริษัทได้รับอนุญาตจากกรมการจัดหางาน" },
-      { icon: ClipboardList, title: "ตรวจสอบเอกสาร", desc: "ขอเอกสารสัญญาอย่างครบถ้วนและอ่านอย่างละเอียด" },
-    ],
-    medium: [
-      { icon: Phone, title: "ติดต่อกรมการจัดหางาน", desc: "โทร 1300 เพื่อยืนยันข้อมูลบริษัท" },
-      { icon: ClipboardList, title: "ล็อคเงินไว้ก่อน", desc: "อย่าโอนเงินจนกว่าจะยืนยันทุกประการ" },
-    ],
-    high: [
-      { icon: Phone, title: "เรียกสายด่วนแรงงาน", desc: "โทร 1694 (สายด่วนแรงงานไทย)" },
-      { icon: Globe, title: "ติดต่อสถานทูต", desc: "ขอข้อมูลติดต่อสถานทูตไทยในประเทศปลายทาง" },
-    ],
-  };
-
-  const actions = actionPlans[result.riskLevel] || actionPlans.medium;
+  // Next step: exactly one prominent action, chosen by risk level.
+  const primary =
+    level.key === "high" ? HOTLINES.labour : level.key === "medium" ? HOTLINES.doe : null;
+  const secondary = level.key === "high" ? HOTLINES.doe : HOTLINES.labour;
 
   return (
-    <div className={`w-full min-h-screen ${config.bg} transition-colors duration-500 flex flex-col items-center`}>
-      <style dangerouslySetInnerHTML={{ __html: `
-        @media print {
-          body, html {
-            background: white !important;
-            color: #000 !important;
-          }
-          header, footer, nav, button, a.no-print-link, .no-print {
-            display: none !important;
-          }
-          .min-h-screen {
-            min-height: 0 !important;
-            background-color: white !important;
-          }
-          .container {
-            padding: 0 !important;
-            margin: 0 auto !important;
-            max-width: 100% !important;
-          }
-          .bg-slate-50 {
-            background-color: #f8fafc !important;
-          }
-          .bg-green-50\\/20 {
-            background-color: #f0fdf4 !important;
-          }
-          section {
-            page-break-inside: avoid;
-          }
-        }
-      `}} />
-      
-      <div className="container mx-auto px-4 md:px-6 py-8 md:py-20 flex flex-col items-center gap-8 md:gap-12 max-w-3xl">
-        
-        {/* Layer 1: Subconscious Hook - Threat Level */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="flex flex-col items-center text-center gap-4 md:gap-6"
-        >
-          {/* Circular SVG Gauge */}
-          <div className="relative w-36 h-36 md:w-44 md:h-44 flex items-center justify-center bg-white rounded-full border border-slate-100 p-2">
-            <svg className="w-full h-full transform -rotate-90">
-              <circle
-                cx="50%"
-                cy="50%"
-                r="40%"
-                className="stroke-slate-100 fill-none"
-                strokeWidth="8"
-              />
-              <motion.circle
-                cx="50%"
-                cy="50%"
-                r="40%"
-                className={`fill-none ${config.strokeColor}`}
-                strokeWidth="10"
-                strokeLinecap="round"
-                strokeDasharray="251.2"
-                initial={{ strokeDashoffset: 251.2 }}
-                animate={{ strokeDashoffset: 251.2 - (251.2 * result.score) / 100 }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-              />
-            </svg>
-            <div className="absolute flex flex-col items-center justify-center">
-              <config.icon className={`${config.color} w-8.5 h-8.5 md:w-10 md:h-10 mb-1`} />
-              <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">คะแนนความเสี่ยง</span>
-              <span className={`text-2xl md:text-4xl font-black ${config.color} leading-none mt-1`}>{result.score}%</span>
-            </div>
-          </div>
-          
-          <div className="flex flex-col gap-2">
-            <h1 className={`text-3xl md:text-5xl font-extrabold ${config.color}`}>
-              {config.text}
+    <div className="w-full max-w-2xl px-4 md:px-6 pt-6 md:pt-14 pb-12 md:pb-20 flex flex-col gap-6 md:gap-8">
+      {/* 1 · Verdict — readable before reading (Layer 1) */}
+      <motion.section
+        aria-labelledby="verdict"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+        className={`rounded-[24px] ${level.tint} p-5 md:p-8 flex flex-col gap-5`}
+      >
+        <div className="flex items-start gap-4">
+          <span className={`inline-flex h-14 w-14 md:h-16 md:w-16 shrink-0 items-center justify-center rounded-full ${level.fill} text-white`}>
+            <level.Icon size={30} strokeWidth={2.4} aria-hidden="true" />
+          </span>
+          <div className="flex flex-col gap-1 min-w-0">
+            <p className="text-footnote font-bold text-label-2">ผลการตรวจสอบเบื้องต้น</p>
+            <h1 id="verdict" className={`text-title1 md:text-large font-bold ${level.ink} leading-tight`}>
+              {level.title}
             </h1>
-            <p className="text-slate-600 text-base md:text-xl max-w-sm md:max-w-md">
-              {config.description}
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Layer 2: Chunked Gateway - Assessment Details */}
-        <section className={`w-full bg-white rounded-3xl md:rounded-5xl overflow-hidden transition-all duration-300 ${config.glowClass}`}>
-          <div className="p-6 md:p-8 flex flex-col gap-4 md:gap-6">
-            <h3 className="text-base md:text-lg font-extrabold text-slate-800 flex items-center gap-2">
-              <Info className="text-slate-400 w-4.5 h-4.5 md:w-5 md:h-5" />
-              รายละเอียดการประเมิน
-            </h3>
-            
-            <div className="flex flex-col gap-3">
-              {result.reasons.length > 0 ? (
-                result.reasons.map((reason, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 + index * 0.1 }}
-                    className={`p-3.5 md:p-4 rounded-xl border-l-4 ${config.borderColor} bg-slate-50 flex items-start gap-3`}
-                  >
-                    <AlertCircle className={`${config.color} mt-0.5 shrink-0`} size={18} />
-                    <span className="text-slate-700 text-sm md:text-base">{reason}</span>
-                  </motion.div>
-                ))
-              ) : (
-                <div className="p-3.5 md:p-4 rounded-xl border-l-4 border-signal-green bg-green-50 flex items-start gap-3">
-                  <CheckCircle2 className="text-signal-green mt-0.5 shrink-0" size={18} />
-                  <span className="text-green-800 font-medium text-sm md:text-base">ไม่พบปัจจัยเสี่ยงในฐานข้อมูลเบื้องต้น</span>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-
-        {/* Verification Checklist */}
-        <section className="w-full bg-white border border-slate-200 rounded-3xl md:rounded-5xl overflow-hidden">
-          <div className="p-6 md:p-8 flex flex-col gap-4 md:gap-6">
-            <div>
-              <h3 className="text-base md:text-lg font-extrabold text-slate-800 flex items-center gap-2 mb-1">
-                <ClipboardList className="text-brand-primary w-4.5 h-4.5 md:w-5 md:h-5" />
-                ขั้นตอนปฏิบัติเพื่อความปลอดภัย (Safety Checklist)
-              </h3>
-              <p className="text-xs text-slate-500">ตรวจสอบและทำเครื่องหมายเพื่อบันทึกประวัติการป้องกัน</p>
-            </div>
-            
-            <div className="flex flex-col gap-3">
-              {[
-                { id: "doe", label: "ตรวจสอบรายชื่อผู้รับอนุญาตจัดหางานในระบบของกรมการจัดหางาน (DOE)" },
-                { id: "dbd", label: "ค้นหาข้อมูลจดทะเบียนนิติบุคคลและงบการเงินกับกรมพัฒนาธุรกิจการค้า (DBD)" },
-                { id: "noPersonalTransfer", label: "หลีกเลี่ยงการโอนเงินมัดจำหรือค่าธรรมเนียมเข้าบัญชีส่วนบุคคล (ต้องเป็นบัญชีบริษัทเท่านั้น)" },
-                { id: "blacklist", label: "ตรวจสอบรายชื่อคนโกงในระบบรายงานและค้นหาประวัติการหลอกลวงทั่วไป" },
-                { id: "receipt", label: "เรียกขอหนังสือสัญญาจ้างงานและหลักฐานการรับเงินที่ถูกต้องทุกครั้ง" },
-              ].map((item) => (
-                <motion.label
-                  key={item.id}
-                  whileHover={{ y: -1 }}
-                  whileTap={{ scale: 0.99 }}
-                  className={`flex items-start gap-3 p-3.5 rounded-xl border hover:border-brand-primary/30 hover:bg-slate-50/50 cursor-pointer transition-all duration-300 ${
-                    checklist[item.id]
-                      ? "bg-green-50/30 border-green-300"
-                      : "bg-white border-slate-100"
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={checklist[item.id]}
-                    onChange={(e) => setChecklist(prev => ({ ...prev, [item.id]: e.target.checked }))}
-                    className="w-5 h-5 rounded-md border-slate-300 text-brand-primary focus:ring-brand-primary cursor-pointer shrink-0 mt-0.5 transition-transform duration-200 hover:scale-105"
-                  />
-                  <span className={`text-sm leading-relaxed select-none transition-all duration-300 ${checklist[item.id] ? "text-slate-400 line-through font-normal" : "text-slate-700 font-medium"}`}>
-                    {item.label}
-                  </span>
-                </motion.label>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Layer 3: Conscious Deep-Dive - Action Plan */}
-        <section className="w-full flex flex-col gap-4 md:gap-6">
-          <h3 className="text-lg md:text-xl font-extrabold text-slate-900 px-2 uppercase tracking-wide">
-            แนวทางการดำเนินการ
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-            {actions.map((action, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + idx * 0.1 }}
-                className="p-5 md:p-6 bg-white border border-slate-100 rounded-3xl md:rounded-4xl flex items-start gap-4 group hover:border-brand-primary transition-all"
-              >
-                <div className="p-2.5 md:p-3 bg-slate-50 rounded-xl group-hover:bg-brand-primary/10 transition-colors">
-                  <action.icon className="text-slate-600 group-hover:text-brand-primary w-5 h-5 md:w-6 md:h-6" />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-slate-900 text-sm md:text-base">{action.title}</h4>
-                  <p className="text-xs md:text-sm text-slate-500 leading-relaxed">{action.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* Emergency Hotlines */}
-        <section className={`w-full p-6 md:p-8 rounded-3xl md:rounded-5xl border border-slate-100 bg-white flex flex-col md:flex-row items-center md:justify-between gap-6 md:gap-8 ${config.threatClass}`}>
-           <div className="flex flex-col gap-1 md:gap-2 text-center md:text-left">
-             <h3 className="text-base md:text-lg font-extrabold text-slate-900">สายด่วนช่วยเหลือ</h3>
-             <p className="text-xs md:text-sm text-slate-500">ติดต่อเจ้าหน้าที่ทันทีเมื่อพบสัญญาณอันตราย</p>
-             <p className="text-xs md:text-sm font-bold text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2 mt-2 inline-flex items-center gap-2 w-fit mx-auto md:mx-0">
-               <CheckCircle2 size={14} className="shrink-0" />
-               ใช้เบอร์ทางการเท่านั้น หลีกเลี่ยงบัญชีหรือเบอร์ส่วนตัว
-             </p>
-           </div>
-           
-           <div className="flex gap-6 md:gap-8">
-             <a href="tel:1694" className="flex flex-col items-center group/phone hover:opacity-85 transition-opacity">
-               <span className="text-[9px] md:text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter group-hover/phone:text-brand-primary transition-colors">สายด่วนแรงงาน</span>
-               <span className={`text-2xl md:text-3xl font-black ${config.color} group-hover/phone:underline flex items-center gap-1.5`}>
-                 <Phone size={18} className="shrink-0" />
-                 1694
-               </span>
-             </a>
-             <div className="w-px h-10 bg-slate-100" />
-             <a href="tel:1300" className="flex flex-col items-center group/phone hover:opacity-85 transition-opacity">
-               <span className="text-[9px] md:text-[10px] font-extrabold text-slate-400 uppercase tracking-tighter group-hover/phone:text-brand-primary transition-colors">กรมการจัดหางาน</span>
-               <span className={`text-2xl md:text-3xl font-black ${config.color} group-hover/phone:underline flex items-center gap-1.5`}>
-                 <Phone size={18} className="shrink-0" />
-                 1300
-               </span>
-             </a>
-           </div>
-        </section>
-
-        <div className="flex flex-col items-center gap-6 md:gap-8 mt-4 w-full">
-          <p className="text-center text-[10px] md:text-xs text-slate-400 max-w-sm md:max-w-md leading-relaxed px-4">
-            *ผลลัพธ์นี้เป็นการประเมินเบื้องต้นจากข้อมูลที่คุณให้มาเท่านั้น ไม่สามารถรับรองความปลอดภัยได้ 100% โปรดตรวจสอบกับกรมการจัดหางานโดยตรงอีกครั้ง
-          </p>
-
-          {/* Share & Download actions */}
-          <div className="flex flex-col items-center gap-3 w-full max-w-sm no-print">
-            <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-              <Share2 size={12} /> แชร์ให้เพื่อน
-            </p>
-            <div className="flex flex-wrap gap-2 md:gap-3 w-full px-4 md:px-0">
-              <a
-                href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent("https://checkgonbin.in.th")}`}
-                target="_blank" rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#06C755] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95 min-w-25"
-              >
-                LINE
-              </a>
-              <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent("https://checkgonbin.in.th")}`}
-                target="_blank" rel="noopener noreferrer"
-                className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-[#1877F2] text-white rounded-xl font-bold text-sm hover:opacity-90 transition-all active:scale-95 min-w-25"
-              >
-                Facebook
-              </a>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText("https://checkgonbin.in.th");
-                  setCopied(true);
-                  setTimeout(() => setCopied(false), 2000);
-                }}
-                className="w-full md:flex-1 flex items-center justify-center gap-2 py-3.5 bg-slate-100 text-slate-700 rounded-xl font-bold text-sm hover:bg-slate-200 transition-all active:scale-95"
-              >
-                {copied ? <><Check size={15} /> คัดลอกแล้ว</> : <><Copy size={15} /> คัดลอกลิงก์</>}
-              </button>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 no-print">
-            <button
-              onClick={() => window.print()}
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-white border-2 border-slate-950 text-slate-950 rounded-2xl font-bold hover:bg-slate-50 transition-all active:scale-95"
-            >
-              <Printer className="w-4.5 h-4.5 md:w-5 md:h-5" />
-              พิมพ์รายงาน / บันทึก PDF
-            </button>
-
-            <Link href="/" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all active:scale-95">
-              <RotateCcw className="w-4.5 h-4.5 md:w-5 md:h-5" />
-              ตรวจสอบใหม่
-            </Link>
           </div>
         </div>
 
-        {/* Cognitive Breather */}
-        <div className="h-20" />
+        {agency?.name_th && (
+          <p className="flex items-center gap-2 text-callout text-label">
+            <Building2 size={18} className="text-label-2 shrink-0" aria-hidden="true" />
+            <span className="font-bold">{agency.name_th}</span>
+          </p>
+        )}
+
+        <p className="text-body text-label">{level.description}</p>
+
+        {/* Three-step meter: position + label, no fake precision */}
+        <div className="flex flex-col gap-1.5" role="img" aria-label={`ระดับความเสี่ยง: ${level.title}`}>
+          <div className="grid grid-cols-3 gap-1.5">
+            {ORDER.map((k) => (
+              <span
+                key={k}
+                className={`h-2 rounded-full ${k === level.key ? LEVELS[k].fill : "bg-fill-strong"}`}
+                aria-hidden="true"
+              />
+            ))}
+          </div>
+          <div className="grid grid-cols-3 gap-1.5 text-caption" aria-hidden="true">
+            {ORDER.map((k, i) => (
+              <span
+                key={k}
+                className={`${i === 1 ? "text-center" : i === 2 ? "text-right" : ""} ${
+                  k === level.key ? `${LEVELS[k].ink} font-bold` : "text-label-2"
+                }`}
+              >
+                {METER_LABEL[k]}
+              </span>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
+      {/* 2 · What we found */}
+      <section aria-labelledby="findings" className="flex flex-col gap-3">
+        <h2 id="findings" className="text-title3 font-bold text-label px-1">
+          สิ่งที่เราพบ
+        </h2>
+        <ul className="inset-list">
+          {reasons.map((reason, i) => {
+            const positive = POSITIVE_PATTERNS.some((p) => reason.includes(p));
+            const Icon = positive ? CheckCircle2 : level.key === "high" ? OctagonAlert : AlertTriangle;
+            return (
+              <li key={i} className="flex items-start gap-3 px-4 py-3.5">
+                <Icon size={20} className={`shrink-0 mt-0.5 ${positive ? "text-safe-ink" : level.ink}`} aria-hidden="true" />
+                <span className="text-callout text-label">{reason}</span>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+
+      {/* 3 · What to do now */}
+      <section aria-labelledby="next" className="flex flex-col gap-3">
+        <h2 id="next" className="text-title3 font-bold text-label px-1">
+          ทำอะไรต่อ
+        </h2>
+
+        {agencyPhone && level.key === "low" ? (
+          <div className="flex flex-col gap-2">
+            <a
+              href={`tel:${agencyPhone.tel}`}
+              onClick={() => trackEvent("result_official_phone_click", { license_no: agency.license_no || "" })}
+              className="btn btn-prominent btn-lg w-full justify-between text-left"
+            >
+              <span className="flex items-center gap-3">
+                <Phone size={20} aria-hidden="true" />
+                <span className="flex flex-col leading-tight">
+                  <span>โทรยืนยันกับบริษัท</span>
+                  <span className="text-footnote font-medium opacity-90">เบอร์ทางการที่จดทะเบียนไว้</span>
+                </span>
+              </span>
+              <span className="text-title3 font-bold tabular-nums">{agencyPhone.display}</span>
+            </a>
+            <p className="text-footnote text-label-2 px-1">ถ้าเบอร์ในแชตไม่ตรงกับเบอร์นี้ ให้สงสัยไว้ก่อนว่าเป็นมิจฉาชีพ</p>
+          </div>
+        ) : primary ? (
+          <HotlineRow line={primary} prominent />
+        ) : (
+          <Link
+            href={agency?.name_th ? `/agencies?q=${encodeURIComponent(agency.name_th)}` : "/agencies"}
+            className="btn btn-prominent btn-lg w-full"
+          >
+            ดูเบอร์ทางการของบริษัท
+          </Link>
+        )}
+        <HotlineRow line={secondary} />
+      </section>
+
+      {/* 4 · Before you pay — a personal checklist */}
+      <section aria-labelledby="checklist" className="flex flex-col gap-3">
+        <div className="flex items-baseline justify-between px-1">
+          <h2 id="checklist" className="text-title3 font-bold text-label">
+            ก่อนจ่ายเงิน เช็ค 5 ข้อ
+          </h2>
+          <span className="text-footnote text-label-2 tabular-nums" aria-live="polite">
+            ครบ {doneCount}/{CHECKLIST.length}
+          </span>
+        </div>
+        <ul className="inset-list">
+          {CHECKLIST.map((item) => (
+            <li key={item.id}>
+              <label className="flex items-start gap-3 px-4 py-3.5 min-h-11 cursor-pointer hover:bg-fill transition-colors">
+                <input
+                  type="checkbox"
+                  className="check mt-0.5"
+                  checked={!!checklist[item.id]}
+                  onChange={(e) => setChecklist((prev) => ({ ...prev, [item.id]: e.target.checked }))}
+                />
+                <span className={`text-callout ${checklist[item.id] ? "text-label-2" : "text-label"}`}>{item.label}</span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <p className="text-footnote text-label-2 px-1">
+        ผลนี้เป็นการประเมินเบื้องต้นจากข้อมูลที่คุณให้และฐานข้อมูลที่เรามี ไม่สามารถรับรองความปลอดภัยได้ 100%
+        โปรดยืนยันกับกรมการจัดหางานโดยตรงก่อนตัดสินใจ
+      </p>
+
+      {/* 5 · Secondary actions */}
+      <div className="flex flex-col gap-3 no-print">
+        <div className="flex flex-col sm:flex-row gap-2">
+          <ShareRow />
+        </div>
+        <div className="flex flex-col sm:flex-row gap-2">
+          <Link href="/" className="btn btn-tinted flex-1">
+            <RotateCcw size={18} aria-hidden="true" /> ตรวจสอบบริษัทอื่น
+          </Link>
+          <button type="button" onClick={() => window.print()} className="btn btn-gray flex-1">
+            <Printer size={18} aria-hidden="true" /> บันทึกเป็น PDF
+          </button>
+        </div>
+        <Link href="/report-scam" className="btn btn-plain self-center">
+          เจอมิจฉาชีพ? แจ้งเบาะแสเพื่อเตือนคนอื่น
+        </Link>
       </div>
     </div>
   );
@@ -399,15 +364,17 @@ function ResultContent() {
 
 export default function Result() {
   return (
-    <Suspense
-      fallback={
-        <div role="status" className="flex flex-col items-center justify-center py-20 gap-4">
-          <div className="w-8 h-8 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" aria-hidden="true" />
-          <p className="text-slate-500">กำลังโหลดผลลัพธ์...</p>
-        </div>
-      }
-    >
-      <ResultContent />
-    </Suspense>
+    <div className="w-full flex flex-col items-center">
+      <Suspense
+        fallback={
+          <div role="status" className="flex flex-col items-center justify-center py-20 gap-3 text-label-2">
+            <span className="h-8 w-8 rounded-full border-[3px] border-accent border-t-transparent animate-spin" aria-hidden="true" />
+            กำลังโหลดผลลัพธ์…
+          </div>
+        }
+      >
+        <ResultContent />
+      </Suspense>
+    </div>
   );
 }

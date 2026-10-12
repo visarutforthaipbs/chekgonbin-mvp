@@ -1,30 +1,106 @@
 "use client";
 
-import { useState, useCallback, useEffect, useMemo, useRef } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef, useId } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import LoadingSpinner from "@/components/LoadingSpinner";
 import { trackEvent } from "@/utils/analytics";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Building2, 
-  Phone, 
-  Banknote, 
-  UserRound, 
-  ArrowRight, 
-  ShieldAlert, 
-  PenSquare, 
-  CheckCircle2, 
-  HelpCircle,
+import ScamNotice from "@/components/ScamNotice";
+import { parsePhones } from "@/utils/phone";
+import {
+  Building2,
+  Phone,
+  ArrowRight,
+  CheckCircle2,
   ChevronDown,
-  RefreshCw,
-  AlertTriangle,
-  X
+  AlertCircle,
+  Loader2,
+  SearchX,
+  Copy,
+  Check,
+  HelpCircle,
+  Database,
 } from "lucide-react";
+
+const RISK_SIGNALS = [
+  {
+    id: "hasUpfrontFee",
+    title: "ถูกเรียกเก็บเงินก่อนเดินทาง",
+    hint: "เช่น ค่าหัว ค่าดำเนินการ ค่ามัดจำเอกสาร ที่ต้องจ่ายทันที",
+    detail:
+      "บริษัทที่ถูกกฎหมายเก็บค่าบริการได้ตามที่กรมการจัดหางานกำหนด และต้องออกใบเสร็จในนามบริษัท การจ่ายค่าหัว ค่ามัดจำ ค่าตั๋ว หรือค่าตรวจสุขภาพล่วงหน้าเข้าบัญชีบุคคล คือสัญญาณอันตราย",
+  },
+  {
+    id: "isSocialContact",
+    title: "ติดต่อผ่านโซเชียลส่วนตัว",
+    hint: "เช่น Facebook ส่วนตัว กลุ่มลับ LINE ส่วนตัว หรือโปรไฟล์นิรนาม",
+    detail:
+      "การชักชวนหรือส่งเอกสารผ่านข้อความส่วนตัว (Facebook, LINE, TikTok DM) จากบุคคลที่ตรวจสอบตัวตนกับบริษัทไม่ได้ เป็นช่องทางที่มิจฉาชีพใช้บ่อยที่สุด",
+  },
+];
+
+function formatThaiDate(iso) {
+  try {
+    return new Date(iso).toLocaleDateString("th-TH", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+      timeZone: "Asia/Bangkok",
+    });
+  } catch {
+    return "";
+  }
+}
+
+function OfficialPhone({ agency }) {
+  const [copied, setCopied] = useState(false);
+  const phone = parsePhones(agency.phone)[0];
+  if (!phone) {
+    return (
+      <p className="text-callout text-caution-ink font-medium">
+        ยังไม่มีเบอร์ทางการของบริษัทนี้ในระบบ ตรวจสอบเพิ่มเติมได้ที่{" "}
+        <Link href={`/agencies?q=${encodeURIComponent(agency.name_th || "")}`} className="underline underline-offset-2">
+          หน้ารายชื่อบริษัท
+        </Link>
+      </p>
+    );
+  }
+  return (
+    <div className="flex items-center gap-2">
+      <a
+        href={`tel:${phone.tel}`}
+        onClick={() =>
+          trackEvent("home_official_phone_click", {
+            agency_name: agency.name_th || "",
+            license_no: agency.license_no || "",
+          })
+        }
+        className="btn flex-1 justify-start bg-safe-tint text-safe-ink hover:opacity-90"
+      >
+        <Phone size={18} aria-hidden="true" />
+        <span className="tabular-nums">{phone.display}</span>
+        <span className="ml-auto text-footnote font-medium">โทร</span>
+      </a>
+      <button
+        type="button"
+        className="icon-btn bg-fill"
+        aria-label={copied ? "คัดลอกเบอร์แล้ว" : "คัดลอกเบอร์โทร"}
+        onClick={() => {
+          navigator.clipboard?.writeText(phone.display);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        }}
+      >
+        {copied ? <Check size={18} className="text-safe-ink" aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
+      </button>
+    </div>
+  );
+}
 
 export default function Home() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const listboxId = useId();
   const [formData, setFormData] = useState({
     agencyName: "",
     contactInfo: "",
@@ -34,8 +110,9 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [lastUpdated, setLastUpdated] = useState(null);
+  const [agencyTotal, setAgencyTotal] = useState(null);
   const [showAdvancedSignals, setShowAdvancedSignals] = useState(false);
-  const [showScamWarningModal, setShowScamWarningModal] = useState(true);
+  const [openDetail, setOpenDetail] = useState(null);
   const [experimentVariant, setExperimentVariant] = useState("B");
   const hasTrackedExperimentView = useRef(false);
   const hasStartedSearchEventRef = useRef(false);
@@ -43,6 +120,7 @@ export default function Home() {
   // Autocomplete states
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const [isSearchingSuggestions, setIsSearchingSuggestions] = useState(false);
   const [selectedAgency, setSelectedAgency] = useState(null);
   const [recoverySuggestions, setRecoverySuggestions] = useState([]);
@@ -63,7 +141,10 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/agencies?q=&page=1")
       .then((r) => r.json())
-      .then((json) => { if (json.last_updated) setLastUpdated(json.last_updated); })
+      .then((json) => {
+        if (json.last_updated) setLastUpdated(json.last_updated);
+        if (typeof json.total === "number") setAgencyTotal(json.total);
+      })
       .catch(() => {});
   }, []);
 
@@ -119,7 +200,8 @@ export default function Home() {
         const response = await fetch(`/api/agencies?q=${encodeURIComponent(query)}&page=1`);
         if (response.ok) {
           const res = await response.json();
-          setSuggestions(res.data || []);
+          setSuggestions((res.data || []).slice(0, 6));
+          setActiveIndex(-1);
           setShowSuggestions(true);
         }
       } catch (err) {
@@ -161,13 +243,37 @@ export default function Home() {
     setSelectedAgency(agency);
     setSuggestions([]);
     setShowSuggestions(false);
-    if (typeof document !== "undefined" && document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
-    }
+    setActiveIndex(-1);
   }, []);
+
+  const handleComboKeyDown = (e) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActiveIndex((i) => (i + 1) % suggestions.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActiveIndex((i) => (i <= 0 ? suggestions.length - 1 : i - 1));
+    } else if (e.key === "Enter" && activeIndex >= 0) {
+      e.preventDefault();
+      handleSelectSuggestion(suggestions[activeIndex]);
+    } else if (e.key === "Escape") {
+      setShowSuggestions(false);
+      setActiveIndex(-1);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isLoading) return;
+    const hasAnyInput =
+      formData.agencyName.trim() || formData.contactInfo.trim() || formData.hasUpfrontFee || formData.isSocialContact;
+    if (!hasAnyInput) {
+      setError("พิมพ์ชื่อบริษัทจัดหางานก่อน แล้วกด “เช็คเลย”");
+      document.getElementById("agencyName")?.focus();
+      return;
+    }
+
     trackEvent("home_submit_primary", {
       variant: experimentVariant,
       paid_traffic: isPaidTraffic ? "yes" : "no",
@@ -186,15 +292,28 @@ export default function Home() {
         body: JSON.stringify(formData),
       });
 
+      if (response.status === 429) {
+        setError("ตรวจสอบบ่อยเกินไป กรุณารอสักครู่แล้วลองใหม่");
+        setIsLoading(false);
+        return;
+      }
       if (!response.ok) {
         throw new Error("เกิดข้อผิดพลาดในการประมวลผล");
       }
 
       const result = await response.json();
+      if (selectedAgency) {
+        result.agency = {
+          name_th: selectedAgency.name_th,
+          license_no: selectedAgency.license_no,
+          phone: parsePhones(selectedAgency.phone)[0]?.display || null,
+        };
+      } else if (formData.agencyName.trim()) {
+        result.agency = { name_th: formData.agencyName.trim() };
+      }
       router.push(`/result?data=${encodeURIComponent(JSON.stringify(result))}`);
     } catch (error) {
-      setError("กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและลองใหม่อีกครั้ง");
-    } finally {
+      setError("เชื่อมต่อไม่สำเร็จ ตรวจสอบอินเทอร์เน็ตแล้วกด “เช็คเลย” อีกครั้ง");
       setIsLoading(false);
     }
   };
@@ -202,37 +321,29 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "เช็คก่อนบิน (ChekGonBin)",
-    "operatingSystem": "All",
-    "applicationCategory": "SafetyApplication",
-    "description": "เครื่องมือตรวจสอบความเสี่ยงเบื้องต้นสำหรับผู้ที่กำลังหางานต่างประเทศ เพื่อป้องกันการโดนหลอกและมิจฉาชีพ",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "THB"
-    },
-    "featureList": [
+    name: "เช็คก่อนบิน (ChekGonBin)",
+    operatingSystem: "All",
+    applicationCategory: "SafetyApplication",
+    description:
+      "เครื่องมือตรวจสอบความเสี่ยงเบื้องต้นสำหรับผู้ที่กำลังหางานต่างประเทศ เพื่อป้องกันการโดนหลอกและมิจฉาชีพ",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "THB" },
+    featureList: [
       "ตรวจสอบชื่อบริษัทจัดหางาน",
       "ตรวจสอบบัญชีดำมิจฉาชีพ",
       "ประเมินความเสี่ยงเบื้องต้น",
-      "รายงานเบาะแสมิจฉาชีพ"
-    ]
+      "รายงานเบาะแสมิจฉาชีพ",
+    ],
   };
 
   const agencyQuery = formData.agencyName.trim();
   const shouldShowPrecheck = agencyQuery.length >= 2;
   const noWhitelistMatchYet =
-    shouldShowPrecheck &&
-    !isSearchingSuggestions &&
-    !selectedAgency &&
-    suggestions.length === 0;
+    shouldShowPrecheck && !isSearchingSuggestions && !selectedAgency && suggestions.length === 0;
 
   useEffect(() => {
     const query = agencyQuery;
     if (!noWhitelistMatchYet || query.length < 4) {
-      queueMicrotask(() => {
-        setRecoverySuggestions([]);
-      });
+      queueMicrotask(() => setRecoverySuggestions([]));
       return;
     }
 
@@ -245,9 +356,7 @@ export default function Home() {
       .trim();
 
     if (!reducedQuery || reducedQuery === query.toLowerCase()) {
-      queueMicrotask(() => {
-        setRecoverySuggestions([]);
-      });
+      queueMicrotask(() => setRecoverySuggestions([]));
       return;
     }
 
@@ -267,441 +376,329 @@ export default function Home() {
     };
   }, [noWhitelistMatchYet, agencyQuery]);
 
-  let precheckTone = "text-slate-500";
-  let precheckText = "พิมพ์ชื่อเพื่อเช็คเบื้องต้นกับ Whitelist";
-
+  // Pre-check status: icon + text + color (never color alone).
+  let precheck = { tone: "text-label-2", Icon: null, text: "พิมพ์อย่างน้อย 2 ตัวอักษรเพื่อค้นในรายชื่อบริษัทที่ได้รับอนุญาต" };
   if (selectedAgency) {
-    precheckTone = "text-green-700";
-    precheckText = "พบใน Whitelist เบื้องต้นแล้ว (จากรายการที่เลือก)";
+    precheck = { tone: "text-safe-ink", Icon: CheckCircle2, text: "พบในรายชื่อบริษัทที่ได้รับอนุญาตจากกรมการจัดหางาน" };
   } else if (shouldShowPrecheck && isSearchingSuggestions) {
-    precheckTone = "text-blue-700";
-    precheckText = "กำลังตรวจสอบรายชื่อใน Whitelist...";
+    precheck = { tone: "text-label-2", Icon: Loader2, text: "กำลังค้นหาในรายชื่อบริษัทที่ได้รับอนุญาต…", spin: true };
   } else if (shouldShowPrecheck && suggestions.length > 0) {
-    precheckTone = "text-amber-700";
-    precheckText = "พบชื่อใกล้เคียง โปรดเลือกจากรายการเพื่อยืนยัน";
+    precheck = { tone: "text-label-2", Icon: HelpCircle, text: "พบชื่อใกล้เคียง เลือกจากรายการเพื่อยืนยัน" };
   } else if (noWhitelistMatchYet) {
-    precheckTone = "text-red-700";
-    precheckText = "ยังไม่พบใน Whitelist เบื้องต้น";
+    precheck = { tone: "text-danger-ink", Icon: SearchX, text: "ไม่พบชื่อนี้ในรายชื่อบริษัทที่ได้รับอนุญาต" };
   }
 
+  const comboOpen = showSuggestions && (isSearchingSuggestions || suggestions.length > 0);
+
   return (
-    <div className="w-full min-h-screen bg-slate-50 flex flex-col items-center">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      {isLoading && <LoadingSpinner text="กำลังวิเคราะห์ความเสี่ยง..." />}
+    <div className="w-full flex flex-col items-center">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <AnimatePresence>
-        {showScamWarningModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4"
-            role="dialog"
-            aria-modal="true"
-            aria-label="คำเตือนภัยมิจฉาชีพ"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 16, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.98 }}
-              transition={{ duration: 0.2 }}
-              className="w-full max-w-2xl bg-white border border-amber-200 rounded-2xl p-5 md:p-6"
-            >
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-amber-100">
-                    <AlertTriangle className="text-amber-600 w-5 h-5" aria-hidden="true" />
-                  </div>
-                  <p className="text-base md:text-lg font-extrabold text-amber-900">
-                    รู้ทันกลโกง: มิจฉาชีพขโมยตัวตนบริษัทจริง
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setShowScamWarningModal(false)}
-                  className="p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-                  aria-label="ปิดหน้าต่างคำเตือน"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
+      <div className="w-full max-w-2xl px-4 md:px-6 pt-8 md:pt-16 pb-12 md:pb-20 flex flex-col gap-6 md:gap-8">
+        {/* Header — states the ONE task of this screen */}
+        <header className="flex flex-col gap-3 md:items-center md:text-center">
+          <h1 className="text-title1 md:text-large font-bold text-label tracking-tight">
+            เช็คบริษัทจัดหางาน
+            <br className="md:hidden" /> ก่อนโอนเงิน
+          </h1>
+          <p className="text-body text-label-2 md:max-w-lg">
+            {isPaidTraffic
+              ? "รู้ผลใน 10 วินาที ว่าบริษัทได้รับอนุญาตจริงหรือไม่ — ฟรี"
+              : "พิมพ์ชื่อบริษัทที่ชวนคุณไปทำงานต่างประเทศ เราจะเทียบกับรายชื่อของกรมการจัดหางานและรายงานมิจฉาชีพ"}
+          </p>
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-footnote text-label-2 md:justify-center">
+            <Database size={15} aria-hidden="true" />
+            <span>
+              ข้อมูลกรมการจัดหางาน{agencyTotal ? ` ${agencyTotal.toLocaleString("th-TH")} บริษัท` : ""}
+            </span>
+            {lastUpdated && (
+              <>
+                <span aria-hidden="true">·</span>
+                <span>อัปเดต {formatThaiDate(lastUpdated)}</span>
+              </>
+            )}
+          </p>
+        </header>
 
-              <div className="flex flex-col gap-3 text-sm md:text-base text-slate-700 leading-relaxed">
-                <p>
-                  มิจฉาชีพมักนำ <strong>ชื่อบริษัท และชื่อผู้มีอำนาจลงนามนิติบุคคล</strong> ของบริษัทที่จดทะเบียนถูกกฎหมาย
-                  ไปสร้างเว็บไซต์ปลอมหรือเพจ Facebook ปลอม แล้วใส่เบอร์โทรและช่องทางติดต่อของตัวเองแทน
-                </p>
-                <p className="font-bold text-amber-900">
-                  ✅ ให้ยึด <span className="underline underline-offset-2">เบอร์โทรทางการที่จดทะเบียนไว้</span> ด้านล่างเป็นหลัก
-                  อย่าโทรหรือโอนเงินผ่านช่องทางอื่นที่ไม่ตรงกับข้อมูลในหน้านี้
-                </p>
-              </div>
+        {/* The tool */}
+        <section aria-labelledby="check-title" className="card p-5 md:p-8" style={{ boxShadow: "var(--shadow-raised)" }}>
+          <h2 id="check-title" className="sr-only">
+            แบบตรวจสอบความเสี่ยง
+          </h2>
+          <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="agencyName" className="text-headline font-bold text-label">
+                ชื่อบริษัทจัดหางาน
+              </label>
 
-              <div className="mt-5 flex justify-end">
-                <button
-                  type="button"
-                  onClick={() => setShowScamWarningModal(false)}
-                  className="px-4 py-2 bg-brand-primary text-white font-bold rounded-lg hover:bg-brand-primary/90 transition-colors"
-                >
-                  รับทราบ
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              <div className="relative">
+                <Building2
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-label-3"
+                  size={20}
+                  aria-hidden="true"
+                />
+                <input
+                  id="agencyName"
+                  type="text"
+                  role="combobox"
+                  aria-expanded={comboOpen}
+                  aria-controls={listboxId}
+                  aria-autocomplete="list"
+                  aria-activedescendant={activeIndex >= 0 ? `${listboxId}-opt-${activeIndex}` : undefined}
+                  aria-describedby="agencyName-status"
+                  aria-invalid={error && !agencyQuery ? "true" : undefined}
+                  placeholder="เช่น จัดหางานบางกอกวินนิ่ง"
+                  className="field pl-12"
+                  value={formData.agencyName}
+                  onChange={(e) => {
+                    handleInputChange("agencyName", e.target.value);
+                    if (error) setError("");
+                  }}
+                  onKeyDown={handleComboKeyDown}
+                  onFocus={() => {
+                    if (formData.agencyName.trim().length >= 2 && !selectedAgency) setShowSuggestions(true);
+                  }}
+                  onBlur={() => setTimeout(() => setShowSuggestions(false), 120)}
+                  autoComplete="off"
+                  enterKeyHint="search"
+                />
 
-      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 flex flex-col gap-8 md:gap-12 max-w-4xl">
-        
-        {/* Layer 3: Conscious Deep-Dive - The Action Tool */}
-        <section id="risk-assessment">
-          <div className="bg-white border-2 border-brand-primary/25 rounded-4xl md:rounded-5xl overflow-hidden">
-
-            <div className="p-6 md:p-12">
-              <div className="flex flex-col gap-3 mb-6 md:mb-8">
-                <div className="flex items-center gap-3 md:gap-4">
-                  <div className="p-2.5 md:p-3 bg-brand-primary/10 rounded-xl">
-                    <PenSquare className="text-brand-primary w-5 h-5 md:w-6 md:h-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-extrabold text-slate-900 mb-1">ประเมินความเสี่ยง</h3>
-                    <p className="text-slate-500 text-xs md:text-sm">
-                      {isPaidTraffic
-                        ? "เช็กชื่อบริษัทก่อนโอนเงินใน 10 วินาที"
-                        : "กรอกข้อมูลเท่าที่มีเพื่อเริ่มการวิเคราะห์"}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2 text-xs md:text-sm text-slate-600">
-                  <CheckCircle2 className="text-signal-green w-3.5 h-3.5" />
-                  <span>ข้อมูลจากกรมการจัดหางาน</span>
-                  {lastUpdated && (
-                    <>
-                      <span aria-hidden="true">•</span>
-                      <span className="inline-flex items-center gap-1.5">
-                        <RefreshCw className="text-blue-500 w-3.5 h-3.5" />
-                        อัปเดตล่าสุด {new Date(lastUpdated).toLocaleDateString("th-TH", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Bangkok" })}
-                      </span>
-                    </>
-                  )}
-                </div>
-              </div>
-
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6 md:gap-8 max-w-full">
-              {error && (
-                <div role="alert" className="px-3 py-2 bg-red-50 border border-red-100 rounded-xl text-red-700 text-sm flex items-center gap-2">
-                  <ShieldAlert size={16} />
-                  {error}
-                </div>
-              )}
-
-              <div className="flex flex-col gap-2 relative">
-                <label htmlFor="agencyName" className="text-[12px] md:text-sm font-bold text-slate-700 uppercase tracking-wide">
-                  1. ชื่อบริษัทจัดหางาน
-                </label>
-                <div className="relative">
-                  <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
-                  <input
-                    id="agencyName"
-                    type="text"
-                    placeholder="เช่น บริษัทจัดหางานบางกอกวินนิ่ง"
-                    className="w-full pl-11 pr-4 py-3.5 md:py-4 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10 transition-all outline-none text-base"
-                    value={formData.agencyName}
-                    onChange={(e) => handleInputChange("agencyName", e.target.value)}
-                    onFocus={() => {
-                      if (formData.agencyName.trim().length >= 2) {
-                        setShowSuggestions(true);
-                      }
-                    }}
-                    onBlur={() => setShowSuggestions(false)}
-                    autoComplete="off"
-                  />
-                </div>
-                <p className={`text-xs md:text-sm font-medium ${precheckTone}`}>{precheckText}</p>
-
-                {selectedAgency && (
-                  <div className="p-3 md:p-4 rounded-xl border border-green-200 bg-green-50/70 flex flex-col gap-2">
-                    <p className="text-xs md:text-sm font-bold text-green-800">เบอร์ทางการของบริษัทที่เลือก</p>
-                    {selectedAgency.phone ? (
-                      <a
-                        href={`tel:${String(selectedAgency.phone).replace(/\s/g, "")}`}
-                        onClick={() => {
-                          trackEvent("home_official_phone_click", {
-                            agency_name: selectedAgency.name_th || "",
-                            license_no: selectedAgency.license_no || "",
-                          });
-                        }}
-                        className="w-fit inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white border border-green-300 text-green-800 font-extrabold text-sm hover:bg-green-100 transition-colors"
-                      >
-                        <Phone className="w-4 h-4" />
-                        {selectedAgency.phone}
-                        <span className="text-[10px] font-black uppercase tracking-wide px-1.5 py-0.5 rounded bg-green-100 border border-green-200">เบอร์ทางการ</span>
-                      </a>
-                    ) : (
-                      <p className="text-xs md:text-sm text-amber-800 font-bold">ยังไม่พบเบอร์ทางการในรายการนี้ โปรดยืนยันผ่านหน้ารายชื่อบริษัทที่ได้รับอนุญาต</p>
-                    )}
-                    <p className="text-xs md:text-sm font-bold text-red-700">
-                      เน้นย้ำ: โทรเฉพาะเบอร์ทางการนี้เท่านั้น อย่าใช้เบอร์หรือบัญชีที่ส่งมาในแชตส่วนตัว แม้ชื่อบริษัทจะดูตรงกัน
-                    </p>
-                  </div>
-                )}
-
-                {/* Autocomplete Dropdown */}
+                {/* Suggestions — a real listbox, keyboard + touch */}
                 <AnimatePresence>
-                  {showSuggestions && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
+                  {comboOpen && (
+                    <motion.ul
+                      id={listboxId}
+                      role="listbox"
+                      aria-label="บริษัทที่ได้รับอนุญาตที่ตรงกับคำค้น"
+                      initial={{ opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute z-50 left-0 right-0 top-full mt-2 bg-white border border-slate-200 rounded-xl max-h-48 md:max-h-60 overflow-y-auto"
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute z-30 left-0 right-0 top-full mt-2 max-h-80 overflow-y-auto rounded-2xl border border-separator bg-surface py-1"
+                      style={{ boxShadow: "0 12px 40px rgba(0,0,0,.14)" }}
                     >
-                      {isSearchingSuggestions && (
-                        <div className="p-4 text-sm text-slate-500 text-center flex items-center justify-center gap-2">
-                          <span className="w-4 h-4 border-2 border-brand-primary border-t-transparent rounded-full animate-spin"></span>
-                          กำลังค้นหา...
-                        </div>
-                      )}
-                      {!isSearchingSuggestions && suggestions.length === 0 ? (
-                        <div className="p-4 text-xs md:text-sm text-slate-500 text-center">
-                          ไม่พบรายชื่อบริษัทจัดหางานในระบบ Whitelist
-                        </div>
+                      {isSearchingSuggestions && suggestions.length === 0 ? (
+                        <li className="flex items-center gap-2 px-4 py-3 text-callout text-label-2">
+                          <Loader2 size={18} className="animate-spin" aria-hidden="true" /> กำลังค้นหา…
+                        </li>
                       ) : (
-                        suggestions.map((agency) => (
-                          <motion.button
-                            key={agency.juristic_id}
-                            type="button"
-                            whileHover={{ x: 4 }}
-                            className="w-full text-left px-4 py-3 hover:bg-brand-primary/5 border-b border-slate-100 last:border-0 transition-all flex flex-col gap-1 focus:outline-none focus:bg-brand-primary/5"
+                        suggestions.map((agency, i) => (
+                          <li
+                            key={agency.juristic_id || `${agency.license_no}-${i}`}
+                            id={`${listboxId}-opt-${i}`}
+                            role="option"
+                            aria-selected={i === activeIndex}
                             onMouseDown={(e) => {
                               e.preventDefault();
                               handleSelectSuggestion(agency);
                             }}
+                            onMouseEnter={() => setActiveIndex(i)}
+                            className={`cursor-pointer px-4 py-3 min-h-11 flex flex-col gap-0.5 ${
+                              i === activeIndex ? "bg-fill" : ""
+                            }`}
                           >
-                            <span className="font-bold text-slate-800 text-xs md:text-sm block">{agency.name_th}</span>
-                            <div className="flex items-center gap-2 text-[10px] md:text-xs text-slate-500">
-                              {agency.license_no && <span>ใบอนุญาตเลขที่: {agency.license_no}</span>}
-                              {agency.province && <span>• {agency.province}</span>}
-                            </div>
-                            <div className="mt-1 text-[10px] md:text-xs text-green-700 font-bold flex items-center gap-1.5">
-                              <Phone className="w-3 h-3" />
-                              {agency.phone ? (
-                                <>
-                                  <span>เบอร์ทางการ: {agency.phone}</span>
-                                  <span className="text-[9px] font-black uppercase tracking-wide px-1 py-0.5 rounded bg-green-100 border border-green-200">โทรเบอร์นี้เท่านั้น</span>
-                                </>
-                              ) : (
-                                <span className="text-amber-700">ยังไม่พบเบอร์ทางการ</span>
-                              )}
-                            </div>
-                          </motion.button>
+                            <span className="text-callout font-bold text-label">{agency.name_th}</span>
+                            <span className="text-footnote text-label-2">
+                              {[agency.license_no && `ใบอนุญาต ${agency.license_no}`, agency.province]
+                                .filter(Boolean)
+                                .join(" · ")}
+                            </span>
+                          </li>
                         ))
                       )}
-                    </motion.div>
+                    </motion.ul>
                   )}
                 </AnimatePresence>
-
-                {noWhitelistMatchYet && (
-                  <div className="flex flex-col gap-2">
-                    {recoverySuggestions.length > 0 && (
-                      <div className="p-3 rounded-xl border border-slate-200 bg-white">
-                        <p className="text-xs md:text-sm font-bold text-slate-700 mb-2">ชื่อใกล้เคียงที่อาจตรงกับที่คุณค้นหา</p>
-                        <div className="flex flex-col gap-2">
-                          {recoverySuggestions.map((agency) => (
-                            <button
-                              key={`recovery-${agency.juristic_id || agency.license_no || agency.name_th}`}
-                              type="button"
-                              onClick={() => handleSelectSuggestion(agency)}
-                              className="text-left px-3 py-2 rounded-lg border border-slate-200 hover:border-brand-primary hover:bg-brand-primary/5 transition-colors"
-                            >
-                              <span className="block text-xs md:text-sm font-bold text-slate-800">{agency.name_th}</span>
-                              {agency.license_no && <span className="block text-[11px] text-slate-500">ใบอนุญาต: {agency.license_no}</span>}
-                              {agency.phone && <span className="block text-[11px] text-green-700 font-bold">เบอร์ทางการ: {agency.phone}</span>}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Link
-                        href="/agencies"
-                        className="text-xs md:text-sm font-bold text-brand-primary bg-brand-primary/5 border border-brand-primary/20 rounded-lg px-3 py-1.5 hover:bg-brand-primary/10 transition-colors"
-                      >
-                        ลองค้นหาในหน้าบริษัทที่ได้รับอนุญาต
-                      </Link>
-                      <Link
-                        href="/report-scam"
-                        className="text-xs md:text-sm font-bold text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-1.5 hover:bg-red-100 transition-colors"
-                      >
-                        แจ้งเบาะแสเพื่อช่วยผู้อื่น
-                      </Link>
-                    </div>
-                  </div>
-                )}
               </div>
 
+              <p id="agencyName-status" aria-live="polite" className={`flex items-start gap-1.5 text-footnote ${precheck.tone}`}>
+                {precheck.Icon && (
+                  <precheck.Icon size={16} className={`shrink-0 mt-0.5 ${precheck.spin ? "animate-spin" : ""}`} aria-hidden="true" />
+                )}
+                <span>{precheck.text}</span>
+              </p>
+
+              {/* Selected → the official phone is THE answer people need */}
+              {selectedAgency && (
+                <div className="mt-1 flex flex-col gap-2 rounded-2xl bg-surface-2 p-4">
+                  <p className="text-footnote font-bold text-label-2">เบอร์ทางการที่จดทะเบียนกับกรมการจัดหางาน</p>
+                  <OfficialPhone agency={selectedAgency} />
+                  <p className="text-footnote text-label-2">
+                    โทรเบอร์นี้เท่านั้น แม้ชื่อบริษัทในแชตจะตรงกัน — มิจฉาชีพมักแอบอ้างชื่อบริษัทจริง
+                  </p>
+                </div>
+              )}
+
+              {/* Not found → recovery, not a dead end */}
+              {noWhitelistMatchYet && (
+                <div className="mt-1 flex flex-col gap-3">
+                  {recoverySuggestions.length > 0 && (
+                    <div className="flex flex-col gap-2">
+                      <p className="text-footnote font-bold text-label-2">หรือหมายถึง</p>
+                      <div className="inset-list">
+                        {recoverySuggestions.map((agency) => (
+                          <button
+                            key={`recovery-${agency.juristic_id || agency.license_no || agency.name_th}`}
+                            type="button"
+                            onClick={() => handleSelectSuggestion(agency)}
+                            className="w-full text-left px-4 py-3 min-h-11 hover:bg-fill transition-colors flex flex-col"
+                          >
+                            <span className="text-callout font-bold text-label">{agency.name_th}</span>
+                            {agency.license_no && (
+                              <span className="text-footnote text-label-2">ใบอนุญาต {agency.license_no}</span>
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <p className="text-footnote text-label-2">
+                    ชื่อที่ไม่อยู่ในรายชื่อไม่ได้แปลว่าเป็นมิจฉาชีพเสมอไป ลองสะกดใหม่ หรือ{" "}
+                    <Link href={`/agencies?q=${encodeURIComponent(agencyQuery)}`} className="text-accent-ink font-medium underline underline-offset-2">
+                      ค้นในรายชื่อทั้งหมด
+                    </Link>
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Optional risk signals — progressive disclosure */}
+            <div className="flex flex-col">
               <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full py-5 md:py-6 bg-brand-primary text-white rounded-2xl font-bold text-lg md:text-xl transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:pointer-events-none"
+                type="button"
+                aria-expanded={showAdvancedSignals}
+                aria-controls="advanced-signals"
+                onClick={() => {
+                  setShowAdvancedSignals((prev) => {
+                    const next = !prev;
+                    trackEvent("home_expand_advanced", {
+                      expanded: next ? "yes" : "no",
+                      variant: experimentVariant,
+                      paid_traffic: isPaidTraffic ? "yes" : "no",
+                    });
+                    return next;
+                  });
+                }}
+                className="flex min-h-11 items-center justify-between gap-3 rounded-xl text-left"
               >
-                {isLoading ? "กำลังประมวลผล..." : "เช็คเลย"}
-                <ArrowRight className="w-5 h-5 md:w-6 md:h-6" />
+                <span className="flex flex-col">
+                  <span className="text-callout font-bold text-label">เพิ่มสิ่งที่เจอมา</span>
+                  <span className="text-footnote text-label-2">ไม่บังคับ · ช่วยให้ผลแม่นขึ้น</span>
+                </span>
+                <ChevronDown
+                  size={22}
+                  className={`text-label-2 shrink-0 transition-transform duration-200 ${showAdvancedSignals ? "rotate-180" : ""}`}
+                  aria-hidden="true"
+                />
               </button>
 
-              <div className="flex flex-col gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowAdvancedSignals((prev) => {
-                      const next = !prev;
-                      trackEvent("home_expand_advanced", {
-                        expanded: next ? "yes" : "no",
-                        variant: experimentVariant,
-                        paid_traffic: isPaidTraffic ? "yes" : "no",
-                      });
-                      return next;
-                    });
-                  }}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm font-bold text-slate-700 bg-white hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
-                >
-                  {showAdvancedSignals ? "ซ่อนข้อมูลเสริมความแม่นยำ" : "เพิ่มข้อมูลเสริมเพื่อความแม่นยำ (ไม่บังคับ)"}
-                  <ChevronDown className={`w-4 h-4 transition-transform ${showAdvancedSignals ? "rotate-180" : ""}`} />
-                </button>
-
-                <AnimatePresence initial={false}>
-                  {showAdvancedSignals && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="flex flex-col gap-6 md:gap-8 pt-2">
-                        <div className="flex flex-col gap-2">
-                          <label htmlFor="contactInfo" className="text-[12px] md:text-sm font-bold text-slate-700 uppercase tracking-wide">
-                            2. ช่องทางติดต่อ (เบอร์/LINE/Email)
-                          </label>
-                          <div className="relative">
-                            <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
-                            <input
-                              id="contactInfo"
-                              type="text"
-                              placeholder="เช่น 081-xxx-xxxx"
-                              className="w-full pl-11 pr-4 py-3.5 md:py-4 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-brand-primary focus:ring-4 focus:ring-brand-primary/10 transition-all outline-none text-base"
-                              value={formData.contactInfo}
-                              onChange={(e) => handleInputChange("contactInfo", e.target.value)}
-                            />
+              <AnimatePresence initial={false}>
+                {showAdvancedSignals && (
+                  <motion.div
+                    id="advanced-signals"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <div className="flex flex-col gap-4 pt-3">
+                      <fieldset className="inset-list">
+                        <legend className="sr-only">สัญญาณความเสี่ยงที่พบ</legend>
+                        {RISK_SIGNALS.map((s) => (
+                          <div key={s.id} className="px-4 py-3">
+                            <div className="flex items-start gap-3">
+                              <input
+                                type="checkbox"
+                                id={s.id}
+                                className="check mt-1"
+                                checked={formData[s.id]}
+                                onChange={(e) => handleInputChange(s.id, e.target.checked)}
+                              />
+                              <label htmlFor={s.id} className="flex-1 cursor-pointer min-h-11 -my-1 py-1">
+                                <span className="block text-callout font-bold text-label">{s.title}</span>
+                                <span className="block text-footnote text-label-2">{s.hint}</span>
+                              </label>
+                              <button
+                                type="button"
+                                className="icon-btn -mr-2 -my-1.5"
+                                aria-expanded={openDetail === s.id}
+                                aria-controls={`${s.id}-detail`}
+                                aria-label={`ทำไม “${s.title}” จึงเสี่ยง`}
+                                onClick={() => setOpenDetail(openDetail === s.id ? null : s.id)}
+                              >
+                                <HelpCircle size={20} aria-hidden="true" />
+                              </button>
+                            </div>
+                            {openDetail === s.id && (
+                              <p id={`${s.id}-detail`} className="mt-2 ml-[34px] text-footnote text-label-2">
+                                {s.detail}
+                              </p>
+                            )}
                           </div>
-                        </div>
+                        ))}
+                      </fieldset>
 
-                        <div className="flex flex-col gap-3 md:gap-4">
-                          <motion.div
-                            whileHover={{ y: -1 }}
-                            className={`flex items-start gap-3 md:gap-4 p-4 md:p-6 border rounded-2xl transition-all duration-300 group relative ${
-                              formData.hasUpfrontFee
-                                ? "border-brand-primary/30 bg-brand-primary/5"
-                                : "border-slate-200 hover:border-slate-300 hover:bg-slate-50/50 bg-white"
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              id="hasUpfrontFee"
-                              className="w-5 h-5 md:w-6 md:h-6 mt-1 md:mt-0 rounded-md border-slate-300 text-brand-primary focus:ring-brand-primary cursor-pointer transition-transform duration-200 hover:scale-105"
-                              checked={formData.hasUpfrontFee}
-                              onChange={(e) => handleInputChange("hasUpfrontFee", e.target.checked)}
-                            />
-                            <label htmlFor="hasUpfrontFee" className="flex items-center gap-3 md:gap-4 flex-1 cursor-pointer">
-                              <div className={`p-2 rounded-lg transition-colors shrink-0 ${formData.hasUpfrontFee ? 'bg-brand-primary/10' : 'bg-slate-100'}`}>
-                                <Banknote className={`${formData.hasUpfrontFee ? 'text-brand-primary' : 'text-slate-400'} w-4.5 h-4.5 md:w-5 md:h-5`} />
-                              </div>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-1.5">
-                                  <span className="block font-bold text-slate-800 text-sm md:text-base">มีการเรียกเก็บเงินล่วงหน้า</span>
-                                  <div className="relative group/tooltip inline-block">
-                                    <button
-                                      type="button"
-                                      className="text-slate-400 hover:text-brand-primary transition-colors focus:outline-none p-0.5"
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                      }}
-                                    >
-                                      <HelpCircle size={14} className="md:w-4 md:h-4 w-3.5 h-3.5" />
-                                    </button>
-                                    <div className="pointer-events-none opacity-0 group-hover/tooltip:opacity-100 group-focus-within/tooltip:opacity-100 transition-opacity duration-200 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 max-w-[80vw] p-3 bg-slate-900 text-white text-xs rounded-lg z-50 leading-relaxed">
-                                      <span className="font-bold block mb-1">สิ่งที่เป็นเงินล่วงหน้า:</span>
-                                      เรียกเก็บค่าธรรมเนียมจัดหางานล่วงหน้า, ค่ามัดจำเอกสาร, ค่าตั๋วเครื่องบิน หรือค่าตรวจสุขภาพล่วงหน้าโดยไม่ได้ผ่านกรมการจัดหางานอย่างถูกต้อง
-                                      <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-slate-900" />
-                                    </div>
-                                  </div>
-                                </div>
-                                <span className="text-xs md:text-sm text-slate-500">เช่น ค่าหัว, ค่าดำเนินการที่ต้องจ่ายทันที</span>
-                              </div>
-                            </label>
-                          </motion.div>
-
-                          <motion.div
-                            whileHover={{ y: -1 }}
-                            className={`flex items-start gap-3 md:gap-4 p-4 md:p-6 border rounded-2xl transition-all duration-300 group relative ${
-                              formData.isSocialContact
-                                ? "border-brand-primary/30 bg-brand-primary/5"
-                                : "border-slate-200 hover:border-slate-300 hover:bg-slate-50/50 bg-white"
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              id="isSocialContact"
-                              className="w-5 h-5 md:w-6 md:h-6 mt-1 md:mt-0 rounded-md border-slate-300 text-brand-primary focus:ring-brand-primary cursor-pointer transition-transform duration-200 hover:scale-105"
-                              checked={formData.isSocialContact}
-                              onChange={(e) => handleInputChange("isSocialContact", e.target.checked)}
-                            />
-                            <label htmlFor="isSocialContact" className="flex items-center gap-3 md:gap-4 flex-1 cursor-pointer">
-                              <div className={`p-2 rounded-lg transition-colors shrink-0 ${formData.isSocialContact ? 'bg-brand-primary/10' : 'bg-slate-100'}`}>
-                                <UserRound className={`${formData.isSocialContact ? 'text-brand-primary' : 'text-slate-400'} w-4.5 h-4.5 md:w-5 md:h-5`} />
-                              </div>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-1.5">
-                                  <span className="block font-bold text-slate-800 text-sm md:text-base">ติดต่อผ่านโซเชียลมีเดียส่วนตัว</span>
-                                  <div className="relative group/tooltip inline-block">
-                                    <button
-                                      type="button"
-                                      className="text-slate-400 hover:text-brand-primary transition-colors focus:outline-none p-0.5"
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                      }}
-                                    >
-                                      <HelpCircle size={14} className="md:w-4 md:h-4 w-3.5 h-3.5" />
-                                    </button>
-                                    <div className="pointer-events-none opacity-0 group-hover/tooltip:opacity-100 group-focus-within/tooltip:opacity-100 transition-opacity duration-200 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 max-w-[80vw] p-3 bg-slate-900 text-white text-xs rounded-lg z-50 leading-relaxed">
-                                      <span className="font-bold block mb-1">พฤติกรรมที่มีความเสี่ยง:</span>
-                                      การพูดคุย ชักชวน หรือส่งต่อเอกสารทางข้อความส่วนตัว (เช่น Facebook ส่วนตัว, LINE ส่วนตัว, TikTok DM) ของบุคคลที่ไม่สามารถตรวจสอบสถานะนิติบุคคลของบริษัทได้
-                                      <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-slate-900" />
-                                    </div>
-                                  </div>
-                                </div>
-                                <span className="text-xs md:text-sm text-slate-500">Facebook ส่วนตัว, กลุ่มลับ, หรือโปรไฟล์นิรนาม</span>
-                              </div>
-                            </label>
-                          </motion.div>
+                      <div className="flex flex-col gap-2">
+                        <label htmlFor="contactInfo" className="text-callout font-bold text-label">
+                          เบอร์ / LINE / อีเมล ที่ติดต่อคุณมา
+                        </label>
+                        <div className="relative">
+                          <Phone
+                            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-label-3"
+                            size={20}
+                            aria-hidden="true"
+                          />
+                          <input
+                            id="contactInfo"
+                            type="text"
+                            inputMode="text"
+                            placeholder="เช่น 081-234-5678 หรือ @lineid"
+                            className="field pl-12"
+                            value={formData.contactInfo}
+                            onChange={(e) => handleInputChange("contactInfo", e.target.value)}
+                            autoComplete="off"
+                          />
                         </div>
+                        <p className="text-footnote text-label-2">เราจะเทียบกับเบอร์ที่เคยถูกรายงานว่าเป็นมิจฉาชีพ</p>
                       </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </form>
-          </div>
-        </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {error && (
+              <p role="alert" className="flex items-start gap-2 rounded-xl bg-danger-tint px-4 py-3 text-callout text-danger-ink">
+                <AlertCircle size={20} className="shrink-0 mt-0.5" aria-hidden="true" />
+                {error}
+              </p>
+            )}
+
+            {/* The one prominent action on this screen */}
+            <button type="submit" aria-busy={isLoading} disabled={isLoading} className="btn btn-prominent btn-lg w-full">
+              {isLoading ? (
+                <>
+                  <Loader2 size={22} className="animate-spin" aria-hidden="true" />
+                  กำลังตรวจสอบ…
+                </>
+              ) : (
+                <>
+                  เช็คเลย
+                  <ArrowRight size={22} aria-hidden="true" />
+                </>
+              )}
+            </button>
+            <p className="-mt-2 text-center text-caption text-label-2">
+              ฟรี · ผลเป็นการประเมินเบื้องต้น ·{" "}
+              <Link href="/privacy-policy" className="underline underline-offset-2">
+                ข้อมูลที่เราเก็บ
+              </Link>
+            </p>
+          </form>
         </section>
 
-        <div className="h-12" />
+        <ScamNotice />
       </div>
     </div>
   );

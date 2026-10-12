@@ -1,3 +1,5 @@
+import ForceLightAppearance from "@/components/ForceLightAppearance";
+
 export const metadata = {
   title: "Admin | เช็คก่อนบิน",
   robots: {
@@ -15,5 +17,10 @@ export const metadata = {
 };
 
 export default function AdminLayout({ children }) {
-  return children;
+  return (
+    <>
+      <ForceLightAppearance />
+      {children}
+    </>
+  );
 }

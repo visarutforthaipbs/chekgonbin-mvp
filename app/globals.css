@@ -1,13 +1,20 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   เช็คก่อนบิน — design tokens (Apple HIG × Signal 39)
+   ONE source of truth for color, type, shape, motion. Components use the
+   semantic utilities below (bg-surface, text-label, text-danger-ink …) —
+   never raw hex or slate-* classes. Dark Mode + Increase Contrast + Reduce
+   Motion are handled here, so components get them for free.
+   ========================================================================== */
+
 @font-face {
   font-family: "DB Helvethaica X";
   src: url("/fonts/dbhelvethaicax-webfont.woff2") format("woff2");
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "DB Helvethaica X";
   src: url("/fonts/dbhelvethaicaxmed-webfont.woff2") format("woff2");
@@ -15,86 +22,376 @@
   font-style: normal;
   font-display: swap;
 }
-
 @font-face {
   font-family: "DB Helvethaica X";
   src: url("/fonts/dbhelvethaicaxbd-webfont.woff2") format("woff2");
-  font-weight: bold;
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  --background: #f8fafc; /* Muted background for Layer 1 structure */
-  --foreground: #0f172a;
-  --signal-red: #ef4444;
-  --signal-orange: #f97316;
-  --signal-green: #22c55e;
-  --brand-primary: #e5472e;
-  --brand-secondary: #0b1b3b;
+  color-scheme: light dark;
+
+  /* Brand */
+  --brand-primary: #e5472e;   /* logo / brand mark only */
+  --brand-secondary: #0b1b3b; /* deep navy — also the light-mode label color */
+
+  /* Accent = the ONE interactive color (prominent buttons, links, focus) */
+  --accent: #d93d24;          /* white text 4.52:1 */
+  --accent-ink: #c8371f;      /* accent as text on bg — 4.8:1 */
+  --on-accent: #ffffff;
+
+  /* Backgrounds (grouped hierarchy) */
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --surface-2: #f2f2f7;
+  --fill: rgba(120, 120, 128, 0.12);
+  --fill-strong: rgba(120, 120, 128, 0.2);
+
+  /* Labels */
+  --label: #0b1b3b;           /* 17:1 */
+  --label-2: #5f6673;         /* 5.3:1 on bg — secondary text */
+  --label-3: #8e8e93;         /* placeholders & decoration only — never body copy */
+  --separator: rgba(60, 60, 67, 0.16);
+  --separator-strong: rgba(60, 60, 67, 0.29);
+
+  /* Risk — Signal 39 Layer 1. Used ONLY to encode threat level.
+     *-fill  = icons/bars/borders (non-text);  *-ink = text (≥4.5:1 on tint & bg) */
+  --safe-fill: #34c759;    --safe-ink: #1a7f37;    --safe-tint: #ecf8ef;
+  --caution-fill: #ff9500; --caution-ink: #b54708; --caution-tint: #fff4e5;
+  --danger-fill: #ff3b30;  --danger-ink: #b42318;  --danger-tint: #fdecec;
+
+  /* Glass (functional layer only: nav bar, tab bar) */
+  --glass: rgba(255, 255, 255, 0.78);
+  --glass-edge: rgba(60, 60, 67, 0.14);
+
+  --shadow-raised: 0 1px 2px rgba(11, 27, 59, 0.04), 0 8px 24px rgba(11, 27, 59, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-appearance="light"]) {
+    --accent: #d93d24;
+    --accent-ink: #ff7457;
+    --bg: #000000;
+    --surface: #1c1c1e;
+    --surface-2: #2c2c2e;
+    --fill: rgba(120, 120, 128, 0.24);
+    --fill-strong: rgba(120, 120, 128, 0.36);
+    --label: #f5f5f7;
+    --label-2: #a1a1aa;
+    --label-3: #6e6e73;
+    --separator: rgba(84, 84, 88, 0.55);
+    --separator-strong: rgba(84, 84, 88, 0.8);
+    --safe-fill: #30d158;    --safe-ink: #30d158;    --safe-tint: rgba(48, 209, 88, 0.14);
+    --caution-fill: #ff9f0a; --caution-ink: #ff9f0a; --caution-tint: rgba(255, 159, 10, 0.14);
+    --danger-fill: #ff453a;  --danger-ink: #ff6961;  --danger-tint: rgba(255, 69, 58, 0.16);
+    --glass: rgba(28, 28, 30, 0.74);
+    --glass-edge: rgba(255, 255, 255, 0.1);
+    --shadow-raised: none;
+  }
+}
+
+/* Increase Contrast */
+@media (prefers-contrast: more) {
+  :root {
+    --label-2: #3c4250;
+    --separator: rgba(60, 60, 67, 0.4);
+    --accent: #b93219;
+    --accent-ink: #a82d17;
+  }
 }
 
 @theme {
-  --font-sans: "DB Helvethaica X", ui-sans-serif, system-ui, sans-serif;
-  
+  --font-sans: "DB Helvethaica X", -apple-system, BlinkMacSystemFont, "Sukhumvit Set", "Noto Sans Thai", system-ui, sans-serif;
+
+  /* Semantic colors → utilities: bg-surface, text-label-2, border-separator … */
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fill: var(--fill);
+  --color-fill-strong: var(--fill-strong);
+  --color-label: var(--label);
+  --color-label-2: var(--label-2);
+  --color-label-3: var(--label-3);
+  --color-separator: var(--separator);
+  --color-separator-strong: var(--separator-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-on-accent: var(--on-accent);
+  --color-safe-fill: var(--safe-fill);
+  --color-safe-ink: var(--safe-ink);
+  --color-safe-tint: var(--safe-tint);
+  --color-caution-fill: var(--caution-fill);
+  --color-caution-ink: var(--caution-ink);
+  --color-caution-tint: var(--caution-tint);
+  --color-danger-fill: var(--danger-fill);
+  --color-danger-ink: var(--danger-ink);
+  --color-danger-tint: var(--danger-tint);
   --color-brand-primary: var(--brand-primary);
   --color-brand-secondary: var(--brand-secondary);
-  --color-signal-red: var(--signal-red);
-  --color-signal-orange: var(--signal-orange);
-  --color-signal-green: var(--signal-green);
+  /* Legacy Signal 39 names (admin page) → mapped onto the risk fills */
+  --color-signal-red: var(--danger-fill);
+  --color-signal-orange: var(--caution-fill);
+  --color-signal-green: var(--safe-fill);
+
+  /* Type scale — HIG text styles, +1px for DB Helvethaica X's small Thai
+     glyphs. Thai needs taller leading than Latin (tone marks / lower vowels). */
+  --text-caption: 0.8125rem;   --text-caption--line-height: 1.45;    /* 13 */
+  --text-footnote: 0.875rem;   --text-footnote--line-height: 1.5;    /* 14 */
+  --text-subhead: 1rem;        --text-subhead--line-height: 1.5;     /* 16 */
+  --text-callout: 1.0625rem;   --text-callout--line-height: 1.5;     /* 17 */
+  --text-body: 1.125rem;       --text-body--line-height: 1.55;       /* 18 */
+  --text-headline: 1.1875rem;  --text-headline--line-height: 1.4;    /* 19 bold */
+  --text-title3: 1.375rem;     --text-title3--line-height: 1.35;     /* 22 */
+  --text-title2: 1.625rem;     --text-title2--line-height: 1.3;      /* 26 */
+  --text-title1: 2rem;         --text-title1--line-height: 1.25;     /* 32 */
+  --text-large: 2.5rem;        --text-large--line-height: 1.2;       /* 40 */
+  --text-display: 3.25rem;     --text-display--line-height: 1.15;    /* 52 */
+
+  --radius-control: 12px;
+  --radius-card: 20px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
-    scroll-padding-top: 80px;
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
-    line-height: 1.6;
+    background: var(--bg);
+    color: var(--label);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-wrap: break-word;
   }
 
   * {
-    @apply border-slate-200;
+    border-color: var(--separator);
+  }
+
+  /* One visible, consistent focus ring for every control (keyboard only). */
+  :focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent);
+    outline-offset: 2px;
+    border-radius: 10px;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--label-3);
+    opacity: 1;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 22%, transparent);
   }
 }
 
-/* SIGNAL 39 Utility: Zero Decorative Pixels */
-.no-noise {
-  @apply shadow-none border-none ring-0;
+@layer components {
+  /* Cards: content layer, solid surface, no decoration beyond a hairline. */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    border: 1px solid var(--separator);
+  }
+
+  /* Grouped inset list (iOS Settings style) */
+  .inset-list {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--separator);
+    overflow: hidden;
+  }
+  .inset-list > * + * {
+    border-top: 1px solid var(--separator);
+  }
+
+  /* Buttons — style, not size, carries priority. All ≥ 44px. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.5rem 1.125rem;
+    border-radius: var(--radius-control);
+    font-weight: 700;
+    font-size: var(--text-callout);
+    line-height: 1.3;
+    text-align: center;
+    transition: background-color 150ms var(--ease-out), opacity 150ms var(--ease-out), transform 150ms var(--ease-out);
+    user-select: none;
+    cursor: pointer;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+  .btn-prominent {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .btn-prominent:hover {
+    background: color-mix(in srgb, var(--accent) 88%, black);
+  }
+  .btn-tinted {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent-ink);
+  }
+  .btn-tinted:hover {
+    background: color-mix(in srgb, var(--accent) 18%, transparent);
+  }
+  .btn-gray {
+    background: var(--fill);
+    color: var(--label);
+  }
+  .btn-gray:hover {
+    background: var(--fill-strong);
+  }
+  .btn-plain {
+    color: var(--accent-ink);
+    padding-inline: 0.5rem;
+  }
+  .btn-plain:hover {
+    background: var(--fill);
+  }
+  .btn-lg {
+    min-height: 56px;
+    font-size: var(--text-headline);
+    border-radius: 16px;
+    padding-inline: 1.5rem;
+  }
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: var(--label-2);
+    flex-shrink: 0;
+    transition: background-color 150ms var(--ease-out);
+  }
+  .icon-btn:hover {
+    background: var(--fill);
+    color: var(--label);
+  }
+
+  /* Text fields — 52px tall, 18px text (no iOS zoom), tone-mark safe. */
+  .field {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.75rem 1rem;
+    background: var(--surface-2);
+    color: var(--label);
+    border: 1px solid transparent;
+    border-radius: var(--radius-control);
+    font-size: var(--text-body);
+    line-height: 1.4;
+    transition: border-color 150ms var(--ease-out), background-color 150ms var(--ease-out);
+  }
+  .field:hover {
+    border-color: var(--separator-strong);
+  }
+  .field:focus {
+    outline: none;
+    background: var(--surface);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--danger-ink);
+  }
+
+  /* Native checkbox, enlarged and tinted. Wrap in a ≥44px label row. */
+  .check {
+    width: 22px;
+    height: 22px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+
+  /* Glass: functional layer only (nav bars). Never on content. */
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+  }
+
+  /* Signal 39 — Layer 1 threat surfaces (kept for compatibility) */
+  .threat-low {
+    background: var(--safe-tint);
+    border-left: 4px solid var(--safe-fill);
+  }
+  .threat-medium {
+    background: var(--caution-tint);
+    border-left: 4px solid var(--caution-fill);
+  }
+  .threat-high {
+    background: var(--danger-tint);
+    border-left: 4px solid var(--danger-fill);
+  }
+  .no-noise {
+    box-shadow: none;
+    border: none;
+  }
 }
 
-/* SIGNAL 39 Utility: Cognitive Breather */
-.breather {
-  @apply p-4 md:p-8 gap-4 md:gap-6;
-}
-
-/* Layer 1: Subconscious Hook - Threat Levels */
-.threat-low {
-  @apply border-l-4 border-signal-green bg-green-50/50 p-6 md:p-8;
-}
-
-.threat-medium {
-  @apply border-l-4 border-signal-orange bg-orange-50/50 p-6 md:p-8;
-}
-
-.threat-high {
-  @apply border-l-4 border-signal-red bg-red-50/50 p-6 md:p-8;
+/* Mobile tab bar clearance (tab bar is 56px + home-indicator safe area). */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom));
+  }
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
-
 .animate-shimmer {
-  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background: linear-gradient(90deg, var(--fill) 25%, var(--fill-strong) 50%, var(--fill) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
 }
 
+/* Reduce Motion — HIG "make motion optional". */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    padding-bottom: 0 !important;
+  }
+  nav,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  .card,
+  .inset-list {
+    break-inside: avoid;
+  }
+}

@@ -24,6 +24,12 @@ Thai job seekers considering overseas work — often anxious, mobile-first, with
 
 ## Design System — Signal 39
 
+> **2026-10-12 — Apple HIG revamp.** All color/type/shape tokens now live in `app/globals.css`
+> (semantic utilities: `bg-surface`, `text-label`, `text-label-2`, `text-safe-ink`, `bg-danger-tint`, `btn btn-prominent` …,
+> with Dark Mode, Increase Contrast and Reduce Motion handled there). Threat colors keep their Signal 39 meaning but are split into
+> `*-fill` (icons/bars) and `*-ink` (text, ≥4.5:1). Never use raw hex or `slate-*` in public pages. Phone numbers from the DOE feed
+> must go through `utils/phone.js` (raw values contain Thai labels/ranges). Evidence bucket is private — store `storage:evidence/<file>`.
+
 All UI decisions follow the Signal 39 framework. Read `39design.md` for the full specification before making any design changes.
 
 ### Color Tokens

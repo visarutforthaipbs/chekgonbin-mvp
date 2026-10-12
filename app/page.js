@@ -3,21 +3,16 @@ import HomeClient from "./HomeClient";
 
 function HomeFallback() {
   return (
-    <div className="w-full min-h-screen bg-slate-50 flex flex-col items-center">
-      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 max-w-4xl">
-        <section className="bg-white border-2 border-brand-primary/25 rounded-4xl md:rounded-5xl overflow-hidden">
-          <div className="p-6 md:p-12 flex flex-col gap-5 md:gap-6">
-            <div className="h-8 md:h-10 w-56 md:w-72 bg-slate-100 rounded-xl animate-pulse" />
-            <div className="h-4 w-44 md:w-56 bg-slate-100 rounded-lg animate-pulse" />
-
-            <div className="h-14 md:h-16 w-full bg-slate-100 rounded-xl animate-pulse" />
-            <div className="h-4 w-40 md:w-52 bg-slate-100 rounded-lg animate-pulse" />
-            <div className="h-4 w-64 md:w-80 bg-slate-100 rounded-lg animate-pulse" />
-
-            <div className="h-14 md:h-16 w-full bg-brand-primary/20 rounded-2xl animate-pulse" />
-            <div className="h-12 w-full bg-slate-100 rounded-xl animate-pulse" />
-          </div>
-        </section>
+    <div className="w-full max-w-2xl px-4 md:px-6 pt-8 md:pt-16 pb-12 flex flex-col gap-6" aria-hidden="true">
+      <div className="flex flex-col gap-3 md:items-center">
+        <div className="h-10 md:h-12 w-64 md:w-96 rounded-xl animate-shimmer" />
+        <div className="h-5 w-full max-w-md rounded-lg animate-shimmer" />
+      </div>
+      <div className="card p-5 md:p-8 flex flex-col gap-5">
+        <div className="h-6 w-40 rounded-lg animate-shimmer" />
+        <div className="h-[52px] w-full rounded-xl animate-shimmer" />
+        <div className="h-11 w-full rounded-xl animate-shimmer" />
+        <div className="h-14 w-full rounded-2xl animate-shimmer" />
       </div>
     </div>
   );

@@ -224,7 +224,15 @@ function ReportsTab({ adminKey }) {
               {r.description && (
                 <p className="text-sm text-slate-600 bg-slate-50 rounded-xl p-4 leading-relaxed">{r.description}</p>
               )}
-              {r.evidence && <p className="text-xs text-slate-400">หลักฐาน: {r.evidence}</p>}
+              {r.evidence_url ? (
+                <a href={r.evidence_url} target="_blank" rel="noopener noreferrer" className="block w-fit">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={r.evidence_url} alt={`หลักฐานรายงาน ${r.agency_name}`} className="max-h-64 rounded-xl border border-slate-200 object-contain" />
+                  <span className="text-xs text-slate-500 underline">เปิดรูปเต็ม (ลิงก์หมดอายุใน 10 นาที)</span>
+                </a>
+              ) : r.evidence ? (
+                <p className="text-xs text-slate-400">หลักฐาน: {r.evidence}</p>
+              ) : null}
             </div>
           ))}
         </div>

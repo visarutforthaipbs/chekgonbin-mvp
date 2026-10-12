@@ -1,7 +1,18 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Providers from "@/components/Providers";
 import Script from "next/script";
 import "./globals.css";
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover", // lets the mobile tab bar sit above the home indicator
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f5f5f7" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+};
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -94,13 +105,9 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body className="min-h-screen flex flex-col relative overflow-x-hidden" suppressHydrationWarning>
-        {/* Ambient Blur Background Blobs */}
-        <div className="fixed -top-40 -left-40 w-96 h-96 bg-brand-primary/5 rounded-full blur-[120px] pointer-events-none z-0" aria-hidden="true" />
-        <div className="fixed bottom-10 -right-40 w-120 h-120 bg-brand-secondary/5 rounded-full blur-[140px] pointer-events-none z-0" aria-hidden="true" />
-
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-9999 focus:px-4 focus:py-2 focus:bg-brand-primary focus:text-white focus:rounded-lg focus:font-bold"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-3 focus:bg-accent focus:text-on-accent focus:rounded-xl focus:font-bold"
         >
           ข้ามไปเนื้อหาหลัก
         </a>
@@ -127,11 +134,13 @@ export default function RootLayout({ children }) {
           `}
         </Script>
 
-        <Navbar />
-        <main id="main-content" className="flex-1 flex flex-col items-center w-full">
-          {children}
-        </main>
-        <Footer />
+        <Providers>
+          <Navbar />
+          <main id="main-content" className="flex-1 flex flex-col items-center w-full">
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
