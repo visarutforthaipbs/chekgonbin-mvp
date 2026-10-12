@@ -250,11 +250,96 @@ def build_update(record: dict) -> dict:
         "net_profit_margin":   safe_float(info.get("netProfitMargin")),
         "gross_profit_margin": safe_float(info.get("grossProfitMargin")),
         "business_size_code":  info.get("businessSizeCode"),
-        "committees":          record.get("committees"),
+        "committees":          sanitize_committees(record.get("committees")),
         "financials":          record.get("financials"),
         "financials_prev":     record.get("financials_prev"),
         "dbd_scraped_at":      record.get("scraped_at"),
     }
+
+
+# ── PII guard ──────────────────────────────────────────────────────────────────
+# The DBD committees endpoint returns `cmtNo` — for natural persons this is the
+# 13-digit Thai citizen ID — plus address/phone/location codes. The agencies
+# table is served publicly by /api/agencies, so ONLY these display fields may
+# ever be stored. (2026-10-12: raw committees had exposed 24/31 checksum-valid
+# citizen IDs on page 1 of the public API; scrubbed + this allowlist added.)
+COMMITTEE_FIELDS = ("cmtSeq", "titleName", "firstName", "lastName",
+                    "firstNameE", "lastNameE", "ntCode")
+
+
+def sanitize_committees(committees):
+    if not isinstance(committees, list):
+        return committees
+    return [{k: c.get(k) for k in COMMITTEE_FIELDS if k in c}
+            for c in committees if isinstance(c, dict)]
+
+
+# ── juristic_id auto-resolution ────────────────────────────────────────────────
+# DOE lists agencies as "บริษัทจัดหางาน X (จํากัด)"; DBD registers them as "X จำกัด"
+# or "จัดหางาน X จำกัด". New DOE agencies arrive with no juristic_id and were
+# silently never DBD-scraped (6/152 on 2026-10-12). Resolve them here — but only
+# on an unambiguous match; anything else is logged for human review, never guessed.
+
+def norm_name(s: str) -> str:
+    s = (s or "").replace("\u0e4d\u0e32", "\u0e33")          # ํา -> ำ (DOE encoding)
+    for t in ("(มหาชน)", "บริษัท", "บจ.", "จำกัด", "จัดหางาน"):
+        s = s.replace(t, "")
+    return re.sub(r"[\s.\-()]", "", s)
+
+
+def search_dbd(session, keyword: str, token: str, enc_key: str) -> list:
+    url = f"{DBD_BASE}/api/v1/company-profiles/infos"
+    headers = {**BROWSER_HEADERS, "Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    try:
+        resp = session.post(url, headers=headers,
+                            json={"keyword": keyword, "type": "", "sortBy": "jpName", "currentPage": 1})
+        if resp.status_code != 200:
+            return []
+        body = resp.json()
+        data = decrypt_response(enc_key, body, url) if isinstance(body, dict) and "ct" in body else body
+        return (data or {}).get("contents") or []
+    except Exception as e:
+        log.debug("search error: %s", e)
+        return []
+
+
+def resolve_missing_ids(supabase, session, token: str, enc_key: str, dry_run: bool = False) -> tuple[int, int]:
+    rows = supabase.table("agencies").select("cid, name_th").is_("juristic_id", "null").execute().data
+    if not rows:
+        return 0, 0
+    log.info("Resolving %d agencies with no juristic_id", len(rows))
+    resolved = review = 0
+    for r in rows:
+        want = norm_name(r.get("name_th", ""))
+        kw = re.sub(r"^(บริษัทจัดหางาน|บริษัท)\s*", "", (r.get("name_th") or "").strip())
+        kw = re.sub(r"\s*(จำกัด|จํากัด)\s*$", "", kw).strip()
+        hits = [h for h in search_dbd(session, kw, token, enc_key)
+                if str(h.get("jpTypeCode")) == "5" and str(h.get("jpStatCode")) == "1"]
+        exact = [h for h in hits if norm_name(h.get("jpName", "")) == want]
+        prefix = [h for h in hits if norm_name(h.get("jpName", "")).startswith(want)] if not exact else []
+        pick = exact if len(exact) == 1 else (prefix if len(prefix) == 1 else [])
+        if len(pick) == 1:
+            jid, how = pick[0]["jpNo"], "exact" if exact else "prefix (DOE name truncated)"
+            log.info("  ✓ cid %s %s -> %s %s [%s]", r["cid"], r["name_th"], jid, pick[0].get("jpName"), how)
+            if not dry_run:
+                supabase.table("agencies").update({"juristic_id": jid}).eq("cid", r["cid"]).execute()
+            resolved += 1
+        else:
+            log.warning("  ? cid %s %s -> NEEDS REVIEW (%d exact, %d prefix, %d hits)",
+                        r["cid"], r["name_th"], len(exact), len(prefix), len(hits))
+            review += 1
+    return resolved, review
+
+
+def write_status(**fields) -> None:
+    """Machine-readable last-run record for the fleet health check (collectors-manager)."""
+    status = {"finished_at": datetime.utcnow().isoformat() + "Z", "host": os.uname().nodename, **fields}
+    try:
+        p = ROOT / "scripts" / "logs" / "last_run.json"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(status, ensure_ascii=False, indent=1))
+    except Exception as e:
+        log.warning("could not write last_run.json: %s", e)
 
 
 def upsert_record(supabase, record: dict) -> bool:
@@ -279,23 +364,34 @@ def main():
 
     parser = argparse.ArgumentParser(description="DBD Scraper")
     parser.add_argument("--force", action="store_true", help="Force scrape all companies")
+    parser.add_argument("--dry-run", action="store_true", help="Resolve + fetch but write NOTHING to Supabase")
+    parser.add_argument("--resolve-only", action="store_true", help="Only resolve missing juristic_ids, skip the scrape")
     args = parser.parse_args(sys.argv[1:])
 
     supabase  = create_client(SUPABASE_URL, SUPABASE_KEY)
+    session   = get_session()
+    token, enc_key = get_token(session)
+
+    # Step 0: give new DOE agencies a juristic_id so they get scraped this run
+    resolved, review = resolve_missing_ids(supabase, session, token, enc_key, dry_run=args.dry_run)
+    if args.resolve_only:
+        write_status(ok=0, fail=0, total=0, resolved=resolved, review=review, dry_run=args.dry_run)
+        log.info("Resolve-only done — %d resolved, %d need review", resolved, review)
+        return
+
     companies = load_companies(supabase, force=args.force)
     total     = len(companies)
-
-    session    = get_session()
-    token = enc_key = ""
-    if total > 0:
-        token, enc_key = get_token(session)
 
     ok = fail = 0
     for i, company in enumerate(companies, 1):
         log.info("[%d/%d] %s", i, total, company["name_th"])
         try:
             record = fetch_company(session, company, token, enc_key)
-            if upsert_record(supabase, record):
+            if args.dry_run:
+                log.info("  (dry-run) would update %d fields, %d committee members (sanitized)",
+                         len(build_update(record)), len(build_update(record)["committees"] or []))
+                ok += 1
+            elif upsert_record(supabase, record):
                 log.info("  ✓ Supabase updated")
                 ok += 1
             else:
@@ -310,6 +406,7 @@ def main():
             token, enc_key = get_token(session)
 
     log.info("Done — %d updated, %d failed", ok, fail)
+    write_status(ok=ok, fail=fail, total=total, resolved=resolved, review=review, dry_run=args.dry_run)
 
     # Post-run freshness report: warn if any agencies still have no DBD data
     try:

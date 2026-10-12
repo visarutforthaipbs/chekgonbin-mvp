@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# collectors-manager 2026-10-12
+.venv/
+scripts/logs/last_run.json
+scripts/__pycache__/
