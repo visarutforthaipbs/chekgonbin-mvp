@@ -199,11 +199,18 @@ def fetch_detail(session: requests.Session, hidden: dict, cid: str) -> dict:
         "โทรศัพท์ที่สามารถติดต่อได้": "director_mobile",
     }
 
+    # Match the LONGEST label first, and only at a label boundary. The page has
+    # both "โทรศัพท์" (company) and "โทรศัพท์ที่สามารถติดต่อได้" (licensee mobile);
+    # a plain startswith in dict order made the mobile row overwrite `phone`
+    # with "ที่สามารถติดต่อได้\n08x…" and left director_mobile empty.
+    labels = sorted(field_map.items(), key=lambda kv: len(kv[0]), reverse=True)
     for td in soup.find_all("td"):
         text = td.get_text(separator="\n", strip=True)
-        for label, key in field_map.items():
-            if text.startswith(label):
-                detail[key] = text.replace(label, "").strip()
+        for label, key in labels:
+            if text == label or text.startswith(label + "\n") or text.startswith(label + " ") or text.startswith(label + ":"):
+                value = text[len(label):].lstrip(" :\n").strip()
+                if key not in detail or not detail[key]:
+                    detail[key] = value
                 break
 
     return detail
