@@ -4,7 +4,13 @@ import iconv from "iconv-lite";
 
 export const runtime = "nodejs";
 export const maxDuration = 300;
-export const preferredRegion = "sin1"; // Singapore — avoids GitHub Actions US IP block
+export const preferredRegion = "sin1";
+// 2026-10-15: toea.doe.go.th drops connections from Vercel/cloud IPs too (sin1 log:
+// UND_ERR_SOCKET "other side closed", 0 bytes read, 164.115.40.36:443). The nightly
+// refresh therefore runs from a Thai IP (collectors-manager watchdog, lighthouse-field →
+// agent-context/scripts/checkgonbin_refresh.py, upsert-only). This route stays as a
+// manual / fallback trigger and no longer has a Vercel cron (see vercel.json).
+const MIN_RECORDS = 100;
 
 const BASE_URL = "https://toea.doe.go.th/LBANK-WEB/main.php";
 const DELAY_MS = 800;
@@ -139,7 +145,9 @@ async function saveToSupabase(records) {
 
   const BATCH = 200;
   for (let i = 0; i < rows.length; i += BATCH) {
-    await supabase.from("agencies").upsert(rows.slice(i, i + BATCH));
+    const { error } = await supabase.from("agencies").upsert(rows.slice(i, i + BATCH));
+    // 2026-10-15: upsert errors used to be ignored → "success" with nothing written
+    if (error) throw new Error(`Supabase upsert failed: ${error.message}`);
     console.log(`Upserted ${Math.min(i + BATCH, rows.length)}/${rows.length}`);
   }
   return rows.length;
@@ -154,6 +162,10 @@ export async function GET(request) {
   try {
     const session = await initSession();
     const records = await scrapeAllPages(session);
+    // A block page or layout change yields 0 rows; never report that as success.
+    if (records.length < MIN_RECORDS) {
+      throw new Error(`Only ${records.length} agencies scraped (< ${MIN_RECORDS}); refusing to write`);
+    }
     const saved = await saveToSupabase(records);
     return Response.json({ success: true, count: saved });
   } catch (err) {

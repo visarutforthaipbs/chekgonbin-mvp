@@ -52,7 +52,7 @@
 ## ⚙️ Cron Job & Scraper Architecture
 
 ### How the Scraper Works
-* **Endpoint:** `/api/cron/scrape-agencies` (`nodejs` runtime, `sin1` Singapore region).
+* **Endpoint:** `/api/cron/scrape-agencies` (`nodejs` runtime, `sin1` Singapore region). **2026-10-15: no longer scheduled on Vercel** — DOE drops connections from cloud IPs (logged `UND_ERR_SOCKET`). The daily refresh runs from a Thai IP: collectors-manager cron `checkgonbin-feed-watchdog` → `~/Documents/Personal-Project/agent-context/scripts/checkgonbin_refresh.py` (upsert-only, ≥100 rows gate).
 * **Schedule:** Daily at `0 20 * * *` (03:00 AM Thailand Time ICT) via Vercel Cron.
 * **Security:** Checked via `Authorization: Bearer ${process.env.CRON_SECRET}`.
 * **Workflow:**
