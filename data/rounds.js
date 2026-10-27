@@ -18,9 +18,9 @@ const FEE_BAN = "ห้ามเรียกหรือรับค่าบร
 const doe = (id) => `https://www.doe.go.th/prd/download/download_by_pool_file/${id}`;
 
 export const COUNTRIES = {
-  IL: { name: "อิสราเอล", flag: "🇮🇱" },
-  RO: { name: "โรมาเนีย", flag: "🇷🇴" },
-  LT: { name: "ลิทัวเนีย", flag: "🇱🇹" },
+  IL: { name: "อิสราเอล" },
+  RO: { name: "โรมาเนีย" },
+  LT: { name: "ลิทัวเนีย" },
 };
 
 export const ROUNDS = [

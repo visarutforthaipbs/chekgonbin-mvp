@@ -45,7 +45,7 @@ export default function RoundsClient() {
   const rounds = useMemo(() => activeRounds(), []);
   const countryOptions = useMemo(() => {
     const codes = [...new Set(rounds.map((r) => r.country))];
-    return [{ value: "", label: "ทุกประเทศ" }, ...codes.map((c) => ({ value: c, label: `${COUNTRIES[c].flag} ${COUNTRIES[c].name}` }))];
+    return [{ value: "", label: "ทุกประเทศ" }, ...codes.map((c) => ({ value: c, label: COUNTRIES[c].name }))];
   }, [rounds]);
 
   const filtering = sex !== "" || age !== "";

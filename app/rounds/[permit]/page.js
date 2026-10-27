@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Flag from "@/components/brand/Flag";
 import { notFound } from "next/navigation";
 import { ChevronLeft, Users, Banknote, Briefcase } from "lucide-react";
 import { ROUNDS, COUNTRIES, getRound, thaiDate, headline, todayBangkok } from "@/data/rounds";
@@ -55,7 +56,7 @@ export default async function RoundPage({ params }) {
 
         <header className="flex flex-col gap-2">
           <p className="text-footnote font-bold text-label-2">
-            <span aria-hidden="true">{c.flag}</span> {c.name} · หนังสืออนุญาตให้รับสมัครคนหางาน จต.2 {r.permit}
+            <Flag code={r.country} size={14} className="align-[-2px] mr-1" /> {c.name} · หนังสืออนุญาตให้รับสมัครคนหางาน จต.2 {r.permit}
           </p>
           <h1 className="text-title1 md:text-large font-bold text-label tracking-tight">
             {headline(r)} {r.total.toLocaleString("th-TH")} อัตรา

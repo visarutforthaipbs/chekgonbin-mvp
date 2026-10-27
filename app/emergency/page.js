@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { COUNTRIES } from "@/data/countries";
+import Flag from "@/components/brand/Flag";
+
 import { HotlineCard, FundCard, ShareRow } from "@/components/journey/Parts";
 
 const title = "อยู่ต่างประเทศแล้ว มีปัญหา — โทรใคร | Thai Migrant Watch";
@@ -36,7 +38,7 @@ export default function EmergencyPage() {
                 href={`/countries/${c.slug}#help`}
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-separator bg-surface px-4 text-callout font-medium text-label hover:border-accent hover:bg-accent-tint hover:text-accent-ink"
               >
-                <span aria-hidden="true">{c.flag}</span>
+                <Flag code={c.code} size={16} />
                 {c.short || c.name}
                 <ChevronRight size={16} aria-hidden="true" />
               </Link>

@@ -4,15 +4,17 @@ import { readFileSync } from "node:fs";
 const src = readFileSync(new URL("../data/countries.js", import.meta.url), "utf8");
 const { COUNTRIES, THAI_HOTLINES, FUND, STAGES, WOMEN, COSTS } = await import("data:text/javascript;base64," + Buffer.from(src).toString("base64"));
 
+const EMOJI = /[\u{1F1E6}-\u{1F1FF}\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
 const BANNED = ["ค่าใช้จ่ายก่อนเดินทาง", "เรียกเก็บเงิน", "ถูกเรียกเก็บเงิน", "ปิด 7 ธ.ค.", "ยังเปิด", "ฟรี", "free meals"];
 let fails = 0;
 const fail = (m) => { fails++; console.error("✗", m); };
 
 const text = JSON.stringify({ COUNTRIES, THAI_HOTLINES, FUND, WOMEN, COSTS });
 for (const w of BANNED) if (text.includes(w)) fail(`banned wording present: "${w}"`);
+if (EMOJI.test(text)) fail("emoji in data — use <Flag code> / lucide icons");
 
 for (const c of COUNTRIES) {
-  if (!c.slug || !c.code || !c.name || !c.flag || !c.jobs) fail(`${c.slug}: missing base field`);
+  if (!c.slug || !/^[A-Z]{2}$/.test(c.code) || !c.name || !c.jobs) fail(`${c.slug}: missing base field`);
   if (!Array.isArray(c.routes) || c.routes.length === 0) fail(`${c.slug}: no routes`);
   for (const k of ["stat", "risk"]) {
     if (c[k] && !/^https:\/\//.test(c[k].source || "")) fail(`${c.slug}.${k}: no https source`);

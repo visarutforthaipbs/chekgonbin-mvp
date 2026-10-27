@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ChevronRight, LifeBuoy } from "lucide-react";
 import { COUNTRIES } from "@/data/countries";
+import Flag from "@/components/brand/Flag";
+
 
 // Home hero — server component. One question, one emergency action, three checks.
 // HIG: one prominent (filled accent) action per view = the country pills' selected
@@ -27,7 +29,7 @@ export default function HomeHero() {
                 href={`/countries/${c.slug}`}
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-separator bg-surface px-4 text-callout font-medium text-label transition-colors hover:border-accent hover:bg-accent-tint hover:text-accent-ink active:bg-accent active:text-on-accent"
               >
-                <span aria-hidden="true">{c.flag}</span>
+                <Flag code={c.code} size={16} />
                 {c.short || c.name}
               </Link>
             </li>

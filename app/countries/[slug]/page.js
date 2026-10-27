@@ -5,6 +5,8 @@ import { COUNTRIES, STAGES, getCountry, COUNTRIES_UPDATED, COSTS } from "@/data/
 import { ROUNDS, activeRounds, thaiDate } from "@/data/rounds";
 import { RoundCard } from "@/components/rounds/RoundParts";
 import { HotlineCard, FundCard, ShareRow, EmptyTab } from "@/components/journey/Parts";
+import Flag from "@/components/brand/Flag";
+
 
 export const revalidate = 86400;
 
@@ -64,9 +66,9 @@ export default async function CountryPage({ params }) {
         <p className="text-footnote text-label-2">
           <Link href="/" className="text-accent-ink">ประเทศ</Link> › {c.name}
         </p>
-        <h1 className="text-title1 md:text-large font-bold text-label tracking-tight">
-          <span aria-hidden="true" className="mr-2">{c.flag}</span>
-          ไปทำงาน{c.name}
+        <h1 className="flex items-center gap-3 text-title1 md:text-large font-bold text-label tracking-tight">
+          <Flag code={c.code} size={28} className="mt-0.5" />
+          <span>ไปทำงาน{c.name}</span>
         </h1>
         <p className="text-body text-label-2">{c.jobs}</p>
       </header>

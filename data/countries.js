@@ -34,7 +34,6 @@ export const COUNTRIES = [
     slug: "taiwan",
     code: "TW",
     name: "ไต้หวัน",
-    flag: "🇹🇼",
     jobs: "โรงงาน · ก่อสร้าง · ประมง · ดูแลผู้สูงอายุ",
     stat: { value: "35.86%", label: "ของคนไทยที่ไปทำงานต่างประเทศปี 2567 ไปไต้หวัน", source: "https://www.doe.go.th/prd/assets/upload/files/lmia_th/39ae438f35456fa765a1064ff77f83dc.pdf" },
     risk: { text: "ปี 2567 กองทุนฯ จ่ายกรณีเสียชีวิตในไต้หวัน 51 ราย", source: "https://www.doe.go.th/prd/assets/upload/files/overseas_th/f0ef9841d0f2768318900ab80ebdeb37.pdf" },
@@ -52,7 +51,6 @@ export const COUNTRIES = [
     slug: "korea",
     code: "KR",
     name: "เกาหลีใต้",
-    flag: "🇰🇷",
     jobs: "โรงงาน (EPS) · เกษตรตามฤดูกาล (E-8)",
     stat: { value: "7,919", label: "คนสมัครกองทุนฯ ไปเกาหลี ปีงบ 2567", source: "https://www.doe.go.th/prd/assets/upload/files/overseas_th/f0ef9841d0f2768318900ab80ebdeb37.pdf" },
     risk: { text: "ไปแบบไม่มีวีซ่าทำงาน (ผีน้อย) มีประมาณ 140,000 คน มากกว่าคนที่ไปถูกกฎหมายผ่าน EPS หลายเท่า", source: "https://epress.lib.uts.edu.au/journals/index.php/portal/article/download/7680/8201/39961" },
@@ -68,7 +66,6 @@ export const COUNTRIES = [
     slug: "japan",
     code: "JP",
     name: "ญี่ปุ่น",
-    flag: "🇯🇵",
     jobs: "ฝึกงานเทคนิค · แรงงานทักษะเฉพาะ (SSW)",
     stat: { value: "5,116", label: "คนสมัครกองทุนฯ ไปญี่ปุ่น ปีงบ 2567", source: "https://www.doe.go.th/prd/assets/upload/files/overseas_th/f0ef9841d0f2768318900ab80ebdeb37.pdf" },
     abroad: [
@@ -80,7 +77,6 @@ export const COUNTRIES = [
     slug: "israel",
     code: "IL",
     name: "อิสราเอล",
-    flag: "🇮🇱",
     jobs: "เกษตร (TIC) · ก่อสร้าง",
     stat: { value: "1,067", label: "คนสมัครกองทุนฯ ไปอิสราเอล ปีงบ 2567", source: "https://www.doe.go.th/prd/assets/upload/files/overseas_th/f0ef9841d0f2768318900ab80ebdeb37.pdf" },
     risk: { text: "ปี 2567 กองทุนฯ จ่ายกรณีเสียชีวิตในอิสราเอล 60 ราย มากที่สุดในทุกประเทศ", source: "https://www.doe.go.th/prd/assets/upload/files/overseas_th/f0ef9841d0f2768318900ab80ebdeb37.pdf" },
@@ -95,7 +91,6 @@ export const COUNTRIES = [
     slug: "romania",
     code: "RO",
     name: "โรมาเนีย",
-    flag: "🇷🇴",
     jobs: "โรงงาน · ก่อสร้าง",
     abroad: [
       { label: "ฉุกเฉินสำหรับคนไทย สถานเอกอัครราชทูต ณ กรุงบูคาเรสต์", number: "072-519-7860", suffix: "จากไทย +40 72 519 7860", tel: "+40725197860", source: "https://bucharest.thaiembassy.org/" },
@@ -108,7 +103,6 @@ export const COUNTRIES = [
     slug: "lithuania",
     code: "LT",
     name: "ลิทัวเนีย",
-    flag: "🇱🇹",
     jobs: "โรงงาน · ขนส่ง",
     abroad: [
       { label: "สถานเอกอัครราชทูต ณ กรุงโคเปนเฮเกน (ดูแลลิทัวเนีย) กด 1 ฝ่ายกงสุล", number: "+45 39 62 50 10", tel: "+4539625010", source: "https://copenhagen.thaiembassy.org/th/index" },
@@ -121,7 +115,6 @@ export const COUNTRIES = [
     code: "AE",
     name: "สหรัฐอาหรับเอมิเรตส์",
     short: "UAE",
-    flag: "🇦🇪",
     jobs: "นวด · สปา · บริการ",
     risk: { text: "คนไทยในดูไบกว่า 12,000 คน ทำงานถูกกฎหมายเพียง 4,500 คน (กงสุลใหญ่ให้สัมภาษณ์ Thai PBS 2567)", source: "https://www.thaipbs.or.th/news/content/337865" },
     abroad: [

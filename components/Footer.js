@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Logo from "@/components/brand/Logo";
 import { Phone } from "lucide-react";
 
 // Server component — no client JS needed.
@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="mx-auto max-w-5xl px-4 md:px-6 py-8 md:py-10 flex flex-col gap-6">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
           <div className="flex flex-col gap-1">
-            <Image src="/brand/thmw-wordmark.svg" alt="Thai Migrant Watch" width={88} height={50} className="h-12 w-auto" />
+            <Logo kind="wordmark" animate="inview" className="h-14 w-auto" />
             <p className="text-callout font-medium text-label mt-1">คนไทยต้องไม่ไปตายดาบหน้า</p>
             <p className="text-footnote text-label-2">
               เราไม่ใช่ช่องทางสมัคร และไม่รับเงิน ·{" "}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Flag from "@/components/brand/Flag";
 import { BadgeCheck, CalendarClock, FileText, Phone, ShieldAlert, Users, Banknote, ChevronRight } from "lucide-react";
 import { COUNTRIES, COST_LABEL, thaiDate, positionsLabel, headline } from "@/data/rounds";
 
@@ -63,7 +64,7 @@ export function RoundCard({ r, verdict }) {
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-col gap-0.5 min-w-0">
             <p className="text-footnote font-bold text-label-2">
-              <span aria-hidden="true">{c.flag}</span> {c.name} · ใบอนุญาต จต.2 {r.permit}
+              <Flag code={r.country} size={14} className="align-[-2px] mr-1" /> {c.name} · ใบอนุญาต จต.2 {r.permit}
             </p>
             <h2 id={`round-${r.slug}`} className="text-headline font-bold text-label">
               {headline(r)}

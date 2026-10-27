@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
+import Logo from "@/components/brand/Logo";
 import { Globe, Search, LifeBuoy, CalendarClock, Info } from "lucide-react";
 
 // Top-level sections. Same list drives the desktop bar and the mobile tab bar,
@@ -32,7 +32,7 @@ export default function Navbar() {
       >
         <div className="mx-auto flex h-14 md:h-16 max-w-5xl items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center min-h-11 rounded-xl" aria-label="Thai Migrant Watch หน้าแรก">
-            <Image src="/brand/thmw-lockup.svg" alt="Thai Migrant Watch" width={256} height={16} priority className="h-4 md:h-[18px] w-auto" />
+            <Logo kind="lockup" animate="load" className="h-4 md:h-[18px] w-auto" />
           </Link>
 
           <ul className="hidden md:flex items-center gap-1">

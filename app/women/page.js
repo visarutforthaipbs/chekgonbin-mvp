@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { ChevronRight, ExternalLink } from "lucide-react";
 import { WOMEN, COUNTRIES } from "@/data/countries";
+import Flag from "@/components/brand/Flag";
+
 import { HotlineCard, ShareRow } from "@/components/journey/Parts";
 
 const title = "ผู้หญิงไปทำงานต่างประเทศ — เช็ก 4 สัญญาณก่อนโอน | Thai Migrant Watch";
@@ -64,7 +66,7 @@ export default function WomenPage() {
                 href={`/countries/${c.slug}`}
                 className="inline-flex min-h-11 items-center gap-2 rounded-full border border-separator bg-surface px-4 text-callout font-medium text-label hover:border-accent hover:bg-accent-tint hover:text-accent-ink"
               >
-                <span aria-hidden="true">{c.flag}</span>
+                <Flag code={c.code} size={16} />
                 {c.short || c.name}
                 <ChevronRight size={16} aria-hidden="true" />
               </Link>

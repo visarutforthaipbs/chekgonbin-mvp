@@ -383,3 +383,26 @@
     break-inside: avoid;
   }
 }
+
+/* ── Brand logo motion (components/brand/Logo.js) ───────────────────────
+   Words rise in once (staggered 80 ms), the heart gives two soft beats, then
+   everything is still. Hover on the nav lockup = one more heartbeat. */
+.thmw-logo .logo-part { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .thmw-logo:not(.no-anim) .logo-part {
+    opacity: 0;
+    transform: translateY(6%);
+    transition: opacity 520ms cubic-bezier(.2,.7,.2,1) var(--d, 0ms), transform 640ms cubic-bezier(.2,.7,.2,1) var(--d, 0ms);
+  }
+  .thmw-logo.is-on .logo-part { opacity: 1; transform: none; }
+  .thmw-logo .logo-heart { transform-box: view-box; transform-origin: var(--hx) var(--hy); }
+  .thmw-logo.is-on .logo-heart { animation: thmw-heartbeat 1.4s cubic-bezier(.3,0,.2,1) 700ms 2 both; }
+  a:hover > .thmw-logo .logo-heart, a:focus-visible > .thmw-logo .logo-heart { animation: thmw-heartbeat 1.1s cubic-bezier(.3,0,.2,1) 0ms 1 both; }
+}
+@keyframes thmw-heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.12); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.08); }
+  60% { transform: scale(1); }
+}
