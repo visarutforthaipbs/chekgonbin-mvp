@@ -277,6 +277,72 @@ export const ROUNDS = [
     source: { url: doe(lt.id), page: 1 },
     verified: "อ่านโดย thmw-qa และ thmw-content 22–23 ต.ค. 2569; ค่าจ้างใบ 147 ตรวจซ้ำโดย thmw-pm 27 ต.ค. 2569",
   })),
+  // ───────────────────────── AUTO (permit-publish.py: primary read + GPU Thai-OCR check) ─────────────────────────
+  {
+    permit: "154/2569",
+    slug: "154-2569",
+    country: "IL",
+    channel: "private",
+    industry: "ก่อสร้าง",
+    employer: "WORK CONNEXT LTD.",
+    employerPlace: "35 HA'MASGER STREET, TEL AVIV",
+    agency: {
+      name: "บีเจซี เวิร์ค คอนเน็กซ์",
+      license: "ต.1302/2568",
+      search: "บีเจซี",
+      phones: ["063-271-9818"],
+    },
+    positions: [
+      {
+        title: "ช่างเหล็ก",
+        count: 454,
+      },
+    ],
+    total: 454,
+    sex: null,
+    sexQuote: null,
+    ageMin: null,
+    ageMax: null,
+    pay: [
+      {
+        label: "ช่างเหล็ก",
+        main: "6,443.85 เชเกล/เดือน",
+        baht: "ประมาณ 70,882.35 บาท/เดือน",
+        note: "ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "ที่พัก",
+        who: "deduct",
+        quote: "นายจ้างจัดหาที่พักให้โดยหักจากค่าจ้าง ตามที่กฎหมายแรงงานอิสราเอลกำหนด",
+        ref: "เงื่อนไขข้อ 3",
+      },
+      {
+        item: "อาหาร",
+        who: "unclear",
+        quote: "นายจ้างจัดหาห้องครัวและอุปกรณ์ประกอบอาหารให้ลูกจ้างโดยไม่คิดมูลค่า",
+        ref: "เงื่อนไขข้อ 4",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "unclear",
+        quote: null,
+        ref: null,
+      },
+    ],
+    terms: [
+      "ระยะเวลาการจ้างงาน 1 ปี ต่อสัญญาได้ 5 ปี",
+      "ชั่วโมงการทำงาน 8 ชั่วโมงต่อวัน 6 วันต่อสัปดาห์ หรือทำงาน 9 ชั่วโมงต่อวัน 5 วันต่อสัปดาห์ (ไม่เกิน 58 ชั่วโมงต่อสัปดาห์)",
+      "เงื่อนไขอื่นๆ เป็นไปตามกฎหมายแรงงานของรัฐอิสราเอล",
+    ],
+    windowStart: "2026-10-15",
+    windowEnd: "2026-12-13",
+    issued: "2026-10-15",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 27 ต.ค. 2569; ผ่าน 26 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(151208), page: 1 },
+  },
 ];
 
 // What each `who` value means, worded for workers. Never say "ฟรี".
