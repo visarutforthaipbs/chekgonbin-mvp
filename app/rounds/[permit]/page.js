@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
     title,
     description,
     alternates: { canonical: `/rounds/${r.slug}` },
-    openGraph: { title, description, url: `https://checkgonbin.in.th/rounds/${r.slug}`, type: "article", images: ["/thumnail.png"] },
+    openGraph: { title, description, url: `https://checkgonbin.in.th/rounds/${r.slug}`, type: "article", images: ["/og.png"] },
   };
 }
 

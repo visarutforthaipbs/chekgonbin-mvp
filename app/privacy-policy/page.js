@@ -13,7 +13,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/thumnail.png",
+        url: "/og.png",
         width: 1200,
         height: 630,
         alt: "นโยบายความเป็นส่วนตัว | Thai Migrant Watch",
@@ -24,7 +24,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "นโยบายความเป็นส่วนตัว",
     description: "การเก็บรักษาและคุ้มครองข้อมูลส่วนบุคคลตามมาตรฐาน PDPA",
-    images: ["/thumnail.png"],
+    images: ["/og.png"],
   },
 };
 

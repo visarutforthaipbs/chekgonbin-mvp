@@ -14,7 +14,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/thumnail.png",
+        url: "/og.png",
         width: 1200,
         height: 630,
         alt: "บริษัทจัดหางานที่ได้รับอนุญาต | Thai Migrant Watch",
@@ -26,7 +26,7 @@ export const metadata = {
     title: "บริษัทจัดหางานที่ได้รับอนุญาต",
     description:
       "ค้นหาและตรวจสอบบริษัทจัดหางานที่ถูกกฎหมายจากฐานข้อมูลกรมการจัดหางาน",
-    images: ["/thumnail.png"],
+    images: ["/og.png"],
   },
 };
 

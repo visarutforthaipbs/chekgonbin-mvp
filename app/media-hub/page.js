@@ -13,7 +13,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/thumnail.png",
+        url: "/og.png",
         width: 1200,
         height: 630,
         alt: "ศูนย์ความรู้ Thai Migrant Watch",
@@ -25,7 +25,7 @@ export const metadata = {
     title: "ศูนย์ความรู้ Thai Migrant Watch",
     description:
       "เนื้อหาความรู้ อินโฟกราฟิก และแนวทางปลอดภัยสำหรับแรงงานไทย",
-    images: ["/thumnail.png"],
+    images: ["/og.png"],
   },
 };
 

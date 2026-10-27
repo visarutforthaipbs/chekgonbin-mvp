@@ -13,7 +13,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/thumnail.png",
+        url: "/og.png",
         width: 1200,
         height: 630,
         alt: "รายงานมิจฉาชีพ | Thai Migrant Watch",
@@ -24,7 +24,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "รายงานมิจฉาชีพงานต่างประเทศ",
     description: "แจ้งเบาะแสบริษัทจัดหางานหลอกลวงเพื่อปกป้องแรงงานไทย",
-    images: ["/thumnail.png"],
+    images: ["/og.png"],
   },
 };
 

@@ -17,7 +17,7 @@ const organizationJsonLd = {
   name: "Thai Migrant Watch",
   alternateName: ["เช็คก่อนบิน", "ChekGonBin"],
   url: "https://checkgonbin.in.th", // TODO: new domain (owner buying one, 27 Oct 2026)
-  logo: "https://checkgonbin.in.th/brand/thmw-wordmark.svg",
+  logo: "https://checkgonbin.in.th/og.png",
   sameAs: ["https://www.facebook.com/profile.php?id=61570127262236"],
   contactPoint: {
     "@type": "ContactPoint",
@@ -67,7 +67,7 @@ export const metadata = {
     siteName: "Thai Migrant Watch",
     images: [
       {
-        url: "/thumnail.png",
+        url: "/og.png",
         width: 1200,
         height: 630,
         alt: "Thai Migrant Watch",
@@ -80,7 +80,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Thai Migrant Watch — ไปทำงานต่างประเทศ ดูทั้งเส้นทางก่อนโอนเงิน",
     description: "เลือกประเทศ แล้วดูทั้งเส้นทาง: ไปทางไหนได้บ้าง เช็กบริษัทก่อนจ่าย และโทรใครเมื่อมีปัญหา",
-    images: ["/thumnail.png"],
+    images: ["/og.png"],
   },
   robots: {
     index: true,
