@@ -36,5 +36,11 @@ for (const h of THAI_HOTLINES) {
 if (!/^https:\/\//.test(FUND.source)) fail("FUND.source missing");
 if (STAGES.length !== 7) fail(`STAGES must be 7, got ${STAGES.length}`);
 
+// LINE greeting (data/line-greeting.js): same wording rules + mandatory disclaimer.
+const greet = readFileSync(new URL("../data/line-greeting.js", import.meta.url), "utf8");
+for (const w of BANNED) if (greet.includes(w)) fail(`LINE greeting banned wording: "${w}"`);
+if (EMOJI.test(greet)) fail("emoji in LINE greeting");
+if (!greet.includes("เราไม่ใช่ช่องทางสมัคร และไม่รับเงิน")) fail("LINE greeting missing disclaimer");
+
 if (fails) { console.error(`${fails} failure(s)`); process.exit(1); }
 console.log(`✓ countries: ${COUNTRIES.length} countries, ${THAI_HOTLINES.length} Thai hotlines, ${abroad} abroad numbers (all cited), 7 stages, no banned wording`);
