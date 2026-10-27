@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShieldCheck, Search, Building2, Megaphone, Info } from "lucide-react";
+import { ShieldCheck, Search, Building2, Megaphone, Info, CalendarClock } from "lucide-react";
 
 // Top-level sections. Same list drives the desktop bar and the mobile tab bar,
 // so navigation is never hidden behind a hamburger (HIG: tab bars stay visible).
 const SECTIONS = [
   { href: "/", label: "ตรวจสอบ", icon: Search },
+  { href: "/rounds", label: "รอบเปิดรับ", icon: CalendarClock },
   { href: "/agencies", label: "รายชื่อบริษัท", icon: Building2 },
   { href: "/report-scam", label: "แจ้งเบาะแส", icon: Megaphone },
   { href: "/about", label: "เกี่ยวกับ", icon: Info },
@@ -60,13 +61,13 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile tab bar — 4 labeled tabs, always visible, safe-area aware */}
+      {/* Mobile tab bar — 5 labeled tabs, always visible, safe-area aware */}
       <nav
         aria-label="เมนูหลัก (มือถือ)"
         className="glass md:hidden fixed inset-x-0 bottom-0 z-40 border-t border-[var(--glass-edge)] no-print"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
-        <ul className="grid grid-cols-4">
+        <ul className="grid grid-cols-5">
           {SECTIONS.map(({ href, label, icon: Icon }) => {
             const active = isActive(pathname, href);
             return (

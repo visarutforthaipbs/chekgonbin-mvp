@@ -1,0 +1,26 @@
+import RoundsClient from "./RoundsClient";
+
+const title = "รอบที่เปิดรับสมัครงานต่างประเทศ | เช็คก่อนบิน";
+const description =
+  "งานต่างประเทศที่มีใบอนุญาตให้รับสมัครจากกรมการจัดหางาน: จำนวนคน เพศ อายุ ค่าจ้าง ใครจ่ายค่าอะไร และบริษัทที่ได้รับอนุญาต อ่านจากใบอนุญาตตัวจริง";
+
+// Re-render daily so permits whose window has ended drop off without a deploy.
+export const revalidate = 86400;
+
+export const metadata = {
+  title,
+  description,
+  alternates: { canonical: "/rounds" },
+  openGraph: {
+    title: "รอบที่เปิดรับสมัครงานต่างประเทศ",
+    description,
+    url: "https://checkgonbin.in.th/rounds",
+    type: "website",
+    images: [{ url: "/thumnail.png", width: 1200, height: 630, alt: title }],
+  },
+  twitter: { card: "summary_large_image", title: "รอบที่เปิดรับสมัครงานต่างประเทศ", description, images: ["/thumnail.png"] },
+};
+
+export default function RoundsPage() {
+  return <RoundsClient />;
+}

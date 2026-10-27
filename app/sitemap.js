@@ -1,3 +1,5 @@
+import { ROUNDS } from "@/data/rounds";
+
 export default function sitemap() {
   const baseUrl = "https://checkgonbin.in.th";
   const lastModified = new Date();
@@ -9,6 +11,18 @@ export default function sitemap() {
       changeFrequency: "daily",
       priority: 1,
     },
+    {
+      url: `${baseUrl}/rounds`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    ...ROUNDS.map((r) => ({
+      url: `${baseUrl}/rounds/${r.slug}`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    })),
     {
       url: `${baseUrl}/agencies`,
       lastModified,
