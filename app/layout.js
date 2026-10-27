@@ -16,7 +16,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: "Thai Migrant Watch",
   alternateName: ["เช็คก่อนบิน", "ChekGonBin"],
-  url: "https://thaimigrantwatch.org", ner buying one, 27 Oct 2026)
+  url: "https://thaimigrantwatch.org",
   logo: "https://thaimigrantwatch.org/og.png",
   sameAs: ["https://www.facebook.com/profile.php?id=61570127262236"],
   contactPoint: {
@@ -32,7 +32,7 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: "Thai Migrant Watch",
   alternateName: ["เช็คก่อนบิน", "ChekGonBin"],
-  url: "https://thaimigrantwatch.org", 
+  url: "https://thaimigrantwatch.org",
   inLanguage: "th-TH",
   potentialAction: {
     "@type": "SearchAction",
