@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Providers from "@/components/Providers";
 import Script from "next/script";
 import "./globals.css";
+import LiffInit from "@/components/line/LiffInit";
 
 export const viewport = {
   width: "device-width",
@@ -102,6 +103,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body className="min-h-screen flex flex-col relative overflow-x-hidden" suppressHydrationWarning>
+        <LiffInit />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:px-4 focus:py-3 focus:bg-accent focus:text-on-accent focus:rounded-xl focus:font-bold"

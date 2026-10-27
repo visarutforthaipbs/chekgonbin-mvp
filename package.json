@@ -11,6 +11,7 @@
     "test:countries": "node scripts/test-countries.mjs"
   },
   "dependencies": {
+    "@line/liff": "^2.31.2",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.105.1",
     "@tailwindcss/postcss": "^4.2.4",

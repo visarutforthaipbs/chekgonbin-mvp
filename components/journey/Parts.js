@@ -1,3 +1,6 @@
+"use client";
+
+import { shareToLine } from "@/components/line/liff";
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, ChevronRight } from "lucide-react";
@@ -65,19 +68,17 @@ export function FundCard() {
 }
 
 export function ShareRow({ title }) {
-  const text = encodeURIComponent(title);
   return (
     <div className="flex items-center justify-between gap-3 rounded-[16px] border border-separator bg-surface px-5 min-h-14">
       <span className="text-callout text-label">แชร์หน้านี้ให้คนที่บ้าน</span>
-      <a
-        href={`https://line.me/R/share?text=${text}`}
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        type="button"
+        onClick={() => shareToLine(title, typeof window !== "undefined" ? window.location.href : "")}
         className="btn btn-tinted min-h-11"
       >
         LINE
         <ChevronRight size={18} aria-hidden="true" />
-      </a>
+      </button>
     </div>
   );
 }
