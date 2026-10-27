@@ -6,6 +6,7 @@ import { ROUNDS, activeRounds, thaiDate } from "@/data/rounds";
 import { RoundCard } from "@/components/rounds/RoundParts";
 import { HotlineCard, FundCard, ShareRow, EmptyTab } from "@/components/journey/Parts";
 import Flag from "@/components/brand/Flag";
+import { WORKFORCE } from "@/data/workforce";
 
 
 export const revalidate = 86400;
@@ -48,6 +49,35 @@ function Stat({ stat }) {
       <p className="text-large font-bold text-label tracking-tight tabular-nums leading-none">{stat.value}</p>
       <p className="text-callout text-label-2">{stat.label}</p>
       <Source href={stat.source} />
+    </div>
+  );
+}
+
+/** Monthly DOE estimate of Thai workers still working in the country (scripts/sync-workforce.py). */
+function Workforce({ code, name }) {
+  const w = WORKFORCE.byCountry[code];
+  if (!w) return null;
+  const diff = w.prev == null ? null : w.count - w.prev;
+  const n = (x) => x.toLocaleString("th-TH");
+  return (
+    <div className="card p-5 flex flex-col gap-1">
+      <p className="text-large font-bold text-label tracking-tight tabular-nums leading-none">
+        {n(w.count)} <span className="text-title3">คน</span>
+      </p>
+      <p className="text-callout text-label-2">
+        คนไทยที่คาดว่ายังทำงานอยู่ใน{name} ตามประมาณการของกรมการจัดหางาน
+        {" · "}
+        <span className="whitespace-nowrap">มากเป็นอันดับ {w.rank} จาก {WORKFORCE.countries} ประเทศ</span>
+      </p>
+      <p className="text-footnote text-label-3 tabular-nums">
+        {diff == null
+          ? null
+          : diff === 0
+            ? `เท่ากับข้อมูลวันที่ ${thaiDate(WORKFORCE.prevDate)} · `
+            : `${diff > 0 ? "เพิ่มขึ้น" : "ลดลง"} ${n(Math.abs(diff))} คน จากข้อมูลวันที่ ${thaiDate(WORKFORCE.prevDate)} · `}
+        ดึงจากแดชบอร์ดของกรมการจัดหางานเมื่อ {thaiDate(WORKFORCE.date)}
+      </p>
+      <Source href={WORKFORCE.source} />
     </div>
   );
 }
@@ -98,6 +128,7 @@ export default async function CountryPage({ params }) {
           {/* 1 ไปแล้วได้อะไร */}
           <section id="worth" aria-labelledby="worth-h" className="scroll-mt-32 flex flex-col gap-4">
             <h2 id="worth-h" className="text-title2 font-bold text-label tracking-tight">ไปแล้วได้อะไร</h2>
+            <Workforce code={c.code} name={c.name} />
             {c.stat ? <Stat stat={c.stat} /> : null}
             {c.risk ? (
               <div className="rounded-[16px] bg-danger-tint p-5 flex flex-col gap-1">
@@ -105,7 +136,7 @@ export default async function CountryPage({ params }) {
                 <Source href={c.risk.source} />
               </div>
             ) : null}
-            {!c.stat && !c.risk ? <EmptyTab what="ค่าจ้างและความเสี่ยง" /> : null}
+            {!c.stat && !c.risk && !WORKFORCE.byCountry[c.code] ? <EmptyTab what="ค่าจ้างและความเสี่ยง" /> : null}
           </section>
 
           {/* 2 ไปทางไหนได้บ้าง */}
