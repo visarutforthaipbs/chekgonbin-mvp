@@ -88,8 +88,9 @@
 }
 
 @theme {
-  /* apple.com idiom: the system face. Thai comes from the OS (SF Thai / Noto Sans Thai). */
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Sukhumvit Set", "Noto Sans Thai", "Helvetica Neue", system-ui, sans-serif;
+  /* apple.com idiom: system face for Latin; Thai is self-hosted Noto Sans Thai (layout.js)
+     so every phone/in-app browser renders the same loopless Thai. */
+  --font-sans: var(--font-thai), -apple-system, BlinkMacSystemFont, "SF Pro Text", "Sukhumvit Set", "Noto Sans Thai", "Helvetica Neue", system-ui, sans-serif;
 
   /* Semantic colors → utilities: bg-surface, text-label-2, border-separator … */
   --color-bg: var(--bg);

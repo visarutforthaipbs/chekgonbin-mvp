@@ -4,6 +4,12 @@ import Providers from "@/components/Providers";
 import Script from "next/script";
 import "./globals.css";
 import LiffInit from "@/components/line/LiffInit";
+import { Noto_Sans_Thai } from "next/font/google";
+
+// One Thai face on every device. Without it iOS falls back to looped Thonburi, Android/
+// Windows to Tahoma/Leelawadee — the LINE/Messenger in-app browsers looked like a different site.
+// Thai subset only: its unicode-range leaves Latin to the system face (SF on Apple).
+const thai = Noto_Sans_Thai({ subsets: ["thai"], display: "swap", variable: "--font-thai" });
 
 export const viewport = {
   width: "device-width",
@@ -98,7 +104,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="th" suppressHydrationWarning>
+    <html lang="th" className={thai.variable} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
