@@ -165,7 +165,7 @@ def checks(e, T):
     add("agency.phones", want <= got and not stray, f"entry {sorted(want)} vs OCR {sorted(got)} · unexplained {stray}")
     add("employer", best_ratio(e["employer"], T) >= 0.85, e["employer"])
     add("total", re.search(rf"(?<![\d,]){e['total']:,}(?![\d,])|(?<![\d,]){e['total']}(?![\d,])", T)
-        or thai_words(e["total"]) in squash(T), e["total"])
+        or f"{thai_words(e['total'])}คน" in squash(T) or f"{e['total']}{thai_words(e['total'])}" in squash(T), e["total"])
     add("total = sum(positions)", sum(p["count"] for p in e["positions"]) == e["total"],
         f"{[p['count'] for p in e['positions']]} vs {e['total']}")
     m = re.search(r"รวม\D{0,30}?(\d+)\s*\(?[ก-๙]*\)?\s*-?\s*ตำแหน่ง", T)
@@ -276,7 +276,9 @@ def count_checks(e, tab, T=""):
     A total of 1 from qwen is the 'รวม 1 ตำแหน่ง' position count, not people -> treated as unread."""
     res = []
     flat = squash(T)
-    words = lambda n: thai_words(n) in flat  # noqa: E731
+    # the spelled number must sit next to the digits "454(สี่ร้อย…)" or before "คน" — a bare "เก้า" anywhere
+    # on the page (dates, pay) is not evidence
+    words = lambda n: f"{n}{thai_words(n)}" in flat or f"{thai_words(n)}คน" in flat  # noqa: E731
     rows = (tab or {}).get("rows") if isinstance((tab or {}).get("rows"), list) else []
     qt = (tab or {}).get("total")
     ok = qt == e["total"] or words(e["total"])
