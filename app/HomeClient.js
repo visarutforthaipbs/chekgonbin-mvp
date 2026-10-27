@@ -321,7 +321,7 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    name: "เช็คก่อนบิน (ChekGonBin)",
+    name: "Thai Migrant Watch",
     operatingSystem: "All",
     applicationCategory: "SafetyApplication",
     description:

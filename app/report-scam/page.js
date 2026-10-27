@@ -1,7 +1,7 @@
 import ReportScamClient from "./ReportScamClient";
 
 export const metadata = {
-  title: "รายงานมิจฉาชีพ | เช็คก่อนบิน - แจ้งเบาะแสบริษัทหลอกลวง",
+  title: "รายงานมิจฉาชีพ | Thai Migrant Watch - แจ้งเบาะแสบริษัทหลอกลวง",
   description:
     "รายงานบริษัทหรือนายหน้าจัดหางานที่น่าสงสัย ช่วยป้องกันแรงงานไทยคนอื่นจากการถูกหลอก",
   alternates: { canonical: "/report-scam" },
@@ -16,7 +16,7 @@ export const metadata = {
         url: "/thumnail.png",
         width: 1200,
         height: 630,
-        alt: "รายงานมิจฉาชีพ | เช็คก่อนบิน",
+        alt: "รายงานมิจฉาชีพ | Thai Migrant Watch",
       },
     ],
   },

@@ -1,9 +1,9 @@
 import PrivacyPolicyClient from "./PrivacyPolicyClient";
 
 export const metadata = {
-  title: "นโยบายความเป็นส่วนตัว | เช็คก่อนบิน",
+  title: "นโยบายความเป็นส่วนตัว | Thai Migrant Watch",
   description:
-    "นโยบายความเป็นส่วนตัวของเช็คก่อนบิน การเก็บรักษาและคุ้มครองข้อมูลส่วนบุคคลตามมาตรฐาน PDPA",
+    "นโยบายความเป็นส่วนตัวของ Thai Migrant Watch การเก็บรักษาและคุ้มครองข้อมูลส่วนบุคคลตามมาตรฐาน PDPA",
   alternates: { canonical: "/privacy-policy" },
   openGraph: {
     title: "นโยบายความเป็นส่วนตัว",
@@ -16,7 +16,7 @@ export const metadata = {
         url: "/thumnail.png",
         width: 1200,
         height: 630,
-        alt: "นโยบายความเป็นส่วนตัว | เช็คก่อนบิน",
+        alt: "นโยบายความเป็นส่วนตัว | Thai Migrant Watch",
       },
     ],
   },

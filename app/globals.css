@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   เช็คก่อนบิน — design tokens (Apple HIG × Signal 39)
+   Thai Migrant Watch — design tokens (Apple HIG × Signal 39)
    ONE source of truth for color, type, shape, motion. Components use the
    semantic utilities below (bg-surface, text-label, text-danger-ink …) —
    never raw hex or slate-* classes. Dark Mode + Increase Contrast + Reduce

@@ -1,7 +1,7 @@
 import ForceLightAppearance from "@/components/ForceLightAppearance";
 
 export const metadata = {
-  title: "Admin | เช็คก่อนบิน",
+  title: "Admin | Thai Migrant Watch",
   robots: {
     index: false,
     follow: false,

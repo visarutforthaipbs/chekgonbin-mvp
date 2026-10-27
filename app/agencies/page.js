@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import AgenciesClient from "./AgenciesClient";
 
 export const metadata = {
-  title: "บริษัทจัดหางานที่ได้รับอนุญาต | เช็คก่อนบิน",
+  title: "บริษัทจัดหางานที่ได้รับอนุญาต | Thai Migrant Watch",
   description:
     "รายชื่อบริษัทจัดหางานที่ได้รับใบอนุญาตจากกรมการจัดหางาน (DOE) ตรวจสอบก่อนใช้บริการ อัปเดตทุกวัน",
   alternates: { canonical: "/agencies" },
@@ -17,7 +17,7 @@ export const metadata = {
         url: "/thumnail.png",
         width: 1200,
         height: 630,
-        alt: "บริษัทจัดหางานที่ได้รับอนุญาต | เช็คก่อนบิน",
+        alt: "บริษัทจัดหางานที่ได้รับอนุญาต | Thai Migrant Watch",
       },
     ],
   },

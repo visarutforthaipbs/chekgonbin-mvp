@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   const r = getRound(permit);
   if (!r) return {};
   const c = COUNTRIES[r.country];
-  const title = `${c.name} ${headline(r)} ${r.total.toLocaleString("th-TH")} อัตรา (จต.2 ${r.permit}) | เช็คก่อนบิน`;
+  const title = `${c.name} ${headline(r)} ${r.total.toLocaleString("th-TH")} อัตรา (จต.2 ${r.permit}) | Thai Migrant Watch`;
   const description = `${sexText(r)} · อายุ: ${ageText(r)} · ${r.pay[0].main} · บริษัท ${r.agency.name} (${r.agency.license}) · ใบอนุญาตให้รับสมัครได้ถึง ${thaiDate(r.windowEnd)} อาจปิดก่อนหากเต็ม`;
   return {
     title,

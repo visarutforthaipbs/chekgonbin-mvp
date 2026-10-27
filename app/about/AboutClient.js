@@ -13,14 +13,14 @@ const SOURCES = [
 const FAQS = [
   {
     q: "จะรู้ได้อย่างไรว่าบริษัทจัดหางานถูกกฎหมาย?",
-    a: "ตรวจเลขที่ใบอนุญาตจัดหางาน และค้นชื่อในรายชื่อบริษัทที่ได้รับอนุญาตจากกรมการจัดหางาน ซึ่งเช็คก่อนบินรวบรวมไว้ให้แล้วในหน้า “รายชื่อบริษัท”",
+    a: "ตรวจเลขที่ใบอนุญาตจัดหางาน และค้นชื่อในรายชื่อบริษัทที่ได้รับอนุญาตจากกรมการจัดหางาน ซึ่ง Thai Migrant Watch รวบรวมไว้ให้แล้วในหน้า “รายชื่อบริษัท”",
   },
   {
     q: "สัญญาณเตือนว่ากำลังจะถูกหลอกมีอะไรบ้าง?",
     a: "ที่พบบ่อยที่สุดคือ 1) เรียกเก็บเงินล่วงหน้าเป็นค่าดำเนินการ 2) ติดต่อผ่านช่องทางส่วนตัวที่ยืนยันตัวตนไม่ได้ 3) สัญญาจ้างไม่ชัดเจน หรือไม่ได้ทำผ่านกรมการจัดหางาน",
   },
   {
-    q: "ผลจากเช็คก่อนบินเชื่อได้แค่ไหน?",
+    q: "ผลจาก Thai Migrant Watch เชื่อได้แค่ไหน?",
     a: "เป็นการประเมินเบื้องต้นจากฐานข้อมูลที่เรามี ช่วยให้คุณรู้ว่าควรระวังตรงไหน แต่ไม่ใช่การรับรอง ก่อนจ่ายเงินควรยืนยันกับกรมการจัดหางาน (1300) ทุกครั้ง",
   },
 ];
@@ -32,7 +32,7 @@ export default function AboutClient() {
     <div className="w-full flex flex-col items-center">
       <div className="w-full max-w-2xl px-4 md:px-6 pt-8 md:pt-14 pb-12 md:pb-20 flex flex-col gap-8 md:gap-10">
         <header className="flex flex-col gap-3">
-          <h1 className="text-title1 md:text-large font-bold text-label tracking-tight">เกี่ยวกับเช็คก่อนบิน</h1>
+          <h1 className="text-title1 md:text-large font-bold text-label tracking-tight">เกี่ยวกับ Thai Migrant Watch</h1>
           <p className="text-body text-label-2">
             โครงการเพื่อสังคม ที่ช่วยให้คนไทยตรวจสอบก่อนไปทำงานต่างประเทศ — ก่อนจะสายเกินไป
           </p>
@@ -40,7 +40,7 @@ export default function AboutClient() {
 
         <section className="flex flex-col gap-4 text-body text-label">
           <p>
-            <strong>เช็คก่อนบินเกิดจากความโกรธ</strong> — โกรธที่คนไทยต้องเสียเงินก้อนสุดท้ายให้มิจฉาชีพ ก่อนจะรู้ตัวว่าถูกหลอก
+            <strong>Thai Migrant Watch เกิดจากความโกรธ</strong> — โกรธที่คนไทยต้องเสียเงินก้อนสุดท้ายให้มิจฉาชีพ ก่อนจะรู้ตัวว่าถูกหลอก
             เราเชื่อว่าข้อมูลที่ถูกต้องควรเข้าถึงได้ <em className="not-italic font-bold">ก่อน</em> การตัดสินใจ ไม่ใช่หลังจากนั้น
           </p>
           <p className="text-label-2">
@@ -65,7 +65,7 @@ export default function AboutClient() {
             ))}
           </ul>
           <p className="text-footnote text-label-2 px-1">
-            เช็คก่อนบินยังอยู่ในระยะทดลอง (MVP) ฐานข้อมูลและกฎการตรวจยังจำกัด ผลลัพธ์จึงเป็นการประเมินเบื้องต้นเท่านั้น
+            Thai Migrant Watch ยังอยู่ในระยะทดลอง (MVP) ฐานข้อมูลและกฎการตรวจยังจำกัด ผลลัพธ์จึงเป็นการประเมินเบื้องต้นเท่านั้น
           </p>
           <Link href="/" className="btn btn-prominent self-start mt-1">
             ลองตรวจสอบบริษัท <ArrowRight size={18} aria-hidden="true" />
@@ -110,14 +110,12 @@ export default function AboutClient() {
 
         <section aria-labelledby="partners" className="flex flex-col gap-3">
           <h2 id="partners" className="text-title3 font-bold text-label px-1">
-            ภาคีร่วมโครงการ
+            ภาคีร่วมงาน
           </h2>
           {/* Logos sit on a fixed light plate so they stay legible in Dark Mode */}
           <div className="rounded-2xl bg-white border border-separator p-6 flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-14">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/partners/prachatham.png" alt="สำนักข่าวประชาธรรม" className="max-h-12 max-w-[200px] object-contain" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/partners/thai-migrant-watch.png" alt="Thai Migrant Watch" className="max-h-16 max-w-[200px] object-contain" />
           </div>
         </section>
 

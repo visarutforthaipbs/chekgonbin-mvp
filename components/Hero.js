@@ -22,7 +22,7 @@ const Hero = () => {
           className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-brand-secondary leading-[1.15] md:leading-[1.1] tracking-tight"
         >
           ก่อนโอน ลองเช็คก่อน<br />
-          <span className="text-brand-primary">เช็คก่อนบิน</span>
+          <span className="text-brand-primary">Thai Migrant Watch</span>
         </motion.h1>
 
         <p className="text-base md:text-xl text-slate-500 max-w-lg md:max-w-none">

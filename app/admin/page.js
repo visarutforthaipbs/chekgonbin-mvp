@@ -40,7 +40,7 @@ function LoginScreen({ onLogin }) {
             <ShieldCheck className="text-brand-primary" size={32} />
           </div>
           <h1 className="text-2xl font-black text-slate-900">Admin Panel</h1>
-          <p className="text-sm text-slate-500">เช็คก่อนบิน — ผู้ดูแลระบบ</p>
+          <p className="text-sm text-slate-500">Thai Migrant Watch — ผู้ดูแลระบบ</p>
         </div>
         <input
           type="password"

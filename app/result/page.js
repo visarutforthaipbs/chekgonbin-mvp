@@ -77,7 +77,7 @@ function ShareRow() {
     queueMicrotask(() => setCanNativeShare(typeof navigator !== "undefined" && !!navigator.share));
   }, []);
 
-  const text = "เช็คบริษัทจัดหางานก่อนโอนเงิน ฟรีที่ เช็คก่อนบิน";
+  const text = "เช็คบริษัทจัดหางานก่อนโอนเงิน ฟรีที่ Thai Migrant Watch";
 
   if (canNativeShare) {
     return (
@@ -86,7 +86,7 @@ function ShareRow() {
         className="btn btn-gray flex-1"
         onClick={() => {
           trackEvent("result_share", { method: "native" });
-          navigator.share({ title: "เช็คก่อนบิน", text, url: SITE_URL }).catch(() => {});
+          navigator.share({ title: "Thai Migrant Watch", text, url: SITE_URL }).catch(() => {});
         }}
       >
         <Share2 size={18} aria-hidden="true" /> แชร์ให้เพื่อน

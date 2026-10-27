@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "ผลการประเมินความเสี่ยง | เช็คก่อนบิน",
+  title: "ผลการประเมินความเสี่ยง | Thai Migrant Watch",
   description: "หน้าผลประเมินความเสี่ยงเฉพาะรายการ ไม่ได้จัดทำเพื่อการทำดัชนีในเครื่องมือค้นหา",
   robots: {
     index: false,
