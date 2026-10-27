@@ -42,10 +42,13 @@ export function CostList({ r, showQuote = false }) {
               <span className="text-callout font-medium text-label min-w-[7.5rem]">{c.item}</span>
               <span className={`inline-flex rounded-md px-2 py-0.5 text-footnote font-bold ${TONE[label.tone]}`}>{label.text}</span>
             </div>
-            {showQuote && (
+            {showQuote && c.quote && (
               <p className="text-footnote text-label-2 pl-3 border-l-2 border-separator-strong">
                 “{c.quote}” <span className="text-label-3">({c.ref})</span>
               </p>
+            )}
+            {showQuote && !c.quote && (
+              <p className="text-footnote text-label-2 pl-3 border-l-2 border-separator-strong">ใบอนุญาตไม่ได้กล่าวถึงเรื่องนี้ ให้ถามบริษัทก่อนสมัคร</p>
             )}
           </li>
         );
