@@ -119,7 +119,7 @@ export default async function CountryPage({ params }) {
             {rounds.length > 0 ? (
               <>
                 <h3 className="text-headline font-bold text-label">งานมีใบอนุญาตตอนนี้ ({rounds.length})</h3>
-                <ul className="flex flex-col gap-4">
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {rounds.map((r) => (
                     <li key={r.slug}>
                       <RoundCard r={r} />

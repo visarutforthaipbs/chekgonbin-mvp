@@ -10,7 +10,10 @@ const TONE = {
 };
 
 export function sexText(r) {
-  return r.sex === "male" ? "เฉพาะผู้ชาย" : "ใบอนุญาตไม่ได้ระบุเพศ";
+  if (r.sex === "male") return "เฉพาะผู้ชาย";
+  if (r.sex === "female") return "เฉพาะผู้หญิง";
+  if (r.sex === "any") return "รับทั้งชายและหญิง";
+  return "ใบอนุญาตไม่ได้ระบุเพศ";
 }
 
 export function ageText(r) {
@@ -25,7 +28,8 @@ export function WindowLine({ r, className = "" }) {
     <p className={`flex items-start gap-2 text-footnote text-label-2 ${className}`}>
       <CalendarClock size={16} className="mt-0.5 shrink-0" aria-hidden="true" />
       <span>
-        ใบอนุญาตให้รับสมัครได้ถึง <span className="font-bold text-label">{thaiDate(r.windowEnd)}</span> อาจปิดก่อนหากเต็ม
+        ใบอนุญาตให้รับสมัครได้ถึง <span className="font-bold text-label">{thaiDate(r.windowEnd)}</span>{" "}
+        <span className="whitespace-nowrap">อาจปิดก่อนหากเต็ม</span>
       </span>
     </p>
   );
@@ -57,27 +61,85 @@ export function CostList({ r, showQuote = false }) {
   );
 }
 
-/** Compact card used in the list. */
+/** Short chip versions for the job-board card ("ไม่ระบุ" is explained in the page's "อ่านอย่างไร" box). */
+export function sexShort(r) {
+  if (r.sex === "male") return "ชายเท่านั้น";
+  if (r.sex === "female") return "หญิงเท่านั้น";
+  if (r.sex === "any") return "ชายและหญิง";
+  return "ไม่ระบุเพศ";
+}
+
+export function ageShort(r) {
+  if (r.ageMin != null && r.ageMax != null) return `อายุ ${r.ageMin}–${r.ageMax} ปี`;
+  if (r.ageMin != null) return `อายุ ${r.ageMin} ปีขึ้นไป`;
+  if (r.ageMax != null) return `อายุไม่เกิน ${r.ageMax} ปี`;
+  return "ไม่ระบุอายุ";
+}
+
+/** "ประมาณ 29,226.48 บาท/เดือน (ตามที่ใบนี้แปลงไว้)" -> ["ประมาณ 29,226.48 บาท/เดือน", "(ตามที่ใบนี้แปลงไว้)"] */
+function splitBaht(baht = "") {
+  const i = baht.indexOf("บาท/เดือน");
+  if (i < 0) return [baht, ""];
+  const cut = i + "บาท/เดือน".length;
+  return [baht.slice(0, cut).trim(), baht.slice(cut).trim()];
+}
+
+function Chip({ icon: Icon, children }) {
+  return (
+    <span className="inline-flex items-center gap-1 rounded-full bg-fill px-2.5 py-1 text-footnote font-medium text-label whitespace-nowrap">
+      {Icon && <Icon size={14} className="text-label-2" aria-hidden="true" />}
+      {children}
+    </span>
+  );
+}
+
+/** Job-board card used in the /rounds grid and on country pages. */
 export function RoundCard({ r, verdict }) {
   const c = COUNTRIES[r.country];
   const pay = r.pay[0];
+  const [bahtMain, bahtNote] = splitBaht(pay.baht);
   return (
-    <article className="card overflow-hidden" aria-labelledby={`round-${r.slug}`}>
-      <div className="p-4 md:p-5 flex flex-col gap-3">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex flex-col gap-0.5 min-w-0">
-            <p className="text-footnote font-bold text-label-2">
-              <Flag code={r.country} size={14} className="align-[-2px] mr-1" /> {c.name} · ใบอนุญาต จต.2 {r.permit}
-            </p>
-            <h2 id={`round-${r.slug}`} className="text-headline font-bold text-label">
-              {headline(r)}
-            </h2>
-            {r.positions.length > 2 && <p className="text-footnote text-label-2">{positionsLabel(r)}</p>}
-          </div>
-          <span className="shrink-0 inline-flex items-center gap-1 rounded-lg bg-fill px-2.5 py-1 text-callout font-bold text-label tabular-nums">
-            <Users size={16} aria-hidden="true" />
-            {r.total.toLocaleString("th-TH")} คน
-          </span>
+    <article
+      className="card h-full flex flex-col overflow-hidden transition-[border-color,box-shadow] hover:border-separator-strong hover:shadow-sm"
+      aria-labelledby={`round-${r.slug}`}
+    >
+      <div className="p-4 md:p-5 flex flex-col gap-4 flex-1">
+        <div className="flex items-center justify-between gap-3">
+          <p className="inline-flex items-center gap-2 text-footnote font-bold text-label min-w-0">
+            <Flag code={r.country} size={20} className="shrink-0 rounded-[3px]" />
+            <span className="truncate">{c.name}</span>
+          </p>
+          <span className="shrink-0 text-caption font-medium text-label-3 tabular-nums">จต.2 {r.permit}</span>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <h2 id={`round-${r.slug}`} className="text-headline font-bold text-label line-clamp-2">
+            {headline(r)}
+          </h2>
+          {r.positions.length > 2 && <p className="text-footnote text-label-2 line-clamp-2">{positionsLabel(r)}</p>}
+          <p className="text-footnote text-label-2 truncate">
+            {r.agency.name} · <span className="tabular-nums">{r.agency.license}</span>
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-1.5">
+          <Chip icon={Users}>
+            <span className="tabular-nums">{r.total.toLocaleString("th-TH")}</span> คน
+          </Chip>
+          <Chip>{sexShort(r)}</Chip>
+          <Chip>{ageShort(r)}</Chip>
+        </div>
+
+        <div className="rounded-xl bg-surface-2 px-3.5 py-3 flex flex-col gap-0.5">
+          <p className="inline-flex items-center gap-1.5 text-caption font-bold text-label-2">
+            <Banknote size={14} aria-hidden="true" />
+            ค่าจ้างตามใบอนุญาต
+          </p>
+          <p className="text-title3 font-bold text-label tabular-nums">{bahtMain}</p>
+          <p className="text-footnote text-label-2 tabular-nums">
+            {pay.main}
+            {bahtNote && <span className="text-label-3"> {bahtNote}</span>}
+          </p>
         </div>
 
         {verdict && verdict.status !== "fit" && (
@@ -94,36 +156,24 @@ export function RoundCard({ r, verdict }) {
           <p className="rounded-lg px-3 py-2 text-footnote font-bold bg-safe-tint text-safe-ink">ตรงเงื่อนไขที่ใบอนุญาตระบุ</p>
         )}
 
-        <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-callout">
-          <div className="flex gap-2">
-            <dt className="text-label-2 shrink-0">เพศ</dt>
-            <dd className="text-label font-medium">{sexText(r)}</dd>
-          </div>
-          <div className="flex gap-2">
-            <dt className="text-label-2 shrink-0">อายุ</dt>
-            <dd className="text-label font-medium">{ageText(r)}</dd>
-          </div>
-          <div className="flex gap-2 sm:col-span-2">
-            <dt className="text-label-2 shrink-0 inline-flex items-center gap-1">
-              <Banknote size={16} aria-hidden="true" />
-              ค่าจ้าง
-            </dt>
-            <dd className="text-label font-medium">
-              {pay.main} <span className="text-label-2 font-normal">({pay.baht})</span>
-            </dd>
-          </div>
-        </dl>
-
-        <div className="flex flex-col gap-1.5">
-          <h3 className="text-footnote font-bold text-label-2">ใครจ่ายอะไร (ตามใบอนุญาต)</h3>
-          <CostList r={r} />
+        <div className="flex flex-col gap-2">
+          <h3 className="text-caption font-bold text-label-2">ใครจ่ายอะไร (ตามใบอนุญาต)</h3>
+          <ul className="flex flex-col gap-1.5">
+            {r.costs.map((cost) => {
+              const label = COST_LABEL[cost.who];
+              return (
+                <li key={cost.item} className="flex items-start justify-between gap-3 text-footnote">
+                  <span className="text-label">{cost.item}</span>
+                  <span className={`shrink-0 max-w-[60%] text-right rounded-md px-2 py-0.5 font-bold ${TONE[label.tone]}`}>
+                    {label.text}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
-        <p className="text-footnote text-label-2">
-          บริษัทจัดหางาน: <span className="text-label font-medium">{r.agency.name}</span> · {r.agency.license}
-        </p>
-
-        <WindowLine r={r} />
+        <WindowLine r={r} className="mt-auto pt-1" />
       </div>
 
       <Link
