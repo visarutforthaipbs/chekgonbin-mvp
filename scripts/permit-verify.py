@@ -164,6 +164,20 @@ def ocr(pdf, dpi, cache):
     return txt
 
 
+
+def word_count(n, flat):
+    """Thai-word evidence for count n in squashed text. "<n><words(n)>" or "<words(n)>คน" counts, but NOT when the
+    words sit right after DIFFERENT digits (142's OCR: "300สองร้อยคน" — digits and words disagree, so the line
+    proves neither 300 nor 200)."""
+    w = thai_words(n)
+    if f"{n}{w}" in flat or f"{n:,}{w}" in flat:
+        return True
+    for m in re.finditer(re.escape(w) + "คน", flat):
+        before = re.search(r"(\d[\d,]*)$", flat[max(0, m.start() - 8):m.start()])
+        if not before or int(before.group(1).replace(",", "")) == n:
+            return True
+    return False
+
 def checks(e, T, passes=None):
     """Return list of (field, ok, detail). T = normalised OCR transcript (one or more passes joined)."""
     res = []
@@ -196,7 +210,7 @@ def checks(e, T, passes=None):
     add("agency.phones", want <= got and not stray, f"entry {sorted(want)} vs OCR {sorted(got)} · unexplained {stray}")
     add("employer", best_ratio(e["employer"], T) >= 0.85, e["employer"])
     add("total", re.search(rf"(?<![\d,]){e['total']:,}(?![\d,])|(?<![\d,]){e['total']}(?![\d,])", T)
-        or f"{thai_words(e['total'])}คน" in squash(T) or f"{e['total']}{thai_words(e['total'])}" in squash(T), e["total"])
+        or word_count(e["total"], squash(T)), e["total"])
     add("total = sum(positions)", sum(p["count"] for p in e["positions"]) == e["total"],
         f"{[p['count'] for p in e['positions']]} vs {e['total']}")
     m = re.search(r"รวม\D{0,30}?(\d+)\s*\(?[ก-๙]*\)?\s*-?\s*ตำแหน่ง", T)
@@ -310,7 +324,7 @@ def count_checks(e, tab, T=""):
     flat = squash(T)
     # the spelled number must sit next to the digits "454(สี่ร้อย…)" or before "คน" — a bare "เก้า" anywhere
     # on the page (dates, pay) is not evidence
-    words = lambda n: f"{n}{thai_words(n)}" in flat or f"{thai_words(n)}คน" in flat  # noqa: E731
+    words = lambda n: word_count(n, flat)  # noqa: E731
     rows = (tab or {}).get("rows") if isinstance((tab or {}).get("rows"), list) else []
     qt = (tab or {}).get("total")
     if qt == 1 and e["total"] != 1:
@@ -326,6 +340,43 @@ def count_checks(e, tab, T=""):
         res.append((f"count '{p['title']}' (qwen table / Thai words)", ok,
                     f"entry {p['count']} · qwen {row.get('count')} · words {words(p['count'])}"))
     return res
+
+
+def crop_checks(e, pdf, cache):
+    """Located evidence for fields the full-page OCR can't read (digits under the DOE seal).
+    entry "crops": [{"field": "total", "box": [x0, y0, x1, y1]}]  (page fractions). The box only says WHERE to
+    look; typhoon-ocr reads that crop at 400/500/600 dpi and must produce the entry value itself, spelled
+    "<digits>(<Thai words>)" or "<Thai words> คน", in >=3 of 6 reads (350-800 dpi). Random tiling was rejected: it
+    hallucinates "200 (สองร้อย) คน"-style text and would confirm wrong counts."""
+    out = []
+    crops = e.get("crops") or []
+    if not crops:
+        return out
+    import pymupdf
+    page = pymupdf.open(pdf)[0]
+    W, H = page.rect.width, page.rect.height
+    key = hashlib.sha256(Path(pdf).read_bytes()).hexdigest()[:16]
+    for c in crops:
+        x0, y0, x1, y1 = c["box"]
+        if c["field"] != "total" or not (0 <= x0 < x1 <= 1 and 0 <= y0 < y1 <= 1) or (x1 - x0) * (y1 - y0) > 0.06:
+            out.append((f"crop {c['field']}", False, "only field 'total', box <= 6 % of the page"))
+            continue
+        hits, reads = 0, []
+        for dpi in (350, 450, 550, 650, 700, 800):
+            f = cache / f"{key}-crop-{x0}-{y0}-{x1}-{y1}-{dpi}.txt"
+            if f.exists():
+                t = f.read_text(encoding="utf-8")
+            else:
+                ensure_gpu()
+                png = page.get_pixmap(dpi=dpi, clip=pymupdf.Rect(W * x0, H * y0, W * x1, H * y1)).tobytes("png")
+                t = R._chat(R.OCR, R.OCR_PROMPT, image=png, num_predict=200).strip()
+                f.write_text(t, encoding="utf-8")
+            reads.append(t[:60])
+            fl = squash(norm(t))
+            n = e["total"]
+            hits += word_count(n, fl)
+        out.append(("total (located crop)", hits >= 3, f"{hits}/6 reads · {reads}"))
+    return out
 
 
 def main():
@@ -348,9 +399,18 @@ def main():
         res = checks(e, "\n".join(passes), passes)
         if all(ok for _, ok, _ in res):
             break
-    res += count_checks(e, table_counts(a.pdf, cache), "\n".join(passes))
-    if any(f.startswith("total (qwen") and ok for f, ok, _ in res):
-        res = [(f, ok or f == "total", d) for f, ok, d in res]  # total confirmed by table read / รวม line
+    def full(ps):
+        r = checks(e, "\n".join(ps), ps) + count_checks(e, table_counts(a.pdf, cache), "\n".join(ps))
+        if any(f.startswith("total (qwen") and ok for f, ok, _ in r):
+            r = [(f, ok or f == "total", d) for f, ok, d in r]  # total confirmed by table read / รวม line
+        return r
+
+    res = full(passes)
+    cr = crop_checks(e, a.pdf, cache)
+    if cr:
+        res += cr
+        if all(ok for _, ok, _ in cr):  # located crop read the total itself -> it stands in for the table/word read
+            res = [(f, ok or f in ("total", "total (qwen table / Thai words)"), d) for f, ok, d in res]
     fails = [(f, d) for f, ok, d in res if not ok]
     verdict = "PASS" if not fails else "HOLD"
     out = {"verdict": verdict, "permit": e["permit"], "checked": len(res), "ocr_passes": len(passes),

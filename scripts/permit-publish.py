@@ -73,6 +73,7 @@ def render(e, verified_note):
     e = dict(e)
     pool = e.pop("source")["pool_id"]
     e.pop("feeBan", None)
+    e.pop("crops", None)  # verifier evidence only, not site data
     e["verified"] = verified_note
     body = js(e, 4)
     body = body[:-1].rstrip() + f"\n    feeBan: FEE_BAN,\n    source: {{ url: doe({pool}), page: 1 }},\n  }}"
