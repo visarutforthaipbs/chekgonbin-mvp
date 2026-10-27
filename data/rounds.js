@@ -21,6 +21,7 @@ export const COUNTRIES = {
   IL: { name: "อิสราเอล" },
   RO: { name: "โรมาเนีย" },
   LT: { name: "ลิทัวเนีย" },
+  TW: { name: "ไต้หวัน" },
 };
 
 export const ROUNDS = [
@@ -342,6 +343,66 @@ export const ROUNDS = [
     verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 27 ต.ค. 2569; ผ่าน 26 จุดตรวจ",
     feeBan: FEE_BAN,
     source: { url: doe(151208), page: 1 },
+  },
+  {
+    permit: "141/2569",
+    slug: "141-2569",
+    country: "TW",
+    channel: "private",
+    industry: "การผลิต ผลิตภัณฑ์โลหะ",
+    employer: "IN WIN DEVELOPMENT INC.",
+    employerPlace: "NO.193 SEC 2 CHANGHSIN RD. SHAN BEE LI LUCHU DIST. TAOYUAN CITY, TAIWAN (R.O.C.)",
+    agency: {
+      name: "เอ็ม ที เวิร์ค",
+      license: "ต.1210/2560",
+      search: "เอ็ม ที เวิร์ค",
+      phones: ["02-062-6475"],
+    },
+    positions: [
+      {
+        title: "คนงานผลิต ผลิตภัณฑ์โลหะ",
+        count: 20,
+      },
+    ],
+    total: 20,
+    sex: "male",
+    sexQuote: "(เพศชาย)",
+    ageMin: null,
+    ageMax: null,
+    pay: [
+      {
+        label: "คนงานผลิต ผลิตภัณฑ์โลหะ",
+        main: "29,500 เหรียญไต้หวัน/เดือน",
+        baht: "ประมาณ 33,335 บาท/เดือน",
+        note: "ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "อาหารและที่พัก",
+        who: "deduct",
+        quote: "นายจ้างจัดอาหาร และที่พักให้โดยหักจากค่าจ้างของลูกจ้าง 2,500 เหรียญไต้หวันต่อเดือน (ประมาณ 2,825 บาทต่อเดือน)",
+        ref: "เงื่อนไขข้อ 3",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "employer",
+        quote: "และจ่ายค่าบัตรโดยสารเครื่องบินไป-กลับให้โดยไม่คิดมูลค่า",
+        ref: "เงื่อนไขข้อ 3",
+      },
+    ],
+    terms: [
+      "พื้นที่จังหวัด (ระบุจังหวัดที่ผู้รับอนุญาตมีสำนักงานตั้งอยู่) กรุงเทพมหานคร",
+      "ระยะเวลาของสัญญาจ้างงาน 3(สาม) ปี",
+      "ไม่เกิน 8 ชั่วโมงต่อวัน และเมื่อรวมกันแล้วต้องไม่เกิน 40 ชั่วโมงต่อสัปดาห์",
+      "เงื่อนไขอื่น ๆ เป็นไปตามกฎหมายแรงงานไต้หวัน",
+    ],
+    windowStart: "2026-10-06",
+    windowEnd: "2026-12-04",
+    issued: "2026-10-06",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 27 ต.ค. 2569; ผ่าน 27 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(150587), page: 1 },
   },
 ];
 
