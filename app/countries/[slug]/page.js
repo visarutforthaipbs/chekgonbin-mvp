@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, ExternalLink } from "lucide-react";
-import { COUNTRIES, STAGES, getCountry, COUNTRIES_UPDATED } from "@/data/countries";
+import { COUNTRIES, STAGES, getCountry, COUNTRIES_UPDATED, COSTS } from "@/data/countries";
 import { ROUNDS, activeRounds, thaiDate } from "@/data/rounds";
 import { RoundCard } from "@/components/rounds/RoundParts";
 import { HotlineCard, FundCard, ShareRow, EmptyTab } from "@/components/journey/Parts";
@@ -146,6 +146,15 @@ export default async function CountryPage({ params }) {
                 <p key={t} className="flex min-h-12 items-center px-5 text-body text-label">{t}</p>
               ))}
             </div>
+            <div className="inset-list">
+              <p className="px-5 pt-4 pb-1 text-headline font-bold text-label">ค่าเดินทางจริงที่มีคนสำรวจไว้</p>
+              {COSTS.map((x) => (
+                <div key={x.route} className="flex min-h-12 items-center justify-between gap-3 px-5 py-2 text-callout">
+                  <span className="text-label">{x.route}{x.note ? <span className="block text-footnote text-label-2">{x.note}</span> : null}</span>
+                  <a href={x.source} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center font-bold text-label tabular-nums whitespace-nowrap underline decoration-separator-strong underline-offset-4">{x.amount}</a>
+                </div>
+              ))}
+            </div>
             <Link href="/#check" className="btn btn-prominent w-full">
               เช็กชื่อบริษัทกับทะเบียนกรมการจัดหางาน
               <ChevronRight size={20} aria-hidden="true" />
@@ -167,9 +176,12 @@ export default async function CountryPage({ params }) {
           {/* 6 มีปัญหาโทรใคร */}
           <section id="help" aria-labelledby="help-h" className="scroll-mt-32 flex flex-col gap-4">
             <h2 id="help-h" className="text-title2 font-bold text-label tracking-tight">มีปัญหาโทรใคร</h2>
-            <HotlineCard />
-            <p className="text-callout text-label-2">
-              เบอร์สถานทูตและสำนักงานแรงงานไทยใน{c.name}: ยังไม่ได้ตรวจสอบจากเอกสารต้นทาง จึงยังไม่แสดง
+            {c.abroad?.length ? <HotlineCard title={`โทรได้เลย (ใน${c.short || c.name})`} extra={c.abroad} /> : null}
+            {c.emergencyLocal ? <p className="text-callout text-label-2">เหตุด่วนในพื้นที่: {c.emergencyLocal}</p> : null}
+            {c.abroadNote ? <p className="text-callout text-label-2">{c.abroadNote}</p> : null}
+            <HotlineCard title="โทรกลับไทย" />
+            <p className="text-footnote text-label-2">
+              เบอร์ทั้งหมดคัดจากเว็บไซต์สถานทูต/กงสุล และหน้า “สำนักงานแรงงานในต่างประเทศ” ของกระทรวงแรงงาน ณ {thaiDate(COUNTRIES_UPDATED)} — กดที่แต่ละเบอร์เพื่อโทร
             </p>
           </section>
 
@@ -179,6 +191,10 @@ export default async function CountryPage({ params }) {
             <EmptyTab what="การกลับบ้านและการเบิกกองทุนฯ" />
           </section>
 
+          <Link href="/women" className="flex min-h-14 items-center justify-between gap-3 rounded-[16px] bg-surface-2 px-5 text-body text-label hover:bg-fill">
+            <span>ผู้หญิงไปทำงานต่างประเทศ — สัญญาณที่ต้องดูก่อนโอน</span>
+            <ChevronRight size={20} className="text-accent-ink shrink-0" aria-hidden="true" />
+          </Link>
           <ShareRow title={shareTitle} />
           <p className="text-footnote text-label-2">
             เราไม่ใช่ช่องทางสมัคร และไม่รับเงิน · ข้อมูล ณ {thaiDate(COUNTRIES_UPDATED)}

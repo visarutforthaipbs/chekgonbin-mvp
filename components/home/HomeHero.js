@@ -79,6 +79,11 @@ export default function HomeHero() {
         ))}
       </section>
 
+      <Link href="/women" className="flex min-h-14 items-center justify-between gap-3 rounded-[16px] bg-surface-2 px-5 text-body text-label hover:bg-fill">
+        <span>ผู้หญิงไปทำงานต่างประเทศ — 4 สัญญาณก่อนโอน</span>
+        <ChevronRight size={20} className="text-accent-ink shrink-0" aria-hidden="true" />
+      </Link>
+
       <p className="text-footnote text-label-2 md:text-center">
         เราไม่ใช่ช่องทางสมัคร และไม่รับเงิน · ข้อมูลจากใบอนุญาตและประกาศของกรมการจัดหางาน
       </p>

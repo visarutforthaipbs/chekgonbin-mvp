@@ -25,6 +25,7 @@ export default function sitemap() {
       priority: 0.9,
     })),
     { url: `${baseUrl}/emergency`, lastModified, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${baseUrl}/women`, lastModified, changeFrequency: "monthly", priority: 0.8 },
     ...ROUNDS.map((r) => ({
       url: `${baseUrl}/rounds/${r.slug}`,
       lastModified,

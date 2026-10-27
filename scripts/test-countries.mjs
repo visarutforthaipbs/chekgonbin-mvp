@@ -2,13 +2,13 @@
 // Every stat/risk must carry a source URL; banned wordings never ship; every tel: is dialable.
 import { readFileSync } from "node:fs";
 const src = readFileSync(new URL("../data/countries.js", import.meta.url), "utf8");
-const { COUNTRIES, THAI_HOTLINES, FUND, STAGES } = await import("data:text/javascript;base64," + Buffer.from(src).toString("base64"));
+const { COUNTRIES, THAI_HOTLINES, FUND, STAGES, WOMEN, COSTS } = await import("data:text/javascript;base64," + Buffer.from(src).toString("base64"));
 
 const BANNED = ["ค่าใช้จ่ายก่อนเดินทาง", "เรียกเก็บเงิน", "ถูกเรียกเก็บเงิน", "ปิด 7 ธ.ค.", "ยังเปิด", "ฟรี", "free meals"];
 let fails = 0;
 const fail = (m) => { fails++; console.error("✗", m); };
 
-const text = JSON.stringify({ COUNTRIES, THAI_HOTLINES, FUND });
+const text = JSON.stringify({ COUNTRIES, THAI_HOTLINES, FUND, WOMEN, COSTS });
 for (const w of BANNED) if (text.includes(w)) fail(`banned wording present: "${w}"`);
 
 for (const c of COUNTRIES) {
@@ -18,6 +18,13 @@ for (const c of COUNTRIES) {
     if (c[k] && !/^https:\/\//.test(c[k].source || "")) fail(`${c.slug}.${k}: no https source`);
   }
 }
+let abroad = 0;
+for (const c of COUNTRIES) for (const h of c.abroad || []) {
+  abroad++;
+  if (!/^\+\d{8,15}$|^1\d{3,7}$/.test(h.tel)) fail(`${c.slug} abroad ${h.label}: tel "${h.tel}" not E.164`);
+  if (!/^https:\/\//.test(h.source || "")) fail(`${c.slug} abroad ${h.label}: no source`);
+}
+for (const x of [...WOMEN.stats, ...COSTS]) if (!/^https?:\/\//.test(x.source || "")) fail(`uncited: ${x.label || x.route}`);
 const slugs = new Set(COUNTRIES.map((c) => c.slug));
 if (slugs.size !== COUNTRIES.length) fail("duplicate slug");
 
@@ -28,4 +35,4 @@ if (!/^https:\/\//.test(FUND.source)) fail("FUND.source missing");
 if (STAGES.length !== 7) fail(`STAGES must be 7, got ${STAGES.length}`);
 
 if (fails) { console.error(`${fails} failure(s)`); process.exit(1); }
-console.log(`✓ countries: ${COUNTRIES.length} countries, ${THAI_HOTLINES.length} hotlines, 7 stages, no banned wording`);
+console.log(`✓ countries: ${COUNTRIES.length} countries, ${THAI_HOTLINES.length} Thai hotlines, ${abroad} abroad numbers (all cited), 7 stages, no banned wording`);
