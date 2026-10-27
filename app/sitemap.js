@@ -2,7 +2,7 @@ import { ROUNDS } from "@/data/rounds";
 import { COUNTRIES } from "@/data/countries";
 
 export default function sitemap() {
-  const baseUrl = "https://checkgonbin.in.th";
+  const baseUrl = "https://thaimigrantwatch.org";
   const lastModified = new Date();
 
   return [

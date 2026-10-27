@@ -10,7 +10,7 @@ export const metadata = {
     title: "บริษัทจัดหางานที่ได้รับอนุญาต",
     description:
       "ค้นหาและตรวจสอบบริษัทจัดหางานที่ถูกกฎหมายจากฐานข้อมูลกรมการจัดหางาน",
-    url: "https://checkgonbin.in.th/agencies",
+    url: "https://thaimigrantwatch.org/agencies",
     type: "website",
     images: [
       {

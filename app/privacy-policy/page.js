@@ -9,7 +9,7 @@ export const metadata = {
     title: "นโยบายความเป็นส่วนตัว",
     description:
       "การเก็บรักษาและคุ้มครองข้อมูลส่วนบุคคลตามมาตรฐาน PDPA",
-    url: "https://checkgonbin.in.th/privacy-policy",
+    url: "https://thaimigrantwatch.org/privacy-policy",
     type: "website",
     images: [
       {

@@ -9,7 +9,7 @@ export const metadata = {
     title: "รายงานมิจฉาชีพงานต่างประเทศ",
     description:
       "แจ้งเบาะแสบริษัทจัดหางานหลอกลวงเพื่อปกป้องแรงงานไทย",
-    url: "https://checkgonbin.in.th/report-scam",
+    url: "https://thaimigrantwatch.org/report-scam",
     type: "website",
     images: [
       {

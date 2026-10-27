@@ -14,7 +14,7 @@ export const metadata = {
   openGraph: {
     title: "งานต่างประเทศที่มีใบอนุญาต",
     description,
-    url: "https://checkgonbin.in.th/rounds",
+    url: "https://thaimigrantwatch.org/rounds",
     type: "website",
     images: [{ url: "/og.png", width: 1200, height: 630, alt: title }],
   },

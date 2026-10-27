@@ -20,7 +20,7 @@ import {
 import { trackEvent } from "@/utils/analytics";
 import { parsePhones } from "@/utils/phone";
 
-const SITE_URL = "https://checkgonbin.in.th";
+const SITE_URL = "https://thaimigrantwatch.org";
 
 // Layer 1 — each level is encoded by color + icon shape + words (never color alone).
 const LEVELS = {

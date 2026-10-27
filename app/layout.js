@@ -16,8 +16,8 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: "Thai Migrant Watch",
   alternateName: ["เช็คก่อนบิน", "ChekGonBin"],
-  url: "https://checkgonbin.in.th", // TODO: new domain (owner buying one, 27 Oct 2026)
-  logo: "https://checkgonbin.in.th/og.png",
+  url: "https://thaimigrantwatch.org", ner buying one, 27 Oct 2026)
+  logo: "https://thaimigrantwatch.org/og.png",
   sameAs: ["https://www.facebook.com/profile.php?id=61570127262236"],
   contactPoint: {
     "@type": "ContactPoint",
@@ -32,17 +32,17 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: "Thai Migrant Watch",
   alternateName: ["เช็คก่อนบิน", "ChekGonBin"],
-  url: "https://checkgonbin.in.th", // TODO: new domain
+  url: "https://thaimigrantwatch.org", 
   inLanguage: "th-TH",
   potentialAction: {
     "@type": "SearchAction",
-    target: "https://checkgonbin.in.th/agencies?q={search_term_string}",
+    target: "https://thaimigrantwatch.org/agencies?q={search_term_string}",
     "query-input": "required name=search_term_string",
   },
 };
 
 export const metadata = {
-  metadataBase: new URL("https://checkgonbin.in.th"),
+  metadataBase: new URL("https://thaimigrantwatch.org"),
   title: "Thai Migrant Watch — ไปทำงานต่างประเทศ ดูทั้งเส้นทางก่อนโอนเงิน",
   description:
     "เลือกประเทศ แล้วดูทั้งเส้นทาง: ไปทางไหนได้บ้าง เช็กบริษัทก่อนจ่าย งานที่มีใบอนุญาต และโทรใครเมื่อมีปัญหา — เราไม่ใช่ช่องทางสมัคร และไม่รับเงิน",
@@ -63,7 +63,7 @@ export const metadata = {
   openGraph: {
     title: "Thai Migrant Watch — ไปทำงานต่างประเทศ ดูทั้งเส้นทางก่อนโอนเงิน",
     description: "เลือกประเทศ แล้วดูทั้งเส้นทาง: ไปทางไหนได้บ้าง เช็กบริษัทก่อนจ่าย และโทรใครเมื่อมีปัญหา",
-    url: "https://checkgonbin.in.th",
+    url: "https://thaimigrantwatch.org",
     siteName: "Thai Migrant Watch",
     images: [
       {

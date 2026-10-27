@@ -9,7 +9,7 @@ export const metadata = {
     title: "ศูนย์ความรู้ Thai Migrant Watch",
     description:
       "เนื้อหาความรู้ อินโฟกราฟิก และแนวทางปลอดภัยสำหรับแรงงานไทย",
-    url: "https://checkgonbin.in.th/media-hub",
+    url: "https://thaimigrantwatch.org/media-hub",
     type: "website",
     images: [
       {

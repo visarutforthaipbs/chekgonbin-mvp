@@ -9,7 +9,7 @@ export const metadata = {
     title: "เกี่ยวกับ Thai Migrant Watch",
     description:
       "โครงการเพื่อสังคมที่มุ่งปกป้องแรงงานไทยจากการหลอกลวงไปทำงานต่างประเทศ",
-    url: "https://checkgonbin.in.th/about",
+    url: "https://thaimigrantwatch.org/about",
     type: "website",
     images: [
       {

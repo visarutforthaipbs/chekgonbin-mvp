@@ -5,7 +5,7 @@ export default function robots() {
       allow: "/",
       disallow: ["/api/", "/admin"],
     },
-    host: "https://checkgonbin.in.th",
-    sitemap: "https://checkgonbin.in.th/sitemap.xml",
+    host: "https://thaimigrantwatch.org",
+    sitemap: "https://thaimigrantwatch.org/sitemap.xml",
   };
 }
