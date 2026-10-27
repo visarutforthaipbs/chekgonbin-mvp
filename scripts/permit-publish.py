@@ -104,7 +104,9 @@ def main():
     new = src
     if AUTO not in new:
         new = new.replace("\n];\n\n// What each `who` value", "\n" + AUTO + "];\n\n// What each `who` value", 1)
-    new = new.replace(AUTO + "];", AUTO + render(e, note) + "];", 1)
+    i = new.index(AUTO) + len(AUTO)
+    j = new.index("\n];\n", i - 1) + 1  # end of ROUNDS, after any earlier AUTO entries
+    new = new[:j] + render(e, note) + new[j:]
     cm = re.search(r"export const COUNTRIES = \{(.*?)\n\};", new, re.S)
     if not cm:
         raise RuntimeError("COUNTRIES block not found")
