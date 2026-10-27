@@ -44,3 +44,4 @@ next-env.d.ts
 .venv/
 scripts/logs/last_run.json
 scripts/__pycache__/
+scripts/permits-inbox/

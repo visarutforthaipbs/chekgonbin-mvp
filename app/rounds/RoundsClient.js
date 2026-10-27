@@ -127,9 +127,11 @@ export default function RoundsClient() {
         </section>
 
         <p className="text-footnote text-label-2 px-1" aria-live="polite">
-          {shown.length > 0
-            ? `${shown.length} ใบอนุญาต · รวม ${places.toLocaleString("th-TH")} อัตรา${filtering ? " ที่ไม่ขัดกับเงื่อนไขของคุณ" : ""}`
-            : "ไม่มีใบอนุญาตที่ตรงกับเงื่อนไขของคุณในตอนนี้"}
+          {rounds.length === 0
+            ? "ตอนนี้ไม่มีใบอนุญาตที่เราอ่านแล้วและยังอยู่ในช่วงรับสมัคร ใบใหม่จะขึ้นที่นี่หลังตรวจจากใบอนุญาตตัวจริง"
+            : shown.length > 0
+              ? `${shown.length} ใบอนุญาต · รวม ${places.toLocaleString("th-TH")} อัตรา${filtering ? " ที่ไม่ขัดกับเงื่อนไขของคุณ" : ""}`
+              : "ไม่มีใบอนุญาตที่ตรงกับเงื่อนไขของคุณในตอนนี้"}
         </p>
 
         <div className="flex flex-col gap-3">
