@@ -379,6 +379,22 @@ def crop_checks(e, pdf, cache):
     return out
 
 
+def listing(e, pdf):
+    """DOE listing title for this exact PDF if it states the entry's single position, sex and total, else None."""
+    st = Path(pdf).parent / "state.json"
+    if not st.exists() or len(e["positions"]) != 1 or e.get("sexQuote") or e.get("sex") not in ("male", "female"):
+        return None
+    sha = hashlib.sha256(Path(pdf).read_bytes()).hexdigest()
+    for v in json.loads(st.read_text(encoding="utf-8")).get("seen", {}).values():
+        if v.get("permit") != e["permit"] or v.get("sha256") != sha:
+            continue
+        t = squash(v.get("title", ""))
+        word = "ชาย" if e["sex"] == "male" else "หญิง"
+        if squash(e["positions"][0]["title"]) in t and re.search(rf"(?<!\d){word}{e['total']}คน", t) is not None:
+            return v["title"]
+    return None
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("entry"), ap.add_argument("pdf")
@@ -412,6 +428,16 @@ def main():
         if all(ok for _, ok, _ in cr):  # located crop read the total itself -> it stands in for the table/word read
             res = [(f, ok or f in ("total", "total (qwen table / Thai words)"), d) for f, ok, d in res]
     fails = [(f, d) for f, ok, d in res if not ok]
+    # DOE listing fallback, count + sex ONLY: when the seal hides them on the scan, DOE's own listing title for
+    # this exact PDF (watcher state.json: same permit, same sha256) may confirm them, e.g. 144/2569
+    # "คนงานผลิต ผลิตภัณฑ์โลหะ (ชาย 9 คน)". Every other field must still pass from the scan, and a sexQuote
+    # ("ใบเขียนว่า …" on the page) is never confirmed this way.
+    LISTABLE = {"total", "total (qwen table / Thai words)", "sex"}
+    if fails and {f for f, _ in fails} <= LISTABLE:
+        lst = listing(e, a.pdf)
+        if lst:
+            res = [(f, ok or f in LISTABLE, d if ok or f not in LISTABLE else f"DOE listing: {lst}") for f, ok, d in res]
+            fails = [(f, d) for f, ok, d in res if not ok]
     verdict = "PASS" if not fails else "HOLD"
     out = {"verdict": verdict, "permit": e["permit"], "checked": len(res), "ocr_passes": len(passes),
            "failures": [{"field": f, "detail": str(d)} for f, d in fails],
