@@ -72,12 +72,12 @@ export default function RoundsClient() {
     <div className="w-full flex flex-col items-center">
       <div className="w-full max-w-3xl px-4 md:px-6 pt-8 md:pt-14 pb-12 md:pb-20 flex flex-col gap-5 md:gap-6">
         <header className="flex flex-col gap-2">
-          <h1 className="text-title1 md:text-large font-bold text-label tracking-tight">รอบที่เปิดรับสมัคร</h1>
+          <h1 className="text-title1 md:text-large font-bold text-label tracking-tight">งานต่างประเทศที่มีใบอนุญาต</h1>
           <p className="text-body text-label-2">
             งานต่างประเทศที่กรมการจัดหางานออกใบอนุญาตให้รับสมัคร อ่านจากใบอนุญาตตัวจริงทีละฉบับ · อัปเดต {thaiDate(ROUNDS_UPDATED)}
           </p>
           <p className="text-footnote text-label-2">
-            เช็คก่อนบินไม่ใช่ช่องทางสมัครงาน และไม่รับเงินจากใคร สมัครผ่านบริษัทที่ระบุในใบอนุญาตเท่านั้น
+            Thai Migrant Watch ไม่ใช่ช่องทางสมัครงาน และไม่รับเงินจากใคร สมัครผ่านบริษัทที่ระบุในใบอนุญาตเท่านั้น
           </p>
         </header>
 

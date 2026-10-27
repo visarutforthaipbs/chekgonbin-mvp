@@ -61,7 +61,7 @@ export default function HomeHero() {
         </h2>
         {[
           { n: "①", text: "บริษัทมีใบอนุญาตไหม", cta: "ค้นหาชื่อบริษัท", href: "#check" },
-          { n: "②", text: "รอบนี้เปิดจริงไหม", cta: "ดูรอบเปิดรับ", href: "/rounds" },
+          { n: "②", text: "งานนี้มีใบอนุญาตไหม", cta: "ดูงานมีใบอนุญาต", href: "/rounds" },
           { n: "③", text: "โฆษณาแบบนี้ = หลอก", cta: "ดูสัญญาณเตือน", href: "#scam-signals" },
         ].map((row) => (
           <Link

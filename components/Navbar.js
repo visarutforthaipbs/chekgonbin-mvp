@@ -10,7 +10,7 @@ import { Globe, Search, LifeBuoy, CalendarClock, Info } from "lucide-react";
 const SECTIONS = [
   { href: "/", label: "ประเทศ", icon: Globe },
   { href: "/agencies", label: "เช็กบริษัท", icon: Search },
-  { href: "/rounds", label: "รอบเปิดรับ", icon: CalendarClock },
+  { href: "/rounds", label: "งานมีใบอนุญาต", icon: CalendarClock },
   { href: "/emergency", label: "ฉุกเฉิน", icon: LifeBuoy },
   { href: "/about", label: "เกี่ยวกับ", icon: Info },
 ];

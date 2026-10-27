@@ -51,7 +51,7 @@ export default async function RoundPage({ params }) {
       <div className="w-full max-w-3xl px-4 md:px-6 pt-6 md:pt-12 pb-12 md:pb-20 flex flex-col gap-4 md:gap-5">
         <Link href="/rounds" className="btn btn-plain self-start -ml-2">
           <ChevronLeft size={18} aria-hidden="true" />
-          รอบที่เปิดรับทั้งหมด
+          งานมีใบอนุญาตทั้งหมด
         </Link>
 
         <header className="flex flex-col gap-2">
