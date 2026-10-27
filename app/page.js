@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import HomeClient from "./HomeClient";
+import HomeHero from "@/components/home/HomeHero";
 
 function HomeFallback() {
   return (
@@ -20,8 +21,13 @@ function HomeFallback() {
 
 export default function Page() {
   return (
-    <Suspense fallback={<HomeFallback />}>
-      <HomeClient />
-    </Suspense>
+    <>
+      <HomeHero />
+      <div id="check" className="scroll-mt-20">
+        <Suspense fallback={<HomeFallback />}>
+          <HomeClient />
+        </Suspense>
+      </div>
+    </>
   );
 }

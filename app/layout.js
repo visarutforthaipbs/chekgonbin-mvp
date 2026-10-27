@@ -8,19 +8,16 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover", // lets the mobile tab bar sit above the home indicator
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f5f5f7" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
+  themeColor: "#f5f5f7",
 };
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "เช็คก่อนบิน",
-  alternateName: "ChekGonBin",
-  url: "https://checkgonbin.in.th",
-  logo: "https://checkgonbin.in.th/thumnail.png",
+  name: "Thai Migrant Watch",
+  alternateName: ["เช็คก่อนบิน", "ChekGonBin"],
+  url: "https://checkgonbin.in.th", // TODO: new domain (owner buying one, 27 Oct 2026)
+  logo: "https://checkgonbin.in.th/brand/thmw-wordmark.svg",
   sameAs: ["https://www.facebook.com/profile.php?id=61570127262236"],
   contactPoint: {
     "@type": "ContactPoint",
@@ -33,9 +30,9 @@ const organizationJsonLd = {
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: "เช็คก่อนบิน",
-  alternateName: "ChekGonBin",
-  url: "https://checkgonbin.in.th",
+  name: "Thai Migrant Watch",
+  alternateName: ["เช็คก่อนบิน", "ChekGonBin"],
+  url: "https://checkgonbin.in.th", // TODO: new domain
   inLanguage: "th-TH",
   potentialAction: {
     "@type": "SearchAction",
@@ -46,9 +43,9 @@ const websiteJsonLd = {
 
 export const metadata = {
   metadataBase: new URL("https://checkgonbin.in.th"),
-  title: "เช็คก่อนบิน - ตรวจสอบความเสี่ยงงานต่างประเทศ | ป้องกันมิจฉาชีพ",
+  title: "Thai Migrant Watch — ไปทำงานต่างประเทศ ดูทั้งเส้นทางก่อนโอนเงิน",
   description:
-    "เครื่องมือตรวจสอบความเสี่ยงเบื้องต้นสำหรับผู้หางานต่างประเทศ เช็คบริษัทจัดหางาน ตรวจสอบบัญชีดำ (Blacklist) และป้องกันการโดนหลอกไปทำงานต่างประเทศ",
+    "เลือกประเทศ แล้วดูทั้งเส้นทาง: ไปทางไหนได้บ้าง เช็กบริษัทก่อนจ่าย รอบที่เปิดจริง และโทรใครเมื่อมีปัญหา — เราไม่ใช่ช่องทางสมัคร และไม่รับเงิน",
   alternates: {
     canonical: "/",
   },
@@ -62,18 +59,18 @@ export const metadata = {
     "หางานเกาหลี",
     "หางานไต้หวัน",
   ],
-  authors: [{ name: "ChekGonBin Team" }],
+  authors: [{ name: "Thai Migrant Watch" }],
   openGraph: {
-    title: "เช็คก่อนบิน - ตรวจสอบความเสี่ยงก่อนไปทำงานต่างประเทศ",
-    description: "อย่าให้ความฝันกลายเป็นฝันร้าย! ตรวจสอบความเสี่ยงและบริษัทจัดหางานได้ฟรีที่นี่",
+    title: "Thai Migrant Watch — ไปทำงานต่างประเทศ ดูทั้งเส้นทางก่อนโอนเงิน",
+    description: "เลือกประเทศ แล้วดูทั้งเส้นทาง: ไปทางไหนได้บ้าง เช็กบริษัทก่อนจ่าย และโทรใครเมื่อมีปัญหา",
     url: "https://checkgonbin.in.th",
-    siteName: "เช็คก่อนบิน",
+    siteName: "Thai Migrant Watch",
     images: [
       {
         url: "/thumnail.png",
         width: 1200,
         height: 630,
-        alt: "เช็คก่อนบิน - ตรวจสอบความเสี่ยงงานต่างประเทศ",
+        alt: "Thai Migrant Watch",
       },
     ],
     locale: "th_TH",
@@ -81,8 +78,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "เช็คก่อนบิน - ตรวจสอบความเสี่ยงก่อนไปทำงานต่างประเทศ",
-    description: "เครื่องมือป้องกันการโดนหลอกไปทำงานต่างประเทศ ตรวจสอบความเสี่ยงได้ใน 1 นาที",
+    title: "Thai Migrant Watch — ไปทำงานต่างประเทศ ดูทั้งเส้นทางก่อนโอนเงิน",
+    description: "เลือกประเทศ แล้วดูทั้งเส้นทาง: ไปทางไหนได้บ้าง เช็กบริษัทก่อนจ่าย และโทรใครเมื่อมีปัญหา",
     images: ["/thumnail.png"],
   },
   robots: {

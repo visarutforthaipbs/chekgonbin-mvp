@@ -191,7 +191,7 @@ export default function MediaHubClient() {
           <p className="text-white/90 text-body max-w-md font-medium">
             ทุกข้อมูลของคุณมีค่าและช่วยป้องกันไม่ให้คนอื่นตกเป็นเหยื่อ
           </p>
-          <Link href="/report-scam" className="px-8 py-4 min-h-11 bg-white text-[#c8371f] rounded-xl md:rounded-4xl font-bold text-lg md:text-xl transition-all active:scale-95 flex items-center gap-2 md:gap-3">
+          <Link href="/report-scam" className="px-8 py-4 min-h-11 bg-white text-accent-ink rounded-xl md:rounded-4xl font-bold text-lg md:text-xl transition-all active:scale-95 flex items-center gap-2 md:gap-3">
             ไปที่หน้ารายงาน
             <ArrowRight className="w-5 h-5 md:w-6 md:h-6" aria-hidden="true" />
           </Link>

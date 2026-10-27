@@ -8,38 +8,21 @@
    Motion are handled here, so components get them for free.
    ========================================================================== */
 
-@font-face {
-  font-family: "DB Helvethaica X";
-  src: url("/fonts/dbhelvethaicax-webfont.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "DB Helvethaica X";
-  src: url("/fonts/dbhelvethaicaxmed-webfont.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "DB Helvethaica X";
-  src: url("/fonts/dbhelvethaicaxbd-webfont.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 
 :root {
-  color-scheme: light dark;
+  /* Light is the only shipped appearance (owner decision 27 Oct 2026);
+     dark tokens stay below, opt-in via [data-appearance="dark"]. */
+  color-scheme: light;
 
-  /* Brand */
-  --brand-primary: #e5472e;   /* logo / brand mark only */
-  --brand-secondary: #0b1b3b; /* deep navy — also the light-mode label color */
+  /* Brand — measured from the THMW logo (public/brand/thmw-wordmark.svg) */
+  --brand-primary: #217e9f;   /* logo teal = also the accent */
+  --brand-heart: #e5472e;     /* logo heart — decoration only (white on it 3.98:1 ✗) */
+  --brand-secondary: #1d1d1f; /* ink */
 
   /* Accent = the ONE interactive color (prominent buttons, links, focus) */
-  --accent: #d93d24;          /* white text 4.52:1 */
-  --accent-ink: #c8371f;      /* accent as text on bg — 4.8:1 */
+  --accent: #217e9f;          /* white text 4.62:1 */
+  --accent-ink: #1b6f8d;      /* accent as text on bg — 5.21:1 */
+  --accent-tint: #e6f1f5;     /* accent-ink on tint 5.29:1 */
   --on-accent: #ffffff;
 
   /* Backgrounds (grouped hierarchy) */
@@ -50,8 +33,8 @@
   --fill-strong: rgba(120, 120, 128, 0.2);
 
   /* Labels */
-  --label: #0b1b3b;           /* 17:1 */
-  --label-2: #5f6673;         /* 5.3:1 on bg — secondary text */
+  --label: #1d1d1f;           /* 16.8:1 */
+  --label-2: #6e6e73;         /* 4.66:1 on bg — secondary text */
   --label-3: #8e8e93;         /* placeholders & decoration only — never body copy */
   --separator: rgba(60, 60, 67, 0.16);
   --separator-strong: rgba(60, 60, 67, 0.29);
@@ -60,19 +43,22 @@
      *-fill  = icons/bars/borders (non-text);  *-ink = text (≥4.5:1 on tint & bg) */
   --safe-fill: #34c759;    --safe-ink: #1a7f37;    --safe-tint: #ecf8ef;
   --caution-fill: #ff9500; --caution-ink: #b54708; --caution-tint: #fff4e5;
-  --danger-fill: #ff3b30;  --danger-ink: #b42318;  --danger-tint: #fdecec;
+  --danger-fill: #d93d24;  --danger-ink: #b42318;  --danger-tint: #fdecec; /* white on fill 4.52:1 — the emergency button */
 
   /* Glass (functional layer only: nav bar, tab bar) */
   --glass: rgba(255, 255, 255, 0.78);
   --glass-edge: rgba(60, 60, 67, 0.14);
 
-  --shadow-raised: 0 1px 2px rgba(11, 27, 59, 0.04), 0 8px 24px rgba(11, 27, 59, 0.06);
+  --shadow-raised: 0 1px 2px rgba(29, 29, 31, 0.04), 0 8px 24px rgba(29, 29, 31, 0.06);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-appearance="light"]) {
-    --accent: #d93d24;
-    --accent-ink: #ff7457;
+/* Dark tokens — NOT active by default (owner: site is white). Opt in with
+   <html data-appearance="dark">. */
+:root[data-appearance="dark"] {
+    color-scheme: dark;
+    --accent: #217e9f;
+    --accent-ink: #5fb3d1;
+    --accent-tint: rgba(33, 126, 159, 0.18);
     --bg: #000000;
     --surface: #1c1c1e;
     --surface-2: #2c2c2e;
@@ -89,7 +75,6 @@
     --glass: rgba(28, 28, 30, 0.74);
     --glass-edge: rgba(255, 255, 255, 0.1);
     --shadow-raised: none;
-  }
 }
 
 /* Increase Contrast */
@@ -97,13 +82,14 @@
   :root {
     --label-2: #3c4250;
     --separator: rgba(60, 60, 67, 0.4);
-    --accent: #b93219;
-    --accent-ink: #a82d17;
+    --accent: #185f78;
+    --accent-ink: #14536a;
   }
 }
 
 @theme {
-  --font-sans: "DB Helvethaica X", -apple-system, BlinkMacSystemFont, "Sukhumvit Set", "Noto Sans Thai", system-ui, sans-serif;
+  /* apple.com idiom: the system face. Thai comes from the OS (SF Thai / Noto Sans Thai). */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Sukhumvit Set", "Noto Sans Thai", "Helvetica Neue", system-ui, sans-serif;
 
   /* Semantic colors → utilities: bg-surface, text-label-2, border-separator … */
   --color-bg: var(--bg);
@@ -129,25 +115,27 @@
   --color-danger-ink: var(--danger-ink);
   --color-danger-tint: var(--danger-tint);
   --color-brand-primary: var(--brand-primary);
+  --color-brand-heart: var(--brand-heart);
   --color-brand-secondary: var(--brand-secondary);
+  --color-accent-tint: var(--accent-tint);
   /* Legacy Signal 39 names (admin page) → mapped onto the risk fills */
   --color-signal-red: var(--danger-fill);
   --color-signal-orange: var(--caution-fill);
   --color-signal-green: var(--safe-fill);
 
-  /* Type scale — HIG text styles, +1px for DB Helvethaica X's small Thai
-     glyphs. Thai needs taller leading than Latin (tone marks / lower vowels). */
-  --text-caption: 0.8125rem;   --text-caption--line-height: 1.45;    /* 13 */
-  --text-footnote: 0.875rem;   --text-footnote--line-height: 1.5;    /* 14 */
-  --text-subhead: 1rem;        --text-subhead--line-height: 1.5;     /* 16 */
-  --text-callout: 1.0625rem;   --text-callout--line-height: 1.5;     /* 17 */
-  --text-body: 1.125rem;       --text-body--line-height: 1.55;       /* 18 */
-  --text-headline: 1.1875rem;  --text-headline--line-height: 1.4;    /* 19 bold */
-  --text-title3: 1.375rem;     --text-title3--line-height: 1.35;     /* 22 */
-  --text-title2: 1.625rem;     --text-title2--line-height: 1.3;      /* 26 */
-  --text-title1: 2rem;         --text-title1--line-height: 1.25;     /* 32 */
-  --text-large: 2.5rem;        --text-large--line-height: 1.2;       /* 40 */
-  --text-display: 3.25rem;     --text-display--line-height: 1.15;    /* 52 */
+  /* Type scale — HIG text styles on the system face.
+     Thai needs taller leading than Latin (tone marks / lower vowels). */
+  --text-caption: 0.75rem;     --text-caption--line-height: 1.45;    /* 12 */
+  --text-footnote: 0.8125rem;  --text-footnote--line-height: 1.5;    /* 13 */
+  --text-subhead: 0.9375rem;   --text-subhead--line-height: 1.5;     /* 15 */
+  --text-callout: 1rem;        --text-callout--line-height: 1.5;     /* 16 */
+  --text-body: 1.0625rem;      --text-body--line-height: 1.55;       /* 17 — Thai needs ≥1.5 */
+  --text-headline: 1.125rem;   --text-headline--line-height: 1.4;    /* 18 semibold */
+  --text-title3: 1.25rem;      --text-title3--line-height: 1.35;     /* 20 */
+  --text-title2: 1.5rem;       --text-title2--line-height: 1.3;      /* 24 */
+  --text-title1: 2rem;         --text-title1--line-height: 1.2;      /* 32 */
+  --text-large: 2.5rem;        --text-large--line-height: 1.15;      /* 40 */
+  --text-display: 3rem;        --text-display--line-height: 1.1;     /* 48; 64 on regular via md: */
 
   --radius-control: 12px;
   --radius-card: 20px;

@@ -2,20 +2,21 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShieldCheck, Search, Building2, Megaphone, Info, CalendarClock } from "lucide-react";
+import Image from "next/image";
+import { Globe, Search, LifeBuoy, CalendarClock, Info } from "lucide-react";
 
 // Top-level sections. Same list drives the desktop bar and the mobile tab bar,
 // so navigation is never hidden behind a hamburger (HIG: tab bars stay visible).
 const SECTIONS = [
-  { href: "/", label: "ตรวจสอบ", icon: Search },
+  { href: "/", label: "ประเทศ", icon: Globe },
+  { href: "/agencies", label: "เช็กบริษัท", icon: Search },
   { href: "/rounds", label: "รอบเปิดรับ", icon: CalendarClock },
-  { href: "/agencies", label: "รายชื่อบริษัท", icon: Building2 },
-  { href: "/report-scam", label: "แจ้งเบาะแส", icon: Megaphone },
+  { href: "/emergency", label: "ฉุกเฉิน", icon: LifeBuoy },
   { href: "/about", label: "เกี่ยวกับ", icon: Info },
 ];
 
 function isActive(pathname, href) {
-  if (href === "/") return pathname === "/" || pathname.startsWith("/result");
+  if (href === "/") return pathname === "/" || pathname.startsWith("/result") || pathname.startsWith("/countries");
   return pathname.startsWith(href);
 }
 
@@ -30,14 +31,8 @@ export default function Navbar() {
         className="glass sticky top-0 z-40 border-b border-[var(--glass-edge)] no-print"
       >
         <div className="mx-auto flex h-14 md:h-16 max-w-5xl items-center justify-between px-4 md:px-6">
-          <Link href="/" className="flex items-center gap-2.5 min-h-11 rounded-xl" aria-label="เช็คก่อนบิน หน้าแรก">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-[10px] bg-brand-primary text-white">
-              <ShieldCheck size={20} strokeWidth={2.25} aria-hidden="true" />
-            </span>
-            <span className="flex flex-col leading-none">
-              <span className="text-title3 font-bold text-label leading-none">เช็คก่อนบิน</span>
-              <span className="hidden md:block text-caption text-label-2 mt-1">ตรวจสอบก่อนไปทำงานต่างประเทศ</span>
-            </span>
+          <Link href="/" className="flex items-center min-h-11 rounded-xl" aria-label="Thai Migrant Watch หน้าแรก">
+            <Image src="/brand/thmw-lockup.svg" alt="Thai Migrant Watch" width={256} height={16} priority className="h-4 md:h-[18px] w-auto" />
           </Link>
 
           <ul className="hidden md:flex items-center gap-1">

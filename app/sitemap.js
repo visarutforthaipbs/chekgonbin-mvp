@@ -1,4 +1,5 @@
 import { ROUNDS } from "@/data/rounds";
+import { COUNTRIES } from "@/data/countries";
 
 export default function sitemap() {
   const baseUrl = "https://checkgonbin.in.th";
@@ -17,6 +18,13 @@ export default function sitemap() {
       changeFrequency: "weekly",
       priority: 0.9,
     },
+    ...COUNTRIES.map((c) => ({
+      url: `${baseUrl}/countries/${c.slug}`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    })),
+    { url: `${baseUrl}/emergency`, lastModified, changeFrequency: "monthly", priority: 0.9 },
     ...ROUNDS.map((r) => ({
       url: `${baseUrl}/rounds/${r.slug}`,
       lastModified,

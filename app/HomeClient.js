@@ -394,13 +394,13 @@ export default function Home() {
     <div className="w-full flex flex-col items-center">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
-      <div className="w-full max-w-2xl px-4 md:px-6 pt-8 md:pt-16 pb-12 md:pb-20 flex flex-col gap-6 md:gap-8">
+      <div className="w-full max-w-2xl px-4 md:px-6 pt-12 md:pt-20 pb-12 md:pb-20 flex flex-col gap-6 md:gap-8">
         {/* Header — states the ONE task of this screen */}
         <header className="flex flex-col gap-3 md:items-center md:text-center">
-          <h1 className="text-title1 md:text-large font-bold text-label tracking-tight">
-            เช็คบริษัทจัดหางาน
-            <br className="md:hidden" /> ก่อนโอนเงิน
-          </h1>
+          <h2 className="text-title2 md:text-title1 font-bold text-label tracking-tight">
+            <span className="text-accent-ink mr-2" aria-hidden="true">①</span>
+            บริษัทมีใบอนุญาตไหม
+          </h2>
           <p className="text-body text-label-2 md:max-w-lg">
             {isPaidTraffic
               ? "รู้ผลใน 10 วินาที ว่าบริษัทได้รับอนุญาตจริงหรือไม่ — ฟรี"
@@ -698,7 +698,7 @@ export default function Home() {
           </form>
         </section>
 
-        <ScamNotice />
+        <div id="scam-signals" className="scroll-mt-24"><ScamNotice /></div>
       </div>
     </div>
   );
