@@ -25,6 +25,7 @@ COUNTRY_TH = {"IL": "อิสราเอล", "RO": "โรมาเนีย"
               "PT": "โปรตุเกส", "ES": "สเปน", "MT": "มอลตา", "BN": "บรูไน", "HK": "ฮ่องกง", "MO": "มาเก๊า"}
 REQUIRED = ["permit", "slug", "country", "channel", "industry", "employer", "agency", "positions", "total", "sex",
             "ageMin", "ageMax", "pay", "costs", "terms", "windowStart", "windowEnd", "issued", "source"]
+IDENT = re.compile(r"[A-Za-z_]\w*")
 COST_WHO = {"employer", "partial", "deduct", "in-pay", "employer-unclear", "unclear", "worker"}
 
 
@@ -41,7 +42,7 @@ def js(v, ind=4):
     if isinstance(v, dict):
         if not v:
             return "{}"
-        items = [f"{inner}{k if re.fullmatch(r'[A-Za-z_]\\w*', k) else json.dumps(k, ensure_ascii=False)}: {js(x, ind + 2)}"
+        items = [f"{inner}{k if IDENT.fullmatch(k) else json.dumps(k, ensure_ascii=False)}: {js(x, ind + 2)}"
                  for k, x in v.items()]
         return "{\n" + ",\n".join(items) + f",\n{pad}}}"
     if isinstance(v, list):
