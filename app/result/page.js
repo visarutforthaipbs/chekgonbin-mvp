@@ -56,8 +56,8 @@ const ORDER = ["low", "medium", "high"];
 const METER_LABEL = { low: "ต่ำ", medium: "ระวัง", high: "สูง" };
 
 const HOTLINES = {
-  labour: { tel: "1694", label: "สายด่วนกระทรวงแรงงาน", sub: "ปรึกษาหรือแจ้งถูกหลอก ฟรี 24 ชม." },
-  doe: { tel: "1300", label: "กรมการจัดหางาน", sub: "ยืนยันใบอนุญาตและการรับสมัคร" },
+  labour: { tel: "1506", label: "สายด่วนกระทรวงแรงงาน 1506 กด 2", sub: "ปรึกษาหรือแจ้งว่าถูกหลอก" },
+  doe: { tel: "1694", label: "สายด่วนกรมการจัดหางาน 1694", sub: "ยืนยันใบอนุญาตและการรับสมัคร" },
 };
 
 const CHECKLIST = [
@@ -77,7 +77,7 @@ function ShareRow() {
     queueMicrotask(() => setCanNativeShare(typeof navigator !== "undefined" && !!navigator.share));
   }, []);
 
-  const text = "เช็คบริษัทจัดหางานก่อนโอนเงิน ฟรีที่ Thai Migrant Watch";
+  const text = "เช็กบริษัทจัดหางานก่อนโอนเงิน ที่ Thai Migrant Watch";
 
   if (canNativeShare) {
     return (

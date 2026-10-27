@@ -158,7 +158,7 @@ export async function POST(request) {
       reasons.push("ไม่พบชื่อบริษัทในรายชื่อผู้ได้รับอนุญาต (Whitelist) ที่เรามี");
     }
 
-    if (hasUpfrontFee)   { score += 40; reasons.push("มีการเรียกเก็บเงินล่วงหน้า (ค่าดำเนินการ/ค่าหัว)"); }
+    if (hasUpfrontFee)   { score += 40; reasons.push("มีคนเรียกค่าสมัครหรือค่าบริการล่วงหน้า (ค่าดำเนินการ/ค่าหัว)"); }
     if (isSocialContact) { score += 10; reasons.push("การติดต่อเกิดขึ้นผ่านช่องทางโซเชียลมีเดียส่วนตัว"); }
 
     const riskLevel = score > 40 ? "high" : score > 10 ? "medium" : "low";

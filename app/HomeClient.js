@@ -25,7 +25,7 @@ import {
 const RISK_SIGNALS = [
   {
     id: "hasUpfrontFee",
-    title: "ถูกเรียกเก็บเงินก่อนเดินทาง",
+    title: "มีคนเรียกค่าสมัครหรือค่าบริการก่อนเดินทาง",
     hint: "เช่น ค่าหัว ค่าดำเนินการ ค่ามัดจำเอกสาร ที่ต้องจ่ายทันที",
     detail:
       "บริษัทที่ถูกกฎหมายเก็บค่าบริการได้ตามที่กรมการจัดหางานกำหนด และต้องออกใบเสร็จในนามบริษัท การจ่ายค่าหัว ค่ามัดจำ ค่าตั๋ว หรือค่าตรวจสุขภาพล่วงหน้าเข้าบัญชีบุคคล คือสัญญาณอันตราย",
@@ -403,7 +403,7 @@ export default function Home() {
           </h2>
           <p className="text-body text-label-2 md:max-w-lg">
             {isPaidTraffic
-              ? "รู้ผลใน 10 วินาที ว่าบริษัทได้รับอนุญาตจริงหรือไม่ — ฟรี"
+              ? "รู้ผลใน 10 วินาที ว่าบริษัทได้รับอนุญาตจริงหรือไม่"
               : "พิมพ์ชื่อบริษัทที่ชวนคุณไปทำงานต่างประเทศ เราจะเทียบกับรายชื่อของกรมการจัดหางานและรายงานมิจฉาชีพ"}
           </p>
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-footnote text-label-2 md:justify-center">
@@ -690,7 +690,7 @@ export default function Home() {
               )}
             </button>
             <p className="-mt-2 text-center text-caption text-label-2">
-              ฟรี · ผลเป็นการประเมินเบื้องต้น ·{" "}
+              ผลเป็นการประเมินเบื้องต้น ·{" "}
               <Link href="/privacy-policy" className="underline underline-offset-2">
                 ข้อมูลที่เราเก็บ
               </Link>

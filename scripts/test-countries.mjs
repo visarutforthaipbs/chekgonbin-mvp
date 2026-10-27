@@ -54,5 +54,17 @@ for (const c of COUNTRIES) {
   else if (!Number.isInteger(w.count) || w.count < 0 || !(w.rank >= 1 && w.rank <= WORKFORCE.countries)) fail(`workforce ${c.code}: bad row`);
 }
 
+// Banned wording + wrong DOE hotline anywhere in shipped UI source (app/, components/).
+{
+  const { readdirSync, statSync } = await import("node:fs");
+  const walk = (d) => readdirSync(d).flatMap((f) => { const p = `${d}/${f}`; return statSync(p).isDirectory() ? walk(p) : /\.(js|jsx|mjs)$/.test(f) ? [p] : []; });
+  const root = new URL("..", import.meta.url).pathname;
+  for (const f of [...walk(root + "app"), ...walk(root + "components")]) {
+    const t = readFileSync(f, "utf8");
+    for (const w of BANNED) if (t.includes(w)) fail(`banned wording "${w}" in ${f.slice(root.length)}`);
+    if (/1300/.test(t) && /กรมการจัดหางาน/.test(t) && /(tel:|tel: ?")1300|กรมการจัดหางาน[^"\n]{0,8}1300|\(1300\)/.test(t)) fail(`1300 labelled as DOE in ${f.slice(root.length)} — DOE hotline is 1694`);
+  }
+}
+
 if (fails) { console.error(`${fails} failure(s)`); process.exit(1); }
 console.log(`✓ countries: ${COUNTRIES.length} countries, ${THAI_HOTLINES.length} Thai hotlines, ${abroad} abroad numbers (all cited), 7 stages, no banned wording`);

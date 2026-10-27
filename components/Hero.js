@@ -11,7 +11,7 @@ const Hero = () => {
         <div className="inline-flex items-center gap-1.5 md:gap-2 px-2.5 py-1 bg-slate-100 rounded-full w-fit border border-slate-200">
           <Shield size={14} className="text-brand-secondary shrink-0" />
           <span className="text-[10px] md:text-xs font-bold text-brand-secondary uppercase tracking-wider">
-            ฟรี • 2 นาที • ไม่เก็บข้อมูล
+            2 นาที • ไม่เก็บข้อมูล
           </span>
         </div>
 
@@ -26,7 +26,7 @@ const Hero = () => {
         </motion.h1>
 
         <p className="text-base md:text-xl text-slate-500 max-w-lg md:max-w-none">
-          บริษัทนี้ถูกกฎหมายไหม? เรียกเก็บเงินล่วงหน้าแบบนี้ปกติไหม?
+          บริษัทนี้ถูกกฎหมายไหม? มีคนเรียกค่าสมัครแบบนี้ปกติไหม?
         </p>
 
       </div>

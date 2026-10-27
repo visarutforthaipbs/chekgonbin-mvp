@@ -395,8 +395,8 @@ export default function AgenciesClient() {
               บริษัทนี้อาจไม่ได้รับอนุญาตจัดส่งคนไปทำงานต่างประเทศ
             </p>
             <div className="flex flex-col sm:flex-row gap-2 mt-1">
-              <a href="tel:1300" className="btn btn-gray">
-                <Phone size={18} aria-hidden="true" /> โทรถามกรมการจัดหางาน 1300
+              <a href="tel:1694" className="btn btn-gray">
+                <Phone size={18} aria-hidden="true" /> โทรถามกรมการจัดหางาน 1694
               </a>
               <Link href="/report-scam" className="btn btn-tinted">
                 แจ้งเบาะแส
