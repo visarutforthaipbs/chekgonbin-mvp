@@ -661,6 +661,66 @@ export const ROUNDS = [
     feeBan: FEE_BAN,
     source: { url: doe(151210), page: 1 },
   },
+  {
+    permit: "142/2569",
+    slug: "142-2569",
+    country: "TW",
+    channel: "private",
+    industry: "ก่อสร้าง",
+    employer: "CTCI CORPORATION",
+    employerPlace: "NO. 89, SEC. 6, JHONGSHAN N. RD., SHIHLIN DIST., TAIPEI CITY 11155, TAIWAN (R.O.C.)",
+    agency: {
+      name: "ชินชัย อินเตอร์เนชั่นแนล",
+      license: "ต.1161/2554",
+      search: "ชินชัย",
+      phones: ["02-1871114"],
+    },
+    positions: [
+      {
+        title: "คนงานก่อสร้าง",
+        count: 300,
+      },
+    ],
+    total: 300,
+    sex: "male",
+    sexQuote: "(ชาย)",
+    ageMin: null,
+    ageMax: null,
+    pay: [
+      {
+        label: "คนงานก่อสร้าง",
+        main: "29,500 เหรียญไต้หวัน/เดือน",
+        baht: "ประมาณ 33,335 บาท/เดือน",
+        note: "ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "อาหารและที่พัก",
+        who: "deduct",
+        quote: "นายจ้างจัดอาหารและที่พักให้โดยหักจากค่าจ้าง 2,500 เหรียญไต้หวันต่อเดือน (ประมาณ 2,825 บาทต่อเดือน)",
+        ref: "เงื่อนไขข้อ 3",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "employer",
+        quote: "และจ่ายค่าบัตรโดยสารเครื่องบินไป-กลับให้โดยไม่คิดมูลค่า",
+        ref: "เงื่อนไขข้อ 3",
+      },
+    ],
+    terms: [
+      "พื้นที่จังหวัด (ระบุจังหวัดที่ผู้รับอนุญาตมีสำนักงานตั้งอยู่) กรุงเทพมหานคร",
+      "ระยะเวลาสัญญาจ้าง 2(สอง)",
+      "ไม่เกิน 8 ชั่วโมงต่อวันและเมื่อรวมกันแล้วต้องไม่เกิน 40 ชั่วโมงต่อสัปดาห์",
+      "เงื่อนไขอื่น ๆ เป็นไปตามกฎหมายแรงงานไต้หวัน",
+    ],
+    windowStart: "2026-10-06",
+    windowEnd: "2026-12-04",
+    issued: "2026-10-06",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 27 ต.ค. 2569; ผ่าน 27 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(150589), page: 1 },
+  },
 ];
 
 // What each `who` value means, worded for workers. Never say "ฟรี".
