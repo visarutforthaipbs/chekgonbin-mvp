@@ -61,18 +61,45 @@ def best_ratio(needle, hay):
 
 
 def numbers(s):
-    return {re.sub(r"[,\s]", "", m) for m in re.findall(r"\d[\d,]*(?:\.\d+)?", norm(s))}
-
-
-def phone_digits(s):
-    """Thai numbers: 02/03/04/05/07 landline = 9 digits, 06/08/09 mobile = 10. A trailing '-6' range suffix is dropped."""
     out = set()
-    for m in re.finditer(r"(?<!\d)0[\d\-\s.]{7,14}\d", norm(s)):
+    for m in re.findall(r"\d[\d,]*(?:\.\d+)?", norm(s)):
+        m = re.sub(r"[,\s]", "", m)
+        out.add(m)
+        if re.fullmatch(r"\d{1,3}\.\d{3}", m):  # Thai OCR / typists use "." as thousands separator: 33.335
+            out.add(m.replace(".", ""))
+    return out
+
+
+NOT_AGENCY = re.compile(r"TAIWAN|ISRAEL|R\.O\.C|โครงการ|หน่วยงานตั้งอยู่|นายจ้าง|กรมการจัดหางาน|DEPARTMENT|EMPLOYMENT|สำนักงานใหญ่", re.I)
+
+
+def phone_digits(s, raw=False):
+    """Thai numbers: 02/03/04/05/07 landline = 9 digits, 06/08/09 mobile = 10. A trailing '-6' range suffix is dropped.
+    Numbers whose preceding ~45 chars name the employer's workplace or the DOE seal are not the agency's -> skipped."""
+    t = unicodedata.normalize("NFC", s or "").translate(THAI_DIGITS)
+    out = set()
+    for m in re.finditer(r"(?<!\d)0[\d\-\s.]{7,14}\d", t):
+        if NOT_AGENCY.search(t[max(0, m.start() - 45):m.start()]):
+            continue
         d = re.sub(r"\D", "", m.group(0))
         n = 10 if d[1] in "689" else 9
         if len(d) >= n:
-            out.add(d[:n])
+            out.add(d if raw else d[:n])
     return out
+
+
+def seen_twice(sets):
+    """Values present in at least 2 OCR passes (a single-pass reading is treated as noise)."""
+    from collections import Counter
+    c = Counter(x for st in sets for x in set(st))
+    return {x for x, k in c.items() if k >= 2 or len(sets) == 1}
+
+
+AGE_RE = re.compile(r"อายุ[^\d\n]{0,25}(\d{2})(?:\s*(?:-|–|ถึง)\s*(\d{2}))?\s*ปี")
+
+
+def ages_in(t):
+    return {int(x) for m in AGE_RE.finditer(t) for x in m.groups() if x}
 
 
 def near(a, b):
@@ -137,7 +164,7 @@ def ocr(pdf, dpi, cache):
     return txt
 
 
-def checks(e, T):
+def checks(e, T, passes=None):
     """Return list of (field, ok, detail). T = normalised OCR transcript (one or more passes joined)."""
     res = []
     add = lambda f, ok, d="": res.append((f, bool(ok), d))  # noqa: E731
@@ -153,15 +180,19 @@ def checks(e, T):
     name = e["agency"]["name"]
     reg = registry(e["agency"]["license"]) if lic else None
     in_ocr = squash(name) in squash(T)
-    if reg and squash(reg["name"]) != squash(name):
+    loose = lambda x: re.sub(r"[.\s]", "", squash(x))  # dots/spaces only — a tone/การันต์ mark is a different spelling  # noqa: E731
+    if reg and loose(reg["name"]) != loose(name):
         add("agency.name vs DOE registry", False, f"entry {name} · registry {reg['name']}")
     else:
         add("agency.name", in_ocr or (reg and best_ratio(name, T) >= 0.85),
             f"{name} · OCR exact={in_ocr} · registry={'match' if reg else 'not found'}")
+    passes = passes or [T]
     want, got = {re.sub(r"\D", "", p) for p in e["agency"].get("phones", [])}, phone_digits(T)
-    # every entry phone must be read exactly by OCR; any other OCR number must be a slip of an entry phone
-    # (a genuinely different number on the permit = a phone the entry missed -> HOLD)
-    stray = sorted(g for g in got - want if not any(near(g, w) for w in want))
+    # every entry phone must be read exactly by OCR (any pass); any OTHER agency-line number read in >=2 passes
+    # that is not a 1-digit slip of an entry phone = a phone the entry missed -> HOLD
+    raw2 = seen_twice([phone_digits(t, raw=True) for t in passes])
+    stray = sorted(g for g in raw2 if g[:len(g)] not in want and g[:10 if g[1] in "689" else 9] not in want
+                   and not any(near(g, w) for w in want))
     add("agency.phones", want <= got and not stray, f"entry {sorted(want)} vs OCR {sorted(got)} · unexplained {stray}")
     add("employer", best_ratio(e["employer"], T) >= 0.85, e["employer"])
     add("total", re.search(rf"(?<![\d,]){e['total']:,}(?![\d,])|(?<![\d,]){e['total']}(?![\d,])", T)
@@ -196,10 +227,11 @@ def checks(e, T):
     add("sex", ok, f"entry {sex} · OCR ชาย={has_m} หญิง={has_f}")
     if e.get("sexQuote"):
         add("sexQuote", best_ratio(e["sexQuote"], T) >= 0.85, e["sexQuote"])
-    ages = [int(x) for x in re.findall(r"อายุ[^\d\n]{0,25}(\d{2})\s*ปี", T)]
+    ages_any = sorted(ages_in(T))
+    ages = sorted(seen_twice([ages_in(t) for t in passes]))
     for k in ("ageMin", "ageMax"):
         if e.get(k) is not None:
-            add(k, e[k] in ages, f"entry {e[k]} vs OCR ages {ages}")
+            add(k, e[k] in ages_any, f"entry {e[k]} vs OCR ages {ages_any}")
     if e.get("ageMin") is None and e.get("ageMax") is None:
         add("age not stated", not ages, f"OCR ages {ages}")
     for c in e.get("costs", []):
@@ -281,7 +313,10 @@ def count_checks(e, tab, T=""):
     words = lambda n: f"{n}{thai_words(n)}" in flat or f"{thai_words(n)}คน" in flat  # noqa: E731
     rows = (tab or {}).get("rows") if isinstance((tab or {}).get("rows"), list) else []
     qt = (tab or {}).get("total")
-    ok = qt == e["total"] or words(e["total"])
+    if qt == 1 and e["total"] != 1:
+        qt = None  # qwen read the "รวม 1 ตำแหน่ง" position count, not people
+    rl = {int(x.replace(",", "")) for x in re.findall(r"ตำแหน่ง\D{0,14}?(\d[\d,]*)\s*\(?[ก-๙]{0,14}\)?\s*-?\s*คน", norm(T))}
+    ok = qt == e["total"] or words(e["total"]) or e["total"] in rl
     res.append(("total (qwen table / Thai words)", ok, f"entry {e['total']} · qwen {qt} · words {words(e['total'])}"))
     if len(e["positions"]) == 1:
         return res  # single row: count == total, already checked
@@ -310,10 +345,12 @@ def main():
     passes, res = [], []
     for dpi in DPIS:  # first pass decides; later passes only add evidence for fields the first one missed
         passes.append(norm(ocr(a.pdf, dpi, cache)))
-        res = checks(e, "\n".join(passes))
+        res = checks(e, "\n".join(passes), passes)
         if all(ok for _, ok, _ in res):
             break
     res += count_checks(e, table_counts(a.pdf, cache), "\n".join(passes))
+    if any(f.startswith("total (qwen") and ok for f, ok, _ in res):
+        res = [(f, ok or f == "total", d) for f, ok, d in res]  # total confirmed by table read / รวม line
     fails = [(f, d) for f, ok, d in res if not ok]
     verdict = "PASS" if not fails else "HOLD"
     out = {"verdict": verdict, "permit": e["permit"], "checked": len(res), "ocr_passes": len(passes),
