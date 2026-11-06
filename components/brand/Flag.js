@@ -6,9 +6,10 @@ import RO from "country-flag-icons/react/3x2/RO";
 import LT from "country-flag-icons/react/3x2/LT";
 import AE from "country-flag-icons/react/3x2/AE";
 import TH from "country-flag-icons/react/3x2/TH";
+import SG from "country-flag-icons/react/3x2/SG";
 
 // Only the countries we publish — keeps the bundle to ~1 KB per flag.
-const Flags = { TW, KR, JP, IL, RO, LT, AE, TH };
+const Flags = { TW, KR, JP, IL, RO, LT, AE, TH, SG };
 
 // Country flag as an SVG (country-flag-icons, MIT), 3:2, rounded, hairline border so white
 // flags (JP) hold their shape on white. Never an emoji — emoji flags render as letters on
