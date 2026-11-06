@@ -12,7 +12,7 @@
 // - Each entry is read by one reader and confirmed by a second (`verified`).
 //   Do not add an entry without both.
 
-export const ROUNDS_UPDATED = "2026-10-27";
+export const ROUNDS_UPDATED = "2026-11-06";
 
 const FEE_BAN = "ห้ามเรียกหรือรับค่าบริการ ค่าใช้จ่าย หรือผลประโยชน์ใด ๆ จากคนหางาน";
 const doe = (id) => `https://www.doe.go.th/prd/download/download_by_pool_file/${id}`;
@@ -780,6 +780,73 @@ export const ROUNDS = [
     verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 27 ต.ค. 2569; ผ่าน 25 จุดตรวจ",
     feeBan: FEE_BAN,
     source: { url: doe(150592), page: 1 },
+  },
+  {
+    permit: "157/2569",
+    slug: "157-2569",
+    country: "IL",
+    channel: "private",
+    industry: "การรีไซเคิล",
+    employer: "TAL OR KARADI GROUP LTD.",
+    employerPlace: "HAD HALOM INDUSTRIAL ZONE, ASHDOD CITY, ISRAEL",
+    agency: {
+      name: "บ๊อสส์ดีไล้ท์ แมนพาวเวอร์",
+      license: "ต.729/2534",
+      search: "บ๊อสส์ดีไล้ท์",
+      phones: ["02-1939185", "092-2562351", "092-2596298", "062-5685598"],
+    },
+    positions: [
+      {
+        title: "พนักงานทั่วไป",
+        count: 6,
+      },
+    ],
+    total: 6,
+    sex: "any",
+    sexQuote: "พนักงานทั่วไป (ชาย/หญิง)",
+    ageMin: 25,
+    ageMax: 45,
+    pay: [
+      {
+        label: "พนักงานทั่วไป",
+        main: "6,443.85 เชคเกล/เดือน",
+        baht: "ประมาณ 70,109.08 บาท/เดือน",
+        note: "ไม่รวมค่าล่วงเวลา · ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "ที่พัก",
+        who: "deduct",
+        quote: "นายจ้างจัดหาที่พักให้โดยจะหักจากเงินเดือนลูกจ้างไม่เกินกฎหมายกำหนด",
+        ref: "เงื่อนไขข้อ 4",
+      },
+      {
+        item: "อาหาร",
+        who: "worker",
+        quote: "ลูกจ้างเป็นผู้จัดหาอาหารด้วยตนเอง",
+        ref: "เงื่อนไขข้อ 5",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "worker",
+        quote: "ลูกจ้างเป็นผู้รับผิดชอบค่าบัตรโดยสารเครื่องบินไป-กลับ",
+        ref: "เงื่อนไขข้อ 6",
+      },
+    ],
+    terms: [
+      "พื้นที่จังหวัด (ระบุจังหวัดที่ผู้รับอนุญาตมีสำนักงานตั้งอยู่) กรุงเทพมหานคร",
+      "อายุ 25-45 ปี",
+      "ระยะเวลาการจ้างงาน 1 ปี (สามารถต่อสัญญาได้สูงสุด 5 ปี)",
+      "ชั่วโมงการทำงาน ทำงานไม่เกิน 8 ชั่วโมงต่อวัน 6 วันต่อสัปดาห์ วันศุกร์วันทำงานสั้นลง 2 ชั่วโมง ชั่วโมงการทำงานปกติ 182 ชั่วโมงต่อเดือน ค่าล่วงเวลา เป็นไปตามที่กฎหมายกำหนด",
+      "เงื่อนไขอื่นๆ เป็นไปตามกฎหมายแรงงานของรัฐอิสราเอล",
+    ],
+    windowStart: "2026-10-26",
+    windowEnd: "2026-12-24",
+    issued: "2026-10-26",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 6 พ.ย. 2569; ผ่าน 31 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(151692), page: 1 },
   },
 ];
 
