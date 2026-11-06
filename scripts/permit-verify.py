@@ -198,8 +198,14 @@ def checks(e, T, passes=None):
     if reg and loose(reg["name"]) != loose(name):
         add("agency.name vs DOE registry", False, f"entry {name} · registry {reg['name']}")
     else:
-        add("agency.name", in_ocr or (reg and best_ratio(name, T) >= 0.85),
-            f"{name} · OCR exact={in_ocr} · registry={'match' if reg else 'not found'}")
+        # Dotted-leader confusion (158/2569: typed over the form's dotted line, typhoon read มาจู-จายา as
+        # มาฐ-ฉายา in every pass). Narrow rule, only reachable when the registry already returned a name equal to
+        # the entry's for this licence: fold the two known confusions (ฐ<-จู, ฉ<-จ) on BOTH sides and require an
+        # exact containment. Anything else (a different letter, a dropped mark) still fails.
+        fold = lambda x: squash(x).replace("ฐ", "จู").replace("ฉ", "จ")  # noqa: E731
+        dotted = bool(reg) and not in_ocr and fold(name) in fold(T)
+        add("agency.name", in_ocr or dotted or (reg and best_ratio(name, T) >= 0.85),
+            f"{name} · OCR exact={in_ocr} · dotted-line fold={dotted} · registry={'match' if reg else 'not found'}")
     passes = passes or [T]
     want, got = {re.sub(r"\D", "", p) for p in e["agency"].get("phones", [])}, phone_digits(T)
     # every entry phone must be read exactly by OCR (any pass); any OTHER agency-line number read in >=2 passes
