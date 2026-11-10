@@ -23,6 +23,30 @@ function normalizeCompanyName(name) {
     .trim();
 }
 
+const TH_MONTHS = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+
+// '11 ตุลาคม 2569' or ISO -> Date (UTC midnight); null when unreadable or empty.
+function parseLicenseExpiry(value) {
+  if (!value || typeof value !== "string") return null;
+  const v = value.trim();
+  const iso = v.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (iso) return new Date(Date.UTC(+iso[1], +iso[2] - 1, +iso[3]));
+  const m = v.match(/^(\d{1,2})\s+(\S+)\s+(\d{4})$/);
+  if (!m) return null;
+  const mi = TH_MONTHS.indexOf(m[2]);
+  if (mi < 0) return null;
+  const y = +m[3] > 2400 ? +m[3] - 543 : +m[3];
+  return new Date(Date.UTC(y, mi, +m[1]));
+}
+
+function isExpired(value) {
+  const d = parseLicenseExpiry(value);
+  if (!d) return false; // unknown expiry is not treated as expired
+  const now = new Date();
+  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  return d < today;
+}
+
 function canonicalizeCompanyName(name) {
   if (!name || typeof name !== "string") return "";
   return name
@@ -110,6 +134,7 @@ export async function POST(request) {
 
     // Whitelist check (Supabase agencies table)
     let inWhitelist = false;
+    let expiredMatchOnly = false;
     if (agencyName) {
       try {
         const canonicalInput = canonicalizeCompanyName(agencyName);
@@ -128,12 +153,12 @@ export async function POST(request) {
 
         const { data: wlMatches } = await supabase
           .from("agencies")
-          .select("name_th, name_en, license_no")
+          .select("name_th, name_en, license_no, license_expiry")
           .or(orFilters.join(","))
           .limit(30);
 
         if (wlMatches && wlMatches.length > 0) {
-          inWhitelist = wlMatches.some((row) => {
+          const matched = wlMatches.filter((row) => {
             const th = canonicalizeCompanyName(row.name_th || "");
             const en = canonicalizeCompanyName(row.name_en || "");
             if (!canonicalInput) return !!(th || en);
@@ -144,6 +169,9 @@ export async function POST(request) {
                   canonicalInput.includes(candidate))
             );
           });
+          // A name match only counts when the licence has not expired.
+          inWhitelist = matched.some((row) => !isExpired(row.license_expiry));
+          expiredMatchOnly = !inWhitelist && matched.length > 0;
         }
       } catch (err) {
         console.error("Whitelist lookup failed:", err.message);
@@ -153,6 +181,9 @@ export async function POST(request) {
     if (inWhitelist) {
       score -= 20;
       reasons.push("ตรวจพบชื่อบริษัทในรายชื่อผู้ได้รับอนุญาต (Whitelist)");
+    } else if (expiredMatchOnly) {
+      score += 15;
+      reasons.push("พบชื่อบริษัทในรายชื่อ แต่วันหมดอายุใบอนุญาตในข้อมูลของเราผ่านมาแล้ว โปรดตรวจสอบกับกรมการจัดหางาน โทร 1694 ก่อนตัดสินใจ");
     } else if (agencyName) {
       score += 15;
       reasons.push("ไม่พบชื่อบริษัทในรายชื่อผู้ได้รับอนุญาต (Whitelist) ที่เรามี");
