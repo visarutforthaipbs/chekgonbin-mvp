@@ -128,7 +128,7 @@ def registry(license_):
 
 def thai_date_re(iso):
     d = date.fromisoformat(iso)
-    return re.compile(rf"(?<!\d){d.day}\s*(?:เดือน)?\s*(?:{MONTHS[d.month - 1]})\s*(?:พ\.ศ\.)?\s*{d.year + 543}")
+    return re.compile(rf"(?<!\d){d.day}\s*(?:เดือน)?\s*(?:{MONTHS[d.month - 1].replace(chr(92) + ".", chr(92) + ".?")})\s*(?:พ\.ศ\.)?\s*{d.year + 543}")
 
 
 def ensure_gpu():
