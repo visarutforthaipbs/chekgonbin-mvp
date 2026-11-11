@@ -1048,6 +1048,72 @@ export const ROUNDS = [
     feeBan: FEE_BAN,
     source: { url: doe(151917), page: 1 },
   },
+  {
+    permit: "161/2569",
+    slug: "161-2569",
+    country: "IL",
+    channel: "private",
+    industry: "ก่อสร้าง",
+    employer: "NARKISIM CONSTRUCTION MANPOWER L.T.D",
+    employerPlace: "BSR TOWERS, BUILDING C, 1 TOZERET HAARETZ, PETAH TIKVA, ISRAEL 4951734, ISRAEL",
+    agency: {
+      name: "เอ็น.ที.เค บิสซิเนส",
+      license: "ต.1035/2544",
+      search: "เอ็น.ที.เค",
+      phones: ["02-5560638"],
+    },
+    positions: [
+      {
+        title: "คนงานทั่วไป",
+        count: 100,
+      },
+    ],
+    total: 100,
+    sex: "male",
+    sexQuote: "คนงานทั่วไป (ชาย)",
+    ageMin: null,
+    ageMax: null,
+    pay: [
+      {
+        label: "คนงานทั่วไป",
+        main: "6,443.85 เชคเกล/เดือน",
+        baht: "ประมาณ 70,882.35 บาท/เดือน",
+        note: "ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "ที่พัก",
+        who: "deduct",
+        quote: "นายจ้างจัดหาที่พักให้ โดยหักค่าจ้างจากลูกจ้างไม่เกินกฎหมายกำหนด",
+        ref: "เงื่อนไขข้อ 3",
+      },
+      {
+        item: "อาหาร",
+        who: "worker",
+        quote: "ค่าอาหารลูกจ้างเป็นผู้รับผิดชอบ",
+        ref: "เงื่อนไขข้อ 4",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "worker",
+        quote: "ค่าบัตรโดยสารเครื่องบินไป-กลับประเทศอิสราเอล ลูกจ้างเป็นผู้รับผิดชอบ",
+        ref: "เงื่อนไขข้อ 6",
+      },
+    ],
+    terms: [
+      "พื้นที่จังหวัด (ระบุจังหวัดที่ผู้รับอนุญาตมีสำนักงานตั้งอยู่) กรุงเทพมหานคร",
+      "ระยะเวลาการจ้างงาน 5(ห้า)ปี",
+      "ทำงานวันละ 8ชั่วโมงต่อวัน สัปดาห์ละ 6วัน และทำงาน 9ชั่วโมงต่อวัน สัปดาห์ละ 5วัน ทำงาน 182ชั่วโมงต่อเดือน (ค่าล่วงเวลา 54 ชั่วโมงต่อเดือน รวมทำงาน 236 ชั่วโมงต่อเดือน)",
+      "อื่นๆ เป็นไปตามกฎหมายแรงงานประเทศอิสราเอล",
+    ],
+    windowStart: "2026-11-05",
+    windowEnd: "2027-01-03",
+    issued: "2026-11-05",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 11 พ.ย. 2569; ผ่าน 28 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(151915), page: 1 },
+  },
 ];
 
 // What each `who` value means, worded for workers. Never say "ฟรี".
