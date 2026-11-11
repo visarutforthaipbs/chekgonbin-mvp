@@ -12,7 +12,7 @@
 // - Each entry is read by one reader and confirmed by a second (`verified`).
 //   Do not add an entry without both.
 
-export const ROUNDS_UPDATED = "2026-11-06";
+export const ROUNDS_UPDATED = "2026-11-11";
 
 const FEE_BAN = "ห้ามเรียกหรือรับค่าบริการ ค่าใช้จ่าย หรือผลประโยชน์ใด ๆ จากคนหางาน";
 const doe = (id) => `https://www.doe.go.th/prd/download/download_by_pool_file/${id}`;
@@ -916,6 +916,72 @@ export const ROUNDS = [
     verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 6 พ.ย. 2569; ผ่าน 29 จุดตรวจ",
     feeBan: FEE_BAN,
     source: { url: doe(151693), page: 1 },
+  },
+  {
+    permit: "163/2569",
+    slug: "163-2569",
+    country: "TW",
+    channel: "private",
+    industry: "การผลิต ผลิตภัณฑ์โลหะ",
+    employer: "SHIN ZU SHING CO., LTD.",
+    employerPlace: "NO.174, JUNYING ST., ZUNAN LI, SHULIN DIST., NEW TAIPEI CITY, TAIWAN R.O.C",
+    agency: {
+      name: "ที.เอ็น.วาย.ไทร์นิตี้",
+      license: "ต.1089/2548",
+      search: "ที.เอ็น.วาย",
+      phones: ["02-5308151", "02-5592359"],
+    },
+    positions: [
+      {
+        title: "คนงานผลิต ผลิตภัณฑ์โลหะ",
+        count: 54,
+      },
+    ],
+    total: 54,
+    sex: "male",
+    sexQuote: "คนงานผลิต ผลิตภัณฑ์โลหะ (ชาย)",
+    ageMin: null,
+    ageMax: null,
+    pay: [
+      {
+        label: "คนงานผลิต ผลิตภัณฑ์โลหะ",
+        main: "29,500 เหรียญไต้หวัน/เดือน",
+        baht: "ประมาณ 33,335 บาท/เดือน",
+        note: "ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "อาหาร",
+        who: "unclear",
+        quote: "นายจ้างจัดหาอาหารให้ลูกจ้างอย่างน้อย 3 มื้อต่อวัน ซึ่งรวมทั้งในวันหยุดงานและในระหว่างการลาป่วย",
+        ref: "เงื่อนไขข้อ 3",
+      },
+      {
+        item: "ที่พัก",
+        who: "deduct",
+        quote: "ตกลงจัดหาที่พักอาศัยที่ปลอดภัยให้โดยหักจากค่าจ้าง 2,500 เหรียญไต้หวันต่อเดือน (ประมาณ 2,825 บาทต่อเดือน)",
+        ref: "เงื่อนไขข้อ 3",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "employer",
+        quote: "และจ่ายค่าบัตรโดยสารเครื่องบินไปกลับให้โดยไม่คิดมูลค่า",
+        ref: "เงื่อนไขข้อ 3",
+      },
+    ],
+    terms: [
+      "พื้นที่จังหวัด (ระบุจังหวัดที่ผู้รับอนุญาตมีสำนักงานตั้งอยู่) กรุงเทพมหานคร",
+      "ระยะเวลาของสัญญาจ้างงาน 3(สาม) ปี",
+      "ชั่วโมงการทำงานของลูกจ้างในแต่ละวันให้ขึ้นอยู่กับข้อกำหนดของนายจ้างแต่ไม่เกิน 8 ชั่วโมงต่อวัน และเมื่อรวมกันแล้วต้องไม่เกิน 40 ชั่วโมงต่อสัปดาห์",
+      "เงื่อนไขอื่น ๆ เป็นไปตามกฎหมายแรงงานไต้หวัน",
+    ],
+    windowStart: "2026-11-05",
+    windowEnd: "2027-01-03",
+    issued: "2026-11-05",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 11 พ.ย. 2569; ผ่าน 28 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(151919), page: 1 },
   },
 ];
 
