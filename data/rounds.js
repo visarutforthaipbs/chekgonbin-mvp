@@ -1114,6 +1114,91 @@ export const ROUNDS = [
     feeBan: FEE_BAN,
     source: { url: doe(151915), page: 1 },
   },
+  {
+    permit: "160/2569",
+    slug: "160-2569",
+    country: "IL",
+    channel: "private",
+    industry: "ก่อสร้าง",
+    employer: "Atlas Foreign Construction Workers Ltd.",
+    employerPlace: "Hathapahach 1a Beer Sheva, Israel",
+    agency: {
+      name: "อี.พี.เอ. อินเตอร์เนชั่นแนล",
+      license: "ต.1222/2562",
+      search: "อี.พี.เอ",
+      phones: ["098-8299796", "080-0785288", "098-2895518"],
+    },
+    positions: [
+      {
+        title: "ช่างฉาบปูน",
+        count: 22,
+      },
+      {
+        title: "ช่างปูกระเบื้อง",
+        count: 25,
+      },
+      {
+        title: "ช่างเหล็ก",
+        count: 18,
+      },
+      {
+        title: "ช่างไม้",
+        count: 20,
+      },
+      {
+        title: "ช่างเชื่อม",
+        count: 25,
+      },
+      {
+        title: "โฟร์แมน",
+        count: 25,
+      },
+    ],
+    total: 135,
+    sex: "male",
+    sexQuote: "คนไทย (เพศชาย) อายุไม่ต่ำกว่า 25 ปี",
+    ageMin: 25,
+    ageMax: null,
+    pay: [
+      {
+        label: "ทุกตำแหน่ง",
+        main: "พื้นฐาน ไม่น้อยกว่า 6,443.85 เชเกล/เดือน",
+        baht: "ประมาณ 70,598 บาท/เดือน",
+        note: "ไม่รวมค่าล่วงเวลา · ใบนี้ใช้อัตรา 1 เชเกล = 10.96 บาท",
+      },
+    ],
+    costs: [
+      {
+        item: "ที่พัก",
+        who: "deduct",
+        quote: "นายจ้างจัดหาที่พักให้โดยหักค่าใช้จ่ายตามที่กฎหมายกำหนด",
+        ref: "ข้อ 5",
+      },
+      {
+        item: "อาหาร",
+        who: "worker",
+        quote: "ค่าอาหารลูกจ้างเป็นผู้รับผิดชอบ",
+        ref: "ข้อ 6",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "worker",
+        quote: "ค่าบัตรโดยสารเครื่องบินไป-กลับประเทศอิสราเอลลูกจ้างเป็นผู้รับผิดชอบ",
+        ref: "ข้อ 7",
+      },
+    ],
+    terms: [
+      "ระยะเวลาการจ้างงาน 1 ปี (ต่ออายุได้สูงสุดถึง 5 ปี)",
+      "ทำงานวันละ 8 ชั่วโมง ทำงานสัปดาห์ละ 6 วัน ทำงานปกติ 182 ชั่วโมงต่อเดือน (ค่าล่วงเวลา 54 ชั่วโมงต่อเดือน รวมทำงาน 236 ชั่วโมงต่อเดือน)",
+      "ระยะเวลาทดลองงาน 3 เดือน",
+    ],
+    windowStart: "2026-11-05",
+    windowEnd: "2027-01-03",
+    issued: "2026-11-05",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 11 พ.ย. 2569; ผ่าน 40 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(151913), page: 1 },
+  },
 ];
 
 // What each `who` value means, worded for workers. Never say "ฟรี".
