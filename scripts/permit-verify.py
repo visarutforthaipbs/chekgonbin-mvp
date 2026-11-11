@@ -401,6 +401,25 @@ def listing(e, pdf):
     return None
 
 
+def listing_multi(e, pdf):
+    """Multi-position permits: DOE listing title for this exact PDF (same permit, same sha256) must state EVERY
+    position with its count, and the counts must add up to the entry total. Counts only: sex is still checked from the page quote. Returns the title or None."""
+    st = Path(pdf).parent / "state.json"
+    if not st.exists() or len(e["positions"]) < 2:
+        return None
+    if sum(p["count"] for p in e["positions"]) != e["total"]:
+        return None
+    sha = hashlib.sha256(Path(pdf).read_bytes()).hexdigest()
+    fold = lambda x: re.sub(r"([\u0E31-\u0E4E])\1+", r"\1", squash(x))  # DOE typos like "ช่่าง" (doubled tone mark)
+    for v in json.loads(st.read_text(encoding="utf-8")).get("seen", {}).values():
+        if v.get("permit") != e["permit"] or v.get("sha256") != sha:
+            continue
+        t = fold(v.get("title", ""))
+        if all(re.search(rf"{re.escape(fold(p['title']))}{p['count']}คน", t) for p in e["positions"]):
+            return v["title"]
+    return None
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("entry"), ap.add_argument("pdf")
@@ -443,6 +462,13 @@ def main():
         lst = listing(e, a.pdf)
         if lst:
             res = [(f, ok or f in LISTABLE, d if ok or f not in LISTABLE else f"DOE listing: {lst}") for f, ok, d in res]
+            fails = [(f, d) for f, ok, d in res if not ok]
+    # multi-position permits: seal-hidden per-position counts confirmed by DOE's listing title (every other field must pass)
+    CNT = lambda f: f.startswith("count '")
+    if fails and all(CNT(f) or f in LISTABLE for f, _ in fails) and any(CNT(f) for f, _ in fails):
+        lst = listing_multi(e, a.pdf)
+        if lst:
+            res = [(f, ok or CNT(f) or f in LISTABLE, d if ok or not CNT(f) else f"DOE listing: {lst}") for f, ok, d in res]
             fails = [(f, d) for f, ok, d in res if not ok]
     verdict = "PASS" if not fails else "HOLD"
     out = {"verdict": verdict, "permit": e["permit"], "checked": len(res), "ocr_passes": len(passes),
