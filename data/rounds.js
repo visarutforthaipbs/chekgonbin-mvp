@@ -23,6 +23,7 @@ export const COUNTRIES = {
   LT: { name: "ลิทัวเนีย" },
   TW: { name: "ไต้หวัน" },
   SG: { name: "สิงคโปร์" },
+  SA: { name: "ซาอุดีอาระเบีย" },
 };
 
 export const ROUNDS = [
