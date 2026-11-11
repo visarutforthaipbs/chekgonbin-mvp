@@ -983,6 +983,71 @@ export const ROUNDS = [
     feeBan: FEE_BAN,
     source: { url: doe(151919), page: 1 },
   },
+  {
+    permit: "162/2569",
+    slug: "162-2569",
+    country: "SA",
+    channel: "private",
+    industry: "การบริการ",
+    employer: "Human Resources Business Support Company",
+    employerPlace: "Rawabi Tower, Prince Turkey Street, Opp. Movenpick Hotel, Al Khobar (Eastern Province) 31952, Saudi Arabia",
+    agency: {
+      name: "มาลินโด",
+      license: "ต.8/2527",
+      search: "มาลินโด",
+      phones: ["02-676-9216"],
+    },
+    positions: [
+      {
+        title: "แม่บ้าน",
+        count: 25,
+      },
+    ],
+    total: 25,
+    sex: "female",
+    sexQuote: null,
+    ageMin: null,
+    ageMax: null,
+    pay: [
+      {
+        label: "แม่บ้าน",
+        main: "2,500 ริยัลซาอุดีอาระเบีย/เดือน",
+        baht: "ประมาณ 22,350 บาท/เดือน",
+        note: "ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "ที่พัก",
+        who: "employer",
+        quote: "นายจ้างเป็นผู้จัดหาให้",
+        ref: "หมายเหตุ ที่พัก",
+      },
+      {
+        item: "อาหาร",
+        who: "employer",
+        quote: "นายจ้างเป็นผู้จัดหาให้",
+        ref: "หมายเหตุ อาหาร/ค่าอาหาร",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "employer",
+        quote: "นายจ้างเป็นผู้จัดหาตั๋วเครื่องบินไป-กลับให้",
+        ref: "หมายเหตุ ค่าตั๋วเครื่องบิน",
+      },
+    ],
+    terms: [
+      "ระยะเวลาของสัญญาจ้าง : 1 ปี และสามารถต่อสัญญาได้",
+      "ชั่วโมงการทำงาน : 8 ชั่วโมงต่อวัน /6 วันต่อสัปดาห์",
+      "ค่าล่วงเวลา : เป็นไปตามกฎหมายแรงงานของประเทศซาอุดีอาระเบีย",
+    ],
+    windowStart: "2026-11-05",
+    windowEnd: "2027-01-03",
+    issued: "2026-11-05",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 11 พ.ย. 2569; ผ่าน 26 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(151917), page: 1 },
+  },
 ];
 
 // What each `who` value means, worded for workers. Never say "ฟรี".
