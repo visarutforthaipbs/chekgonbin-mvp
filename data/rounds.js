@@ -12,7 +12,7 @@
 // - Each entry is read by one reader and confirmed by a second (`verified`).
 //   Do not add an entry without both.
 
-export const ROUNDS_UPDATED = "2026-11-11";
+export const ROUNDS_UPDATED = "2026-11-26";
 
 const FEE_BAN = "ห้ามเรียกหรือรับค่าบริการ ค่าใช้จ่าย หรือผลประโยชน์ใด ๆ จากคนหางาน";
 const doe = (id) => `https://www.doe.go.th/prd/download/download_by_pool_file/${id}`;
@@ -1198,6 +1198,73 @@ export const ROUNDS = [
     verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 11 พ.ย. 2569; ผ่าน 40 จุดตรวจ",
     feeBan: FEE_BAN,
     source: { url: doe(151913), page: 1 },
+  },
+  {
+    permit: "165/2569",
+    slug: "165-2569",
+    country: "SG",
+    channel: "private",
+    industry: "ก่อสร้าง",
+    employer: "SOLAR GREEN ENTERPRISE PTE LTD",
+    employerPlace: "NO.100 PASIR PANJANG ROAD,#04-07,SINGAPORE 118518",
+    agency: {
+      name: "ที.เอช.กรีน",
+      license: "ต.1063/2546",
+      search: "ที.เอช.กรีน",
+      phones: ["02-5307910"],
+    },
+    positions: [
+      {
+        title: "คนงานก่อสร้าง",
+        count: 30,
+      },
+    ],
+    total: 30,
+    sex: null,
+    sexQuote: null,
+    ageMin: null,
+    ageMax: null,
+    pay: [
+      {
+        label: "คนงานก่อสร้าง",
+        main: "1,300 ดอลลาร์สิงคโปร์/เดือน",
+        baht: "ประมาณ 34,268 บาท/เดือน",
+        note: "ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "ที่พัก",
+        who: "employer",
+        quote: "นายจ้างจัดที่พักให้โดยไม่คิดมูลค่า",
+        ref: "เงื่อนไขข้อ 4",
+      },
+      {
+        item: "อาหาร",
+        who: "worker",
+        quote: "ลูกจ้างรับผิดชอบเอง",
+        ref: "เงื่อนไขข้อ 3",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "unclear",
+        quote: "ค่าบัตรโดยสารเครื่องบินกรุงเทพฯ-สิงคโปร์เมื่อลงนามในสัญญาจ้างแล้วและบัตรโดยสารเครื่องบินเที่ยวกลับสิงคโปร์-กรุงเทพฯเมื่อครบสัญญาจ้าง",
+        ref: "เงื่อนไขข้อ 5",
+      },
+    ],
+    terms: [
+      "ระยะเวลาการจ้างงาน : -2(สอง)- ปี",
+      "ชั่วโมงการทำงาน : 8 ชั่วโมงต่อวันหรือ 44 ชั่วโมงต่อสัปดาห์",
+      "ค่ารักษาพยาบาล : จากโรงพยาบาลที่บริษัทกำหนดโดยไม่มีค่าใช้จ่าย",
+      "ทดลองงาน 90 วัน",
+      "เงื่อนไขอื่นๆให้เป็นไปตามกฎหมายแรงงานของประเทศสิงคโปร์",
+    ],
+    windowStart: "2026-11-16",
+    windowEnd: "2027-01-14",
+    issued: "2026-11-16",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 26 พ.ย. 2569; ผ่าน 29 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(152408), page: 1 },
   },
 ];
 
