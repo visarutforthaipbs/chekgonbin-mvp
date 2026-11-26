@@ -1266,6 +1266,71 @@ export const ROUNDS = [
     feeBan: FEE_BAN,
     source: { url: doe(152408), page: 1 },
   },
+  {
+    permit: "166/2569",
+    slug: "166-2569",
+    country: "SA",
+    channel: "private",
+    industry: "การบริการ",
+    employer: "Naqlin company Ltd. (Naqleen company Ltd.)",
+    employerPlace: "KSA, JEDDAH",
+    agency: {
+      name: "กรุงเทพสุ้นฮวดเทรดดิ้ง",
+      license: "ต.698/2534",
+      search: "สุ้นฮวด",
+      phones: ["02-9707544"],
+    },
+    positions: [
+      {
+        title: "พนักงานขับรถบรรทุกหนัก",
+        count: 13,
+      },
+    ],
+    total: 13,
+    sex: null,
+    sexQuote: null,
+    ageMin: null,
+    ageMax: null,
+    pay: [
+      {
+        label: "พนักงานขับรถบรรทุกหนัก",
+        main: "2,062 ริยัลซาอุดีอาระเบีย/เดือน (เงินเดือนรวม)",
+        baht: "ประมาณ 18,413 บาท/เดือน",
+        note: "ตัวเลขเงินบาทตามที่ใบนี้แปลงไว้",
+      },
+    ],
+    costs: [
+      {
+        item: "ที่พัก",
+        who: "employer",
+        quote: "บริษัทเป็นผู้จัดหาและรับผิดชอบค่าใช้จ่าย",
+        ref: "สาระสำคัญของสัญญาจ้าง ที่พัก",
+      },
+      {
+        item: "อาหาร",
+        who: "employer",
+        quote: "บริษัทจ่ายค่าอาหารให้ 450 SAR ต่อเดือน (ประมาณ 4,018 บาท)",
+        ref: "สาระสำคัญของสัญญาจ้าง ค่าอาหาร",
+      },
+      {
+        item: "ตั๋วเครื่องบินไป-กลับ",
+        who: "employer",
+        quote: "ค่าโดยสารเครื่องบินไป-กลับ บริษัทเป็นผู้รับผิดชอบค่าใช้จ่าย",
+        ref: "สาระสำคัญของสัญญาจ้าง ค่าเดินทาง",
+      },
+    ],
+    terms: [
+      "ระยะเวลาของสัญญาจ้าง : สัญญาจ้าง 2 ปี (มีระยะเวลาทดลองงาน 90 วัน)",
+      "เวลาทำงาน : ทำงาน 8 ชั่วโมง/วัน 6 วัน/สัปดาห์",
+      "ค่ารักษาพยาบาล และประกันภัย : บริษัทเป็นผู้รับผิดชอบ",
+    ],
+    windowStart: "2026-11-17",
+    windowEnd: "2027-01-15",
+    issued: "2026-11-17",
+    verified: "อ่านจากใบอนุญาตโดย thmw-pm และตรวจซ้ำด้วย Thai OCR (typhoon-ocr บน gpu01) 26 พ.ย. 2569; ผ่าน 26 จุดตรวจ",
+    feeBan: FEE_BAN,
+    source: { url: doe(152409), page: 1 },
+  },
 ];
 
 // What each `who` value means, worded for workers. Never say "ฟรี".
